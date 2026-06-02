@@ -31,6 +31,12 @@
   {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
   {%- render 'css-variables' -%}
 
+  {%- comment -%} Kansawala custom foundation (migrated) — tokens, typography, fonts, org schema {%- endcomment -%}
+  {{ 'kw-tokens.css'     | asset_url | stylesheet_tag }}
+  {{ 'kw-typography.css' | asset_url | stylesheet_tag }}
+  {%- render 'kw-fonts' -%}
+  {%- if request.page_type == 'index' -%}{%- render 'kw-schema-organization' -%}{%- endif -%}
+
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
 

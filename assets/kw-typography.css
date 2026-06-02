@@ -1,0 +1,381 @@
+/* ═══════════════════════════════════════════════════════════════════
+   KANSAWALA TYPOGRAPHY SYSTEM  (9.1.0 migration · Phase 1)
+   ───────────────────────────────────────────────────────────────────
+   Single source of truth for every KW section's text styles.
+   Built on the design tokens in assets/kw-tokens.css (:root).
+
+   Usage in any section:
+       <div class="t-eyebrow">Shop by Metal</div>
+       <h2 class="t-display">Ayurveda's<em>Recommended Metals</em></h2>
+       <div class="t-label">For Eating</div>
+       <p class="t-body">Body copy goes here.</p>
+
+   Colors stay section-local (merchants pick them per section).
+   Only font-family, size, weight, letter-spacing, line-height,
+   text-transform are centralized here. Scoped to .t-* utilities (plus a
+   contained .rte h4–h6 fix) — no global element styles, additive on top
+   of stock Impulse 9.1.0. See BRAND.md.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. EYEBROW  (tiny uppercase kicker above a heading) ──────────── */
+.t-eyebrow{
+  font-family: var(--d);
+  font-size:   var(--fs-xs);
+  font-weight: 400;
+  letter-spacing: var(--ls-eye);
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0;
+}
+
+/* Optional decorative dash before eyebrow text */
+.t-eyebrow--dash{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.t-eyebrow--dash::before{
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ─── 2. DISPLAY HEADINGS  (main section titles) ───────────────────── */
+.t-display{
+  font-family: var(--d);
+  font-size:   var(--fs-3xl);
+  font-weight: 400;
+  letter-spacing: var(--ls-hd);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.t-display-lg{
+  font-family: var(--d);
+  font-size:   var(--fs-hero);
+  font-weight: 400;
+  letter-spacing: var(--ls-hd);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.t-display-sm{
+  font-family: var(--d);
+  font-size:   var(--fs-2xl);
+  font-weight: 400;
+  letter-spacing: var(--ls-hd);
+  line-height: var(--lh-tight);
+  text-transform: uppercase;
+  text-wrap: balance;
+  margin: 0;
+}
+
+/* Italic serif accent line inside a display heading */
+.t-display-em,
+.t-display em,
+.t-display-lg em,
+.t-display-sm em{
+  font-family: var(--s);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.1em;
+  letter-spacing: .02em;
+  text-transform: none;
+  display: block;
+}
+
+/* ─── 3. HEADING LEVELS  (secondary / tertiary) ────────────────────── */
+.t-heading{
+  font-family: var(--d);
+  font-size:   var(--fs-xl);
+  font-weight: 400;
+  letter-spacing: .06em;
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.t-heading-sm{
+  font-family: var(--d);
+  font-size:   var(--fs-lg);
+  font-weight: 400;
+  letter-spacing: .04em;
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Brand logotype (footer / header wordmark) */
+.t-logo{
+  font-family: var(--d);
+  font-size:   var(--fs-sm);
+  font-weight: 200;
+  letter-spacing: .24em;
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.t-logo-sub{
+  font-family: var(--d);
+  font-size:   var(--fs-xs);
+  font-weight: 400;
+  letter-spacing: .3em;
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ─── 4. CARD TITLE  (product / collection card names) ─────────────── */
+.t-card-title{
+  font-family: var(--d);
+  font-size:   var(--fs-xl);
+  font-weight: 400;
+  letter-spacing: .06em;
+  line-height: var(--lh-snug);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Serif variant for "minimal" card style */
+.t-card-title-serif{
+  font-family: var(--s);
+  font-size:   var(--fs-lg);
+  font-weight: 300;
+  letter-spacing: .02em;
+  line-height: 1;
+  text-transform: none;
+  margin: 0;
+}
+
+/* Italic serif card title */
+.t-card-title-serif-italic{
+  font-family: var(--s);
+  font-size:   var(--fs-lg);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: .02em;
+  line-height: 1;
+  text-transform: none;
+  margin: 0;
+}
+
+/* Italic serif subtitle inside a card title */
+.t-card-title em{
+  font-family: var(--s);
+  font-style: italic;
+  font-weight: 300;
+  font-size: .9em;
+  letter-spacing: .01em;
+  text-transform: none;
+  display: block;
+}
+
+/* kw-card name typography */
+.t-card-name{
+  font-family: var(--d);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: .12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  margin: 0;
+}
+@media (max-width: 749px){
+  .t-card-name{ font-size: 14px; }
+}
+
+/* kw-card ATC button typography */
+.t-card-cta{
+  font-family: var(--d);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: .18em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@media (max-width: 749px){
+  .t-card-cta{ font-size: 14px; letter-spacing: .12em; }
+}
+
+/* kw-card eyebrow typography */
+.t-card-eye{ font-size: 12px; }
+@media (max-width: 749px){
+  .t-card-eye{ font-size: 12px; }
+}
+
+/* Collections-grid card eyebrow */
+.t-cc-card-eye{ font-size: 14px; }
+@media (max-width: 749px){
+  .t-cc-card-eye{ font-size: 12px; }
+}
+
+/* Collections-grid card name */
+.t-cc-card-name{
+  font-family: var(--d);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: .12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  margin: 0;
+}
+@media (max-width: 749px){
+  .t-cc-card-name{ font-size: 16px; }
+}
+
+/* ─── 5. LABEL  (metal / category pills under images) ──────────────── */
+.t-label{
+  font-family: var(--d);
+  font-size:   var(--fs-xs);
+  font-weight: 400;
+  letter-spacing: var(--ls-label);
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ─── 6. BODY COPY ─────────────────────────────────────────────────── */
+.t-body{
+  font-family: var(--d);
+  font-size:   var(--fs-base);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.t-body-lg{
+  font-family: var(--d);
+  font-size:   var(--fs-md);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.t-body-sm{
+  font-family: var(--d);
+  font-size:   var(--fs-sm);
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Serif body for quotes / decorative paragraphs */
+.t-body-serif{
+  font-family: var(--s);
+  font-size:   var(--fs-md);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: .01em;
+  line-height: var(--lh-base);
+  margin: 0;
+}
+
+/* ─── 7. LINK / CTA  (View all →, Learn more →) ───────────────────── */
+.t-link{
+  font-family: var(--d);
+  font-size:   var(--fs-xs);
+  font-weight: 400;
+  letter-spacing: .22em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap .2s ease, color .2s ease;
+}
+.t-link:hover{ gap: 16px; }
+
+/* ─── 8. QUOTE / PULL-QUOTE ───────────────────────────────────────── */
+.t-quote{
+  font-family: var(--s);
+  font-size:   var(--fs-2xl);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0;
+  line-height: var(--lh-snug);
+  margin: 0;
+}
+
+/* ─── 9. STAT NUMBER  (big metric displays) ───────────────────────── */
+.t-stat{
+  font-family: var(--d);
+  font-size:   var(--fs-3xl);
+  /* 200, not 100 — Jost Thin (100) isn't in the loaded weight set
+     (snippets/kw-fonts.liquid), which caused a faux/synthesized weight. */
+  font-weight: 200;
+  letter-spacing: var(--ls-hd);
+  line-height: 1;
+  margin: 0;
+}
+
+/* Serif upright variant — used for every stat / year / step number */
+.t-stat-serif-upright{
+  font-family: var(--s);
+  font-size:   var(--fs-3xl);
+  font-weight: 300;
+  font-style: normal;
+  letter-spacing: .01em;
+  line-height: 1;
+  margin: 0;
+}
+
+/* ─── 10. ALIGNMENT HELPERS ───────────────────────────────────────── */
+.t-center{ text-align: center; }
+.t-left  { text-align: left;   }
+.t-right { text-align: right;  }
+
+@media (max-width: 767px){
+  .t-center-m{ text-align: center; }
+  .t-left-m  { text-align: left;   }
+  .t-right-m { text-align: right;  }
+}
+
+/* ─── 11. LETTER-SPACING MODIFIERS ─────────────────────────────────
+   Stack alongside .t-label or .t-link to override tracking only. */
+.t-label-tab    { letter-spacing: .14em; }
+@media (max-width: 749px){
+  .t-label-tab  { letter-spacing: .12em; }
+}
+@media (max-width: 749px){
+  .t-label-fit-m{ letter-spacing: .14em; }
+}
+.t-eyebrow-fit  { letter-spacing: .22em; }
+.t-label-tight  { letter-spacing: .12em; }
+.t-link-spacious{ letter-spacing: .24em; }
+.t-label-stat   { letter-spacing: .08em; }
+.t-stars        { letter-spacing: 2px; line-height: 1; }
+
+/* Rich-text headings — give merchant h4–h6 the real heading family
+   instead of Impulse's small uppercase accent styling. Scoped to .rte. */
+.rte h4, .rte h5, .rte h6 {
+  font-family: var(--typeHeaderPrimary), var(--typeHeaderFallback);
+  font-weight: var(--typeHeaderWeight);
+  letter-spacing: var(--typeHeaderSpacing);
+  line-height: var(--typeHeaderLineHeight);
+  text-transform: none;
+}
+.rte h4 { font-size: var(--typeH3SizeMobile); }
+.rte h5, .rte h6 { font-size: calc(var(--typeBaseSize) + 2px); }
+@media only screen and (min-width: 769px) {
+  .rte h4 { font-size: var(--typeH3Size); }
+}
+
+/* ─── STOCK-MATCH (2026-05-31, hardened) ───────────────────────────────
+   KW headings = Jost 400 and body line-height = 1.4 (matching the stock
+   Jost scale) are now set DIRECTLY in the base rules above — NOT as a
+   trailing override — so reordering this file can't silently revert them.
+   Cormorant serif accents (.t-display em, .t-card-title em, .t-card-title-serif*,
+   .t-body-serif, .t-quote, .t-stat-serif-upright) intentionally stay light/300 —
+   that's the brand layer; stock has no Cormorant. */

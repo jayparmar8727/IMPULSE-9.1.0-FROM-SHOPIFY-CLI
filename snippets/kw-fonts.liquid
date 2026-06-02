@@ -1,0 +1,19 @@
+{%- comment -%}
+  KANSAWALA fonts (9.1.0 migration · Phase 1)
+  ----------------------------------------------------------------------
+  Loads ONLY Cormorant Garamond (--s) — the serif italic accent / numerals.
+  Jost (--d) is NOT loaded here anymore: the theme's font picker is set to
+  Jost, so the stock theme already loads it (snippets/font-face.liquid). The
+  KW sections reuse that same Jost (no duplicate download). If the theme font
+  is ever changed off Jost, --d falls back to the system sans-serif.
+  Scoped to the KW design system via assets/kw-tokens.css. Rendered from
+  layout/theme.liquid <head> alongside the other head partials.
+
+  Async pattern: preconnect → preload → print/onload stylesheet swap, with
+  a <noscript> fallback. See BRAND.md.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,700;1,300;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,700;1,300;1,400&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,700;1,300;1,400&display=swap"></noscript>

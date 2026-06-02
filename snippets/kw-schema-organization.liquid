@@ -1,0 +1,62 @@
+{%- comment -%}
+  KANSAWALA — global Organization structured data (SEO).
+  Additive: complements the article-scoped Organization that stock already emits
+  (sections/article-template.liquid). Rendered once from layout/theme.liquid <head>
+  on the homepage. See SEO.md.
+{%- endcomment -%}
+{%- liquid
+  assign m = shop.brand.metafields.social_links
+  assign fb  = settings.social_facebook_link  | default: m.facebook.value
+  assign ig  = settings.social_instagram_link | default: m.instagram.value
+  assign yt  = settings.social_youtube_link   | default: m.youtube.value
+  assign tw  = settings.social_twitter_link   | default: m.twitter.value
+  assign pin = settings.social_pinterest_link | default: m.pinterest.value
+  assign tt  = settings.social_tiktok_link    | default: m.tiktok.value
+  assign li  = settings.social_linkedin_link  | default: m.linkedin.value
+  assign th  = settings.social_threads_link   | default: m.threads.value
+
+  assign socials = ''
+  if fb  != blank
+    assign socials = socials | append: fb  | append: '~~'
+  endif
+  if ig  != blank
+    assign socials = socials | append: ig  | append: '~~'
+  endif
+  if yt  != blank
+    assign socials = socials | append: yt  | append: '~~'
+  endif
+  if tw  != blank
+    assign socials = socials | append: tw  | append: '~~'
+  endif
+  if pin != blank
+    assign socials = socials | append: pin | append: '~~'
+  endif
+  if tt  != blank
+    assign socials = socials | append: tt  | append: '~~'
+  endif
+  if li  != blank
+    assign socials = socials | append: li  | append: '~~'
+  endif
+  if th  != blank
+    assign socials = socials | append: th  | append: '~~'
+  endif
+  assign socials = socials | split: '~~'
+
+  assign logo_url = ''
+  if settings.logo != blank
+    assign logo_url = settings.logo | image_url: width: 600
+    unless logo_url contains '://'
+      assign logo_url = logo_url | prepend: 'https:'
+    endunless
+  endif
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.secure_url | json }}{% if logo_url != blank %},
+  "logo": {{ logo_url | json }}{% endif %}{% if socials.size > 0 %},
+  "sameAs": [{% for s in socials %}{{ s | json }}{% unless forloop.last %}, {% endunless %}{% endfor %}]{% endif %}
+}
+</script>

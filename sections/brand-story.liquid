@@ -260,7 +260,7 @@
             {%- endfor -%}
           </div>
         {%- elsif request.design_mode -%}
-          <p class="t-body" style="color:{{ body_color }};opacity:.55;margin:0 0 30px;">Add “Pill tag” blocks for the trait pills.</p>
+          <p class="t-body kw-editor-hint" style="--kw-hint-color: {{ body_color }};">Add “Pill tag” blocks for the trait pills.</p>
         {%- endif -%}
         {%- if cta_text != blank -%}
           <a href="{{ cta_link | default: '#' }}" class="s-cta t-link">

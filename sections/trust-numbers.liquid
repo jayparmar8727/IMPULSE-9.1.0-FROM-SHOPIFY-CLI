@@ -136,7 +136,7 @@
 {%- endstyle -%}
 
 <div class="trust-{{ section.id }}" data-kw-trust-numbers role="region" aria-labelledby="tn-h-{{ section.id }}" {{ section.shopify_attributes }}>
-  <h2 id="tn-h-{{ section.id }}" class="t-display" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;">{{ section.settings.aria_label | default: 'Brand achievements' | escape }}</h2>
+  <h2 id="tn-h-{{ section.id }}" class="visually-hidden">{{ section.settings.aria_label | default: 'Brand achievements' | escape }}</h2>
   <div class="tn-inner">
   {%- for block in section.blocks -%}
     {%- liquid

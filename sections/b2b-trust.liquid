@@ -225,6 +225,7 @@
     background-size: cover;
     background-position: center;
     background-color: {{ heading_color }};
+    background-image: var(--b2b-img);
   }
   .b2b-{{ section.id }} .b2b-body {
     padding: 28px 28px 28px;
@@ -477,7 +478,7 @@
           {%- assign t_img_url = '' -%}
           {%- if block.settings.image_url != blank -%}{%- assign t_img_url = block.settings.image_url -%}{%- endif -%}
           <article class="b2b-card" role="listitem" data-b2b-slide="{{ forloop.index0 }}" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
-            <div class="b2b-img"{% if t_img_url != blank %} style="background-image:url('{{ t_img_url | escape }}');"{% endif %}></div>
+            <div class="b2b-img"{% if t_img_url != blank %} style="--b2b-img:url('{{ t_img_url | escape }}');"{% endif %}></div>
             <div class="b2b-body">
               {%- if block.settings.property_name != blank -%}
                 <div class="b2b-property">

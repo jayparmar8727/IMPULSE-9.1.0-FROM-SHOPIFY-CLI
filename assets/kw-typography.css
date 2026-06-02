@@ -379,3 +379,16 @@
    Cormorant serif accents (.t-display em, .t-card-title em, .t-card-title-serif*,
    .t-body-serif, .t-quote, .t-stat-serif-upright) intentionally stay light/300 —
    that's the brand layer; stock has no Cormorant. */
+
+/* ─── Custom-section helper utilities (2026-06-02, inline-style cleanup) ──
+   Reusable classes that replace ad-hoc inline style="" in the KW sections,
+   per docs/section-standards.md §2 ("never inline style=''"). Dynamic colour
+   is still fed through the --kw-hint-color custom property, which §2 sanctions. */
+.kw-col-full { grid-column: 1 / -1; }
+
+/* Theme-editor empty-state placeholder text (renders in design mode only). */
+.kw-editor-hint {
+  margin: 0;
+  opacity: .55;
+  color: var(--kw-hint-color, currentColor);
+}

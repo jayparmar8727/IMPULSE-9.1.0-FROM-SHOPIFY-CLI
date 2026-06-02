@@ -339,7 +339,7 @@
         {%- endif -%}
       </div>
     {%- else -%}
-      <h2 class="t-display" id="mlg-h-{{ section.id }}" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;">{{ 'Meaning & legacy' | escape }}</h2>
+      <h2 class="visually-hidden" id="mlg-h-{{ section.id }}">{{ 'Meaning & legacy' | escape }}</h2>
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
@@ -403,7 +403,7 @@
         {%- endfor -%}
       </div>
     {%- elsif request.design_mode -%}
-      <p class="t-body" style="color:{{ sub_color }};opacity:.55;">Add &ldquo;Step&rdquo; blocks to build the gifting journey.</p>
+      <p class="t-body kw-editor-hint" style="--kw-hint-color: {{ sub_color }};">Add &ldquo;Step&rdquo; blocks to build the gifting journey.</p>
     {%- endif -%}
 
     {%- if footer_text != blank or cta_text != blank -%}

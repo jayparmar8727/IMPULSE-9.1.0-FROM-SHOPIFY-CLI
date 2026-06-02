@@ -1,0 +1,19 @@
+# Files Shopify CLI (`theme dev` / `theme push`) must NEVER sync to the store.
+# Note: the CLI already only uploads the 8 recognised theme dirs (assets, blocks,
+# config, layout, locales, sections, snippets, templates). These rules make the
+# intent explicit and add belt-and-suspenders coverage.
+
+# ── Atomic-write temp files ──────────────────────────────────────────────
+# Editors & Claude Code save as "<name>.tmp.<pid>.<hash>" then rename; the
+# watcher can catch the temp file mid-write and error on illegal characters.
+*.tmp.*
+*/*.tmp.*
+
+# ── Editor swap / backup files ───────────────────────────────────────────
+*~
+*.swp
+*.bak
+
+# ── Documentation — repo-only, never part of the live theme ──────────────
+*.md
+docs/

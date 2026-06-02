@@ -333,7 +333,7 @@
           {%- endfor -%}
         </div>
       {%- elsif request.design_mode -%}
-        <p class="t-body" style="color:{{ body_color }};opacity:.55;margin-top:8px;">Add “Stat” blocks for the metrics grid.</p>
+        <p class="t-body kw-editor-hint" style="--kw-hint-color: {{ body_color }};">Add “Stat” blocks for the metrics grid.</p>
       {%- endif -%}
     </div>
 
@@ -375,7 +375,7 @@
             {%- endif -%}
           {%- endfor -%}
         {%- else -%}
-          <div class="tri-panel" style="grid-column:1/-1;">
+          <div class="tri-panel kw-col-full">
             <div class="tri-placeholder">{{ 'lifestyle-2' | placeholder_svg_tag }}</div>
             {%- if request.design_mode -%}<div class="tri-cap"><span class="tri-cap-sub t-eyebrow">Add “Triptych panel” blocks for the images.</span></div>{%- endif -%}
           </div>

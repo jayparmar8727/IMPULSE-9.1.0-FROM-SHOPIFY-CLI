@@ -1,0 +1,760 @@
+{%- liquid
+  assign eyebrow        = section.settings.eyebrow
+  assign heading        = section.settings.heading
+  assign heading_italic = section.settings.heading_italic
+  assign body_text      = section.settings.body_text
+  assign bg_color       = section.settings.bg_color
+  assign left_bg        = section.settings.left_bg
+  assign right_bg       = section.settings.right_bg
+  assign eye_color      = section.settings.eye_color
+  assign heading_color  = section.settings.heading_color
+  assign heading_italic_color = section.settings.heading_italic_color
+  assign body_color     = section.settings.body_color
+  assign stat_num_color = section.settings.stat_num_color
+  assign stat_label_color = section.settings.stat_label_color
+  assign container_width = section.settings.container_width
+  assign right_panel_height_desktop = section.settings.map_height_desktop
+  assign right_panel_height_mobile  = section.settings.map_height_mobile
+  assign right_panel_width   = section.settings.right_panel_width
+  assign left_panel_width    = 100 | minus: right_panel_width
+  assign max_width      = section.settings.max_width
+  assign padding_top    = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_x      = section.settings.padding_x
+  assign padding_top_mobile    = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile      = section.settings.padding_x_mobile
+  assign heading_size_desktop = section.settings.heading_size_desktop
+  assign heading_size_mobile  = section.settings.heading_size_mobile
+  assign stat_number_size_desktop = section.settings.stat_number_size_desktop
+  assign stat_number_size_mobile = section.settings.stat_number_size_mobile
+  assign stat_label_size_desktop = section.settings.stat_label_size_desktop
+  assign stat_label_size_mobile  = section.settings.stat_label_size_mobile
+  assign body_size_desktop = section.settings.body_size_desktop
+  assign body_size_mobile = section.settings.body_size_mobile
+  assign text_alignment = section.settings.text_alignment
+
+  assign panel_eye_color   = section.settings.panel_eye_color
+  assign panel_title_color = section.settings.panel_title_color
+  assign panel_sub_color   = section.settings.panel_sub_color
+  assign panel_overlay     = section.settings.panel_overlay
+  assign panel_title_size_desktop = section.settings.panel_title_size_desktop
+  assign panel_title_size_mobile  = section.settings.panel_title_size_mobile
+
+  assign stat_count = 0
+  assign panel_count = 0
+  for block in section.blocks
+    if block.type == 'stat'
+      assign stat_count = stat_count | plus: 1
+    elsif block.type == 'panel'
+      assign panel_count = panel_count | plus: 1
+    endif
+  endfor
+
+  case text_alignment
+    when 'center'
+      assign flex_align = 'center'
+      assign body_margin = '0 auto 40px'
+      assign body_margin_mobile = '0 auto 28px'
+    when 'right'
+      assign flex_align = 'flex-end'
+      assign body_margin = '0 0 40px auto'
+      assign body_margin_mobile = '0 0 28px auto'
+    else
+      assign flex_align = 'flex-start'
+      assign body_margin = '0 0 40px 0'
+      assign body_margin_mobile = '0 0 28px 0'
+  endcase
+-%}
+
+{%- style -%}
+  .gp2-{{ section.id }} {
+    background: {{ bg_color }};
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  .gp2-{{ section.id }} .presence-grid {
+    display: grid;
+    grid-template-columns: {{ left_panel_width }}fr {{ right_panel_width }}fr;
+    align-items: stretch;
+    padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin: 0 auto;
+    {%- endif -%}
+    box-sizing: border-box;
+  }
+  .gp2-{{ section.id }} .pres-l {
+    padding: 0 52px 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: {{ flex_align }};
+    text-align: {{ text_alignment }};
+    background: {{ left_bg }};
+  }
+  .gp2-{{ section.id }} .pres-r {
+    background: {{ right_bg }};
+    position: relative;
+    overflow: hidden;
+    min-height: {{ right_panel_height_desktop }}px;
+  }
+  .gp2-{{ section.id }} .t-eyebrow {
+    color: {{ eye_color }};
+    margin-bottom: 14px;
+  }
+  .gp2-{{ section.id }} .t-eyebrow--dash::before {
+    background: {{ eye_color }};
+    width: 28px;
+  }
+  .gp2-{{ section.id }} .pres-h { color: {{ heading_color }}; margin: 0 0 28px; font-size: {{ heading_size_mobile }}px; }
+  .gp2-{{ section.id }} .pres-h em { color: {{ heading_italic_color }}; }
+  @media (min-width: 1024px) {
+    .gp2-{{ section.id }} .presence-grid { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
+    .gp2-{{ section.id }} .pres-h { font-size: {{ heading_size_desktop }}px; }
+  }
+  .gp2-{{ section.id }} .pres-p {
+    color: {{ body_color }};
+    margin: {{ body_margin }};
+    max-width: 460px;
+    font-size: {{ body_size_desktop }}px;  }
+  .gp2-{{ section.id }} .pres-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .gp2-{{ section.id }} .pstat {
+    padding: 22px 18px 22px 0;
+  }
+  .gp2-{{ section.id }} .pstat:nth-child(2n) {
+    padding-left: 22px;
+    border-left: 1px solid rgba(107,60,35,0.1);
+  }
+  .gp2-{{ section.id }} .pstat:nth-child(n+3) {
+    border-top: 1px solid rgba(107,60,35,0.1);
+  }
+  .gp2-{{ section.id }} .pstat-n {
+    color: {{ stat_num_color }};
+    margin-bottom: 6px;  }
+  @media (min-width: 1024px) {
+    .gp2-{{ section.id }} .pstat-n { font-size: {{ stat_number_size_desktop }}px; }
+    .gp2-{{ section.id }} .pstat-l { font-size: {{ stat_label_size_desktop }}px; }
+  }
+  .gp2-{{ section.id }} .pstat-l {
+    color: {{ stat_label_color }};
+    /* Allow long labels ("Countries Reached") to wrap instead of overflowing
+       the half-width stat cell on narrow screens. */  }
+  /* ── Triptych (right panel) ── */
+  .gp2-{{ section.id }} .tri-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .gp2-{{ section.id }} .tri-panel {
+    position: relative;
+    overflow: hidden;
+    background: {{ right_bg }};
+    min-height: inherit;
+  }
+  .gp2-{{ section.id }} .tri-placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(216,174,130,0.08);
+  }
+  .gp2-{{ section.id }} .tri-placeholder svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .35;
+  }
+  .gp2-{{ section.id }} .tri-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--tri-focal, 50% 50%);
+    display: block;
+    transition: transform 1.4s cubic-bezier(.2,.8,.2,1), filter .6s ease;
+    filter: saturate(1.05) contrast(1.04);
+  }
+  .gp2-{{ section.id }} .tri-panel:hover .tri-img {
+    transform: scale(1.04);
+    filter: saturate(1.12) contrast(1.06);
+  }
+  .gp2-{{ section.id }} .tri-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(42,21,8,0) 0%,
+      rgba(42,21,8,0) 35%,
+      rgba(42,21,8,{{ panel_overlay | divided_by: 100.0 | times: 0.65 }}) 75%,
+      rgba(42,21,8,{{ panel_overlay | divided_by: 100.0 }}) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .gp2-{{ section.id }} .tri-panel + .tri-panel::before {
+    content: '';
+    position: absolute;
+    top: 8%;
+    bottom: 8%;
+    left: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(216,174,130,0.18), transparent);
+    z-index: 2;
+  }
+  .gp2-{{ section.id }} .tri-cap {
+    position: absolute;
+    bottom: 34px;
+    left: 16px;
+    right: 16px;
+    z-index: 3;
+  }
+  .gp2-{{ section.id }} .tri-cap-eye {
+    color: {{ panel_eye_color }};
+    margin-bottom: 10px;
+    display: block;
+  }
+  .gp2-{{ section.id }} .tri-cap-eye::before {
+    background: {{ panel_eye_color }};
+    width: 28px;
+  }
+  .gp2-{{ section.id }} .tri-cap-ttl {
+    color: {{ panel_title_color }};
+    line-height: 1.2;
+    margin-bottom: 8px;
+    font-size: {{ panel_title_size_mobile }}px;
+    text-shadow: 0 2px 14px rgba(0,0,0,.45);
+    overflow-wrap: break-word;
+  }
+  .gp2-{{ section.id }} .tri-cap-sub {
+    color: {{ panel_sub_color }};
+    display: block;
+  }
+  @media (min-width: 1024px) {
+    .gp2-{{ section.id }} .tri-cap-ttl { font-size: {{ panel_title_size_desktop }}px; }
+  }
+  /* Triptych mobile */
+  @media (max-width: 768px) {
+    .gp2-{{ section.id }} .tri-grid {
+      grid-template-columns: 1fr;
+    }
+    .gp2-{{ section.id }} .tri-panel { height: {{ right_panel_height_mobile }}px; }
+    .gp2-{{ section.id }} .tri-cap { bottom: 24px; left: 22px; right: 22px; }
+    .gp2-{{ section.id }} .tri-panel + .tri-panel::before {
+      top: 0; bottom: auto; left: 8%; right: 8%; width: auto; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(216,174,130,0.18), transparent);
+    }
+  }
+  /* fade-up — only when JS active */
+  .js-kw-fadeup .gp2-{{ section.id }} .fu { opacity: 0; transform: translateY(24px); transition: opacity var(--dur-reveal) var(--ease-reveal), transform var(--dur-reveal) var(--ease-reveal); }
+  .js-kw-fadeup .gp2-{{ section.id }} .fu.in { opacity: 1; transform: translateY(0); }
+  .js-kw-fadeup .gp2-{{ section.id }} .fu:nth-child(2) { transition-delay: .1s; }
+  .js-kw-fadeup .gp2-{{ section.id }} .fu:nth-child(3) { transition-delay: .2s; }
+  .js-kw-fadeup .gp2-{{ section.id }} .fu:nth-child(4) { transition-delay: .3s; }
+  @media (max-width: 768px) {
+    .gp2-{{ section.id }} .presence-grid { grid-template-columns: 1fr; row-gap: 32px; }
+    .gp2-{{ section.id }} .pres-l {
+      padding: 0;
+      align-items: {{ flex_align }};
+      text-align: {{ text_alignment }};
+    }
+    .gp2-{{ section.id }} .pres-r { height: auto; min-height: {{ right_panel_height_mobile }}px; }
+    .gp2-{{ section.id }} .pres-l .t-eyebrow { align-self: {{ flex_align }}; }
+    .gp2-{{ section.id }} .pres-l .pres-h,
+    .gp2-{{ section.id }} .pres-l .pres-p {
+      text-align: {{ text_alignment }};
+      width: 100%;
+    }
+    .gp2-{{ section.id }} .pres-l .pres-p {
+      margin: {{ body_margin_mobile }};
+      max-width: 100%;
+      font-size: {{ body_size_mobile }}px;
+    }
+    .gp2-{{ section.id }} .pres-l .pres-stats {
+      width: 100%;
+      max-width: 100%;
+    }
+    .gp2-{{ section.id }} .pres-l .pstat {
+      padding: 16px 8px;
+      text-align: {{ text_alignment }};
+    }
+    .gp2-{{ section.id }} .pres-l .pstat:nth-child(2n) {
+      padding-left: 8px;
+      border-left: 1px solid rgba(107,60,35,0.1);
+    }
+    .gp2-{{ section.id }} .pres-l .pstat:nth-child(n+3) {
+      border-top: 1px solid rgba(107,60,35,0.1);
+    }
+    .gp2-{{ section.id }} .pstat-n {
+      font-size: {{ stat_number_size_mobile }}px;
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    /* .pstat-l mobile — letter-spacing tightener comes from
+       .t-label-fit-m in assets/kw-typography.css. Section-local rule
+       handles font-size + line-height only. */
+    .gp2-{{ section.id }} .pstat-l {
+      font-size: {{ stat_label_size_mobile }}px;
+      line-height: 1.4;
+    }
+  }
+  {%- if section.settings.hide_desktop -%}
+  @media (min-width: 769px) { .gp2-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media (max-width: 768px) { .gp2-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section class="global-presence gp2-{{ section.id }}"{% if heading != blank %} aria-labelledby="gp-h-{{ section.id }}"{% else %} aria-label="{{ eyebrow | default: 'Global presence' | escape }}"{% endif %} data-kw-fade-up data-kw-fade-up-threshold="0.05" {{ section.shopify_attributes }}>
+
+  <div class="presence-grid">
+    <div class="pres-l fu">
+      {%- if eyebrow != blank -%}<div class="t-eyebrow t-eyebrow--dash">{{ eyebrow | escape }}</div>{%- endif -%}
+      {%- if heading != blank -%}
+        <h2 class="pres-h t-display" id="gp-h-{{ section.id }}">{{ heading | escape }}{%- if heading_italic != blank -%}<em>{{ heading_italic | escape }}</em>{%- endif -%}</h2>
+      {%- endif -%}
+      {%- if body_text != blank -%}<p class="pres-p t-body">{{ body_text | escape }}</p>{%- endif -%}
+      {%- if stat_count > 0 -%}
+        <div class="pres-stats">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              <div class="pstat fu" {{ block.shopify_attributes }}>
+                <div class="pstat-n t-stat-serif-upright">{{ block.settings.number | escape }}</div>
+                <div class="pstat-l t-label t-label-fit-m">{{ block.settings.label | escape }}</div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- elsif request.design_mode -%}
+        <p class="t-body" style="color:{{ body_color }};opacity:.55;margin-top:8px;">Add “Stat” blocks for the metrics grid.</p>
+      {%- endif -%}
+    </div>
+
+    <div class="pres-r fu">
+      <div class="tri-grid">
+        {%- if panel_count > 0 -%}
+          {%- assign panel_i = 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'panel' -%}
+              {%- liquid
+                assign img_focal = block.settings.image.presentation.focal_point | default: '50% 50%'
+                assign p_loading = 'lazy'
+                assign p_fp = 'auto'
+                if panel_i == 0
+                  assign p_loading = 'eager'
+                  assign p_fp = 'high'
+                endif
+                assign panel_i = panel_i | plus: 1
+              -%}
+              <div class="tri-panel" style="--tri-focal: {{ img_focal | escape }};" {{ block.shopify_attributes }}>
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 1600 | image_tag:
+                    class: 'tri-img',
+                    loading: p_loading,
+                    fetchpriority: p_fp,
+                    widths: '480, 720, 960, 1200, 1600',
+                    sizes: '(max-width: 768px) 100vw, 33vw',
+                    alt: block.settings.image.alt
+                  }}
+                {%- else -%}
+                  <div class="tri-placeholder">{{ 'lifestyle-2' | placeholder_svg_tag }}</div>
+                {%- endif -%}
+                <div class="tri-cap">
+                  {%- if block.settings.eyebrow != blank -%}<span class="tri-cap-eye t-eyebrow t-eyebrow--dash">{{ block.settings.eyebrow | escape }}</span>{%- endif -%}
+                  {%- if block.settings.title != blank -%}<h3 class="tri-cap-ttl t-card-title-serif-italic">{{ block.settings.title | escape }}</h3>{%- endif -%}
+                  {%- if block.settings.sub != blank -%}<span class="tri-cap-sub t-eyebrow t-eyebrow-fit">{{ block.settings.sub | escape }}</span>{%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <div class="tri-panel" style="grid-column:1/-1;">
+            <div class="tri-placeholder">{{ 'lifestyle-2' | placeholder_svg_tag }}</div>
+            {%- if request.design_mode -%}<div class="tri-cap"><span class="tri-cap-sub t-eyebrow">Add “Triptych panel” blocks for the images.</span></div>{%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+</section>
+
+{%- comment -%}
+  Fade-up reveal handled by the shared self-booting IIFE in assets/theme.js
+  (ported from 9.0.0 theme.custom.js initFadeUp). Section root carries
+  data-kw-fade-up; the IIFE adds .js-kw-fadeup to <html> and reveals .fu els.
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Global Presence",
+  "tag": "section",
+  "class": "kw-global-presence-2",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Global Presence"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "From Sihor to the"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading italic line",
+      "default": "world’s tables."
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Body text",
+      "default": "What began as a humble family workshop in Sihor is now part of kitchens and conversations across the globe. In 1945, our grandfather lit the first fire. Today, that fire burns in homes across 40+ countries."
+    },
+    {
+      "type": "header",
+      "content": "Right panel"
+    },
+    {
+      "type": "range",
+      "id": "right_panel_width",
+      "label": "Right panel width — desktop",
+      "info": "Width of the right panel as a percentage of the row. Mobile stacks single-column.",
+      "min": 30,
+      "max": 70,
+      "step": 1,
+      "default": 60,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "map_height_desktop",
+      "label": "Image height — desktop",
+      "info": "Minimum height of the image area on desktop. The images always stretch to match the left text column's height — increase this slider to make both columns taller than the natural text height.",
+      "min": 320,
+      "max": 900,
+      "step": 10,
+      "default": 610,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "map_height_mobile",
+      "label": "Image height — mobile",
+      "info": "Height of each stacked image on mobile.",
+      "min": 200,
+      "max": 700,
+      "step": 10,
+      "default": 200,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment (left panel)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "boxed", "label": "Boxed" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width (px)",
+      "min": 800,
+      "max": 1920,
+      "step": 20,
+      "default": 1500,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Desktop"
+    },
+    { "type": "range", "id": "padding_top",    "label": "Padding top (px)",        "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (px)",     "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+    { "type": "range", "id": "padding_x",      "label": "Horizontal padding (px)", "min": 0, "max": 120, "step": 4, "default": 40,  "unit": "px" },
+    {
+      "type": "header",
+      "content": "Spacing — Mobile"
+    },
+    { "type": "range", "id": "padding_top_mobile",    "label": "Padding top (px)",        "min": 0, "max": 120, "step": 4, "default": 40, "unit": "px" },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom (px)",     "min": 0, "max": 120, "step": 4, "default": 40, "unit": "px" },
+    { "type": "range", "id": "padding_x_mobile",      "label": "Horizontal padding (px)", "min": 0, "max": 40,  "step": 1, "default": 17, "unit": "px" },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop (px)",
+      "min": 24,
+      "max": 72,
+      "step": 1,
+      "default": 43,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile (px)",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "stat_number_size_desktop",
+      "label": "Stat number size desktop (px)",
+      "min": 28,
+      "max": 72,
+      "step": 2,
+      "default": 44,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "stat_number_size_mobile",
+      "label": "Stat number size mobile (px)",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "default": 28,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "stat_label_size_mobile",
+      "label": "Stat label size mobile (px)",
+      "min": 8,
+      "max": 14,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
+    },
+    { "type": "range", "id": "stat_label_size_desktop", "label": "Stat label size desktop (px)", "min": 8, "max": 18, "step": 1, "default": 11, "unit": "px" },
+    { "type": "range", "id": "body_size_desktop", "label": "Body text size desktop (px)", "min": 12, "max": 28, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "body_size_mobile", "label": "Body text size mobile (px)", "min": 10, "max": 24, "step": 1, "default": 16, "unit": "px" },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section background",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "left_bg",
+      "label": "Left panel background",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "right_bg",
+      "label": "Right panel background",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "eye_color",
+      "label": "Eyebrow color",
+      "default": "#a05f1f"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "heading_italic_color",
+      "label": "Heading italic color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "stat_num_color",
+      "label": "Stat number color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "stat_label_color",
+      "label": "Stat label color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "header",
+      "content": "Triptych — caption sizes",
+      "info": "The right panel switches to a 3-image triptych when at least one Triptych panel block is added below."
+    },
+    { "type": "range", "id": "panel_title_size_desktop", "label": "Panel title size desktop (px)", "min": 18, "max": 40, "step": 1, "default": 20, "unit": "px" },
+    { "type": "range", "id": "panel_title_size_mobile",  "label": "Panel title size mobile (px)",  "min": 16, "max": 32, "step": 1, "default": 20, "unit": "px" },
+    { "type": "range", "id": "panel_overlay", "label": "Panel bottom-fade darkness (%)", "min": 0, "max": 100, "step": 1, "default": 85, "unit": "%" },
+    {
+      "type": "header",
+      "content": "Triptych — caption colors"
+    },
+    { "type": "color", "id": "panel_eye_color",   "label": "Caption eyebrow color", "default": "#bc843f" },
+    { "type": "color", "id": "panel_title_color", "label": "Caption title color", "default": "#faf5ee" },
+    { "type": "color", "id": "panel_sub_color",   "label": "Caption sub color", "default": "#d8ae82" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "1945"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Year Founded"
+        }
+      ]
+    },
+    {
+      "type": "panel",
+      "name": "Triptych panel",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Panel image",
+          "info": "To pick which part of the image stays visible: open Settings → Files, click this image, and drag the focal point dot to the part you want centered. Save — the panel will pick it up automatically."
+        },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Origin" },
+        { "type": "text", "id": "title", "label": "Title", "default": "The fire that has not gone out." },
+        { "type": "text", "id": "sub", "label": "Sub", "default": "Lit · 1945" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Global Presence",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "1945",
+            "label": "Year Founded"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "75+",
+            "label": "Years of Legacy"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "40+",
+            "label": "Countries Reached"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "NABL",
+            "label": "Certified Purity"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "The Origin",
+            "title": "The fire that has not gone out.",
+            "sub": "Lit · 1945"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "The Craft",
+            "title": "Twenty-five hand operations. One piece.",
+            "sub": "By hand · always"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "eyebrow": "The Family",
+            "title": "Four generations of one furnace.",
+            "sub": "Mukundray · Fulchand"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

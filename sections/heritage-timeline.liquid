@@ -1,0 +1,455 @@
+{%- liquid
+  assign bg_color = section.settings.bg_color
+  assign dot_color = section.settings.dot_color
+  assign era_color = section.settings.era_color
+  assign title_color = section.settings.title_color
+  assign desc_color = section.settings.desc_color
+  assign divider_color = section.settings.divider_color
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_x = section.settings.padding_x
+  assign gap = section.settings.gap
+  assign era_size_desktop = section.settings.era_size_desktop
+  assign era_size_mobile = section.settings.era_size_mobile
+  assign title_size_desktop = section.settings.title_size_desktop
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign desc_size_desktop = section.settings.desc_size_desktop
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign padding_top_mobile = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile = section.settings.padding_x_mobile
+  assign margin_top_mobile = section.settings.margin_top_mobile
+  assign margin_bottom_mobile = section.settings.margin_bottom_mobile
+  assign container_width = section.settings.container_width
+  assign max_width = section.settings.max_width
+  assign body_size_mobile = section.settings.body_size_mobile
+-%}
+
+{%- style -%}
+  .htl-{{ section.id }} {
+    background: {{ bg_color }};
+    padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    margin: {{ margin_top_mobile }}px 0 {{ margin_bottom_mobile }}px;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .htl-{{ section.id }} .htl-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ gap }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+  }
+  .htl-{{ section.id }} .ht-item {
+    position: relative;
+    padding: 0;
+  }
+  .htl-{{ section.id }} .ht-item::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: {{ dot_color }};
+    box-shadow: var(--shadow-ring);
+    margin-bottom: 22px;
+  }
+  .htl-{{ section.id }} .ht-era {
+    color: {{ era_color }};
+    margin-bottom: 10px;
+    font-size: {{ era_size_mobile }}px;  }
+  .htl-{{ section.id }} .ht-title {
+    color: {{ title_color }};
+    margin: 0 0 12px;
+    font-size: {{ title_size_mobile }}px;  }
+  .htl-{{ section.id }} .ht-desc {
+    color: {{ desc_color }};
+    margin: 0;
+    font-size: {{ body_size_mobile }}px;  }
+  /* Gated on .js-kw-fadeup (set by the shared fade-up IIFE) so the band stays
+     visible if JS never runs — no hidden-content trap. */
+  .js-kw-fadeup .htl-{{ section.id }} .fu {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+  }
+  .js-kw-fadeup .htl-{{ section.id }} .fu.in { opacity: 1; transform: translateY(0); }
+  .js-kw-fadeup .htl-{{ section.id }} .fu:nth-child(2) { transition-delay: 0.1s; }
+  .js-kw-fadeup .htl-{{ section.id }} .fu:nth-child(3) { transition-delay: 0.2s; }
+  .js-kw-fadeup .htl-{{ section.id }} .fu:nth-child(4) { transition-delay: 0.3s; }
+  .js-kw-fadeup .htl-{{ section.id }} .fu:nth-child(5) { transition-delay: 0.4s; }
+  .js-kw-fadeup .htl-{{ section.id }} .fu:nth-child(6) { transition-delay: 0.5s; }
+  {%- if section.settings.hide_desktop -%}
+  @media(min-width: 768px) { .htl-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media(max-width: 749px) { .htl-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  @media(min-width: 1024px) {
+    .htl-{{ section.id }} {
+      padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+      margin: {{ margin_top }}px 0 {{ margin_bottom }}px;
+    }
+    .htl-{{ section.id }} .htl-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .htl-{{ section.id }} .ht-item {
+      padding: 56px 36px;
+    }
+    .htl-{{ section.id }} .ht-era { font-size: {{ era_size_desktop }}px; }
+    .htl-{{ section.id }} .ht-title { font-size: {{ title_size_desktop }}px; }
+    .htl-{{ section.id }} .ht-desc { font-size: {{ desc_size_desktop }}px; }
+    {%- if divider_color != blank -%}
+    .htl-{{ section.id }} .ht-item:not(:last-child) {
+      border-right: 1px solid {{ divider_color }};
+    }
+    {%- endif -%}
+  }
+{%- endstyle -%}
+
+<section class="heritage-timeline htl-{{ section.id }}" data-kw-fade-up aria-label="{{ section.settings.aria_label | default: 'Kansawala heritage timeline' | escape }}" {{ section.shopify_attributes }}>
+  <div class="htl-grid">
+    {%- for block in section.blocks -%}
+      <div class="ht-item fu" {{ block.shopify_attributes }}>
+        {%- if block.settings.era != blank -%}<p class="ht-era t-stat-serif-upright">{{ block.settings.era | escape }}</p>{%- endif -%}
+        {%- if block.settings.title != blank -%}<h3 class="ht-title t-label">{{ block.settings.title | escape }}</h3>{%- endif -%}
+        {%- if block.settings.description != blank -%}<p class="ht-desc t-body-sm">{{ block.settings.description | escape }}</p>{%- endif -%}
+      </div>
+    {%- endfor -%}
+    {%- if section.blocks.size == 0 and request.design_mode -%}
+      <div class="ht-item"><p class="ht-era t-stat-serif-upright">1945</p><p class="ht-desc t-body-sm">Add “Era” blocks to build the timeline.</p></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%}
+  Fade-up reveal handled by the shared self-booting IIFE in assets/theme.js
+  (data-kw-fade-up → adds .js-kw-fadeup to <html>, reveals .fu on scroll).
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Heritage Timeline",
+  "tag": "section",
+  "class": "kw-heritage-timeline",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "ARIA label",
+      "default": "Kansawala heritage timeline"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "era_size_desktop",
+      "label": "Era size desktop (px)",
+      "min": 28,
+      "max": 72,
+      "step": 2,
+      "default": 44,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "era_size_mobile",
+      "label": "Era size mobile (px)",
+      "min": 22,
+      "max": 48,
+      "step": 2,
+      "default": 36,
+      "unit": "px"
+    },
+    { "type": "range", "id": "title_size_desktop", "label": "Title size desktop (px)", "min": 10, "max": 32, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "title_size_mobile", "label": "Title size mobile (px)", "min": 10, "max": 28, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "desc_size_desktop", "label": "Description size desktop (px)", "min": 10, "max": 24, "step": 1, "default": 14, "unit": "px" },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Item gap mobile (px)",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "full", "label": "Full width" },
+        { "value": "boxed", "label": "Boxed (centered)" }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max content width (px)",
+      "min": 800,
+      "max": 1800,
+      "step": 20,
+      "default": 1500,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal padding desktop (px)",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top desktop (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom desktop (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top (px)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom (px)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Mobile horizontal padding (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 17,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Mobile margin top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Mobile margin bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Typography"
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Body font size mobile (px)",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "default": 13,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "era_color",
+      "label": "Era (year) color",
+      "default": "#d8ae82"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description color",
+      "default": "#fee8d9"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider (desktop)",
+      "default": "#d8ae821a"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "era",
+      "name": "Era",
+      "settings": [
+        {
+          "type": "text",
+          "id": "era",
+          "label": "Era label (year)",
+          "default": "1945"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "The Beginning"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Sh. Mukundray Fulchand lights the first furnace in Sihor, Gujarat. A family legacy begins."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Heritage Timeline",
+      "blocks": [
+        {
+          "type": "era",
+          "settings": {
+            "era": "1945",
+            "title": "The Beginning",
+            "description": "Sh. Mukundray Fulchand lights the first furnace in Sihor, Gujarat. A family legacy begins."
+          }
+        },
+        {
+          "type": "era",
+          "settings": {
+            "era": "1970s",
+            "title": "Second Generation",
+            "description": "The craft passes to the next generation. Range expands to Brass and Copper alongside Kansa."
+          }
+        },
+        {
+          "type": "era",
+          "settings": {
+            "era": "2000s",
+            "title": "India & Beyond",
+            "description": "Kansawala begins serving households across India. Quality earns accolades near and far."
+          }
+        },
+        {
+          "type": "era",
+          "settings": {
+            "era": "Today",
+            "title": "Global Family",
+            "description": "4th generation. 40+ countries. 1000+ homes. The same fire, the same hands, the same love."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

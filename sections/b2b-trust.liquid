@@ -1,0 +1,766 @@
+{%- liquid
+  assign eyebrow            = section.settings.eyebrow
+  assign heading            = section.settings.heading
+  assign heading_italic     = section.settings.heading_italic
+  assign sub                = section.settings.sub
+  assign strip_label        = section.settings.strip_label
+
+  assign bg_color                 = section.settings.bg_color
+  assign band_bg_color            = section.settings.band_bg_color
+  assign eye_color                = section.settings.eye_color
+  assign heading_color            = section.settings.heading_color
+  assign heading_italic_color     = section.settings.heading_italic_color
+  assign sub_color                = section.settings.sub_color
+  assign card_bg                  = section.settings.card_bg
+  assign card_border              = section.settings.card_border
+  assign card_quote_color         = section.settings.card_quote_color
+  assign star_color               = section.settings.star_color
+  assign client_color             = section.settings.client_color
+  assign band_num_color           = section.settings.band_num_color
+
+  assign container_width   = section.settings.container_width
+  assign max_width         = section.settings.max_width
+  assign padding_top       = section.settings.padding_top
+  assign padding_bottom    = section.settings.padding_bottom
+  assign padding_x         = section.settings.padding_x
+  assign padding_top_mobile    = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile      = section.settings.padding_x_mobile
+
+  assign heading_size_desktop = section.settings.heading_size_desktop
+  assign heading_size_mobile  = section.settings.heading_size_mobile
+
+  assign strip_speed           = section.settings.strip_speed
+  assign strip_label_size_desktop = section.settings.strip_label_size_desktop
+  assign strip_label_size_mobile  = section.settings.strip_label_size_mobile
+  assign sub_size_desktop      = section.settings.sub_size_desktop
+  assign sub_size_mobile       = section.settings.sub_size_mobile
+  assign quote_size_desktop    = section.settings.quote_size_desktop
+  assign quote_size_mobile     = section.settings.quote_size_mobile
+  assign property_name_size_desktop = section.settings.property_name_size_desktop
+  assign property_name_size_mobile  = section.settings.property_name_size_mobile
+  assign property_loc_size_desktop  = section.settings.property_loc_size_desktop
+  assign property_loc_size_mobile   = section.settings.property_loc_size_mobile
+  assign card_stat_size_desktop = section.settings.card_stat_size_desktop
+  assign card_stat_size_mobile  = section.settings.card_stat_size_mobile
+  assign band_num_size_desktop = section.settings.band_num_size_desktop
+  assign band_num_size_mobile  = section.settings.band_num_size_mobile
+
+  assign card_padding_mobile = section.settings.card_padding_mobile
+  assign card_width_mobile   = section.settings.card_width_mobile
+  assign card_gap_mobile     = section.settings.card_gap_mobile
+
+  assign clients      = section.blocks | where: 'type', 'client'
+  assign testimonials = section.blocks | where: 'type', 'testimonial'
+-%}
+
+{%- comment -%}
+  B2B Trust — KANSAWALA custom section (ported 9.0.0 → 9.1.0).
+  Three parts: (1) a CSS-only auto-scrolling client-logo marquee, (2) a
+  testimonial slider (scroll-snap cards) with dots + autoplay on mobile + tablet,
+  and (3) a 4-up stat band on a brown background. Structural + dynamic CSS
+  lives inline below, scoped to .b2b-{{ section.id }}. Typography (.t-*)
+  comes from assets/kw-typography.css + tokens from assets/kw-tokens.css;
+  fonts from snippets/kw-fonts.liquid.
+
+  The logo marquee is PURE CSS (keyframes + duplicated track + edge-fade
+  mask), pauses on hover, and falls back to a static centered list under
+  prefers-reduced-motion. The testimonial slider engine is a self-booting
+  IIFE in assets/theme.js, bound via data-section-type="b2b-trust"; it
+  drives ONLY the testimonial cards. Both parts degrade gracefully with
+  no JS — every card stays visible & scrollable, every logo readable.
+{%- endcomment -%}
+
+{%- style -%}
+  .b2b-{{ section.id }} { background: {{ bg_color }}; box-sizing: border-box; overflow-x: hidden; }
+  .b2b-{{ section.id }} .b2b-inner {
+    padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin: 0 auto;
+    {%- endif -%}
+    box-sizing: border-box;
+  }
+
+  /* Partner client strip layout.
+     Top split is header (left) + auto-scroll logo strip (right). The
+     600fr / 840fr column ratio, 640px strip max-width, 28px strip
+     padding, 60px logo max-height, 200px per-client min-width, and the
+     edge fade mask define the current look. minmax(0, ...) keeps the
+     marquee's max-content track from forcing the column past its share. */
+  .b2b-{{ section.id }} .b2b-top {
+    display: grid;
+    grid-template-columns: minmax(0, 600fr) minmax(0, 840fr);
+    gap: 32px;
+    align-items: center;
+    margin-bottom: 64px;
+  }
+  .b2b-{{ section.id }} .b2b-top--solo {
+    grid-template-columns: 1fr;
+    text-align: center;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .b2b-{{ section.id }} .b2b-top--solo .b2b-hdr { text-align: center; }
+  .b2b-{{ section.id }} .b2b-top--solo .b2b-sub { margin-left: auto; margin-right: auto; }
+  .b2b-{{ section.id }} .b2b-hdr { text-align: left; max-width: none; margin: 0; }
+  .b2b-{{ section.id }} .t-eyebrow { color: {{ eye_color }}; margin-bottom: 14px; display: inline-flex; align-items: center; }
+  .b2b-{{ section.id }} .t-eyebrow--dash::before { background: {{ eye_color }}; width: 28px; }
+  .b2b-{{ section.id }} .t-display { color: {{ heading_color }}; font-size: {{ heading_size_desktop }}px; }
+  .b2b-{{ section.id }} .t-display em { color: {{ heading_italic_color }}; }
+  .b2b-{{ section.id }} .b2b-sub {
+    color: {{ sub_color }};
+    margin: 18px 0 0;
+    font-size: {{ sub_size_desktop }}px;
+    max-width: 520px;
+  }
+
+  .b2b-{{ section.id }} .b2b-strip {
+    position: relative;
+    margin: 0 auto;
+    padding: 28px 0;
+    border-top: 1px solid {{ card_border }};
+    border-bottom: 1px solid {{ card_border }};
+    text-align: center;
+    min-width: 0;
+    width: 100%;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+  }
+  .b2b-{{ section.id }} .b2b-strip-label {
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%);
+    background: {{ bg_color }};
+    padding: 0 20px;
+    color: {{ eye_color }};
+    white-space: nowrap;
+    /* line-height stays 1 from .t-eyebrow */
+    font-size: {{ strip_label_size_desktop }}px;
+  }
+  .b2b-{{ section.id }} .b2b-strip-list {
+    width: 100%;
+    flex: 1 1 auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 10%, #000 90%, transparent 100%);
+  }
+  .b2b-{{ section.id }} .b2b-strip-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    gap: 0;
+    animation: b2b-marquee-{{ section.id }} {{ strip_speed }}s linear infinite;
+  }
+  .b2b-{{ section.id }} .b2b-strip:hover .b2b-strip-track { animation-play-state: paused; }
+  @keyframes b2b-marquee-{{ section.id }} {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* Stop the scroll AND let the logos wrap so nothing stays clipped by
+       overflow:hidden — reduced-motion users get a static centered list.
+       The aria-hidden duplicate pass is dropped so AT isn't doubled. */
+    .b2b-{{ section.id }} .b2b-strip-list { overflow: visible; -webkit-mask-image: none; mask-image: none; }
+    .b2b-{{ section.id }} .b2b-strip-track {
+      animation: none;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .b2b-{{ section.id }} .b2b-client--dup { display: none; }
+  }
+  .b2b-{{ section.id }} .b2b-client {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-width: 200px;
+    color: {{ client_color }};
+    padding: 4px 24px;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+  .b2b-{{ section.id }} a.b2b-client:hover { opacity: 0.7; }
+  .b2b-{{ section.id }} a.b2b-client:focus-visible {
+    outline: 2px solid {{ eye_color }};
+    outline-offset: 3px;
+  }
+  .b2b-{{ section.id }} .b2b-logo {
+    display: block;
+    max-height: 60px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    opacity: 1;
+  }
+
+  .b2b-{{ section.id }} .b2b-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 56px;
+  }
+  .b2b-{{ section.id }} .b2b-card {
+    background: {{ card_bg }};
+    border: 1px solid {{ card_border }};
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .b2b-{{ section.id }} .b2b-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+  .b2b-{{ section.id }} .b2b-img {
+    aspect-ratio: 4 / 3;
+    background-size: cover;
+    background-position: center;
+    background-color: {{ heading_color }};
+  }
+  .b2b-{{ section.id }} .b2b-body {
+    padding: 28px 28px 28px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .b2b-{{ section.id }} .b2b-property {
+    margin-bottom: 0;
+  }
+  .b2b-{{ section.id }} .b2b-property-name {
+    color: {{ heading_color }};
+    margin: 0;
+    font-size: {{ property_name_size_desktop }}px;
+  }
+  .b2b-{{ section.id }} .b2b-property-loc {
+    color: {{ eye_color }};
+    margin: 4px 0 0;
+    font-size: {{ property_loc_size_desktop }}px;
+  }
+  .b2b-{{ section.id }} .b2b-stars {
+    color: {{ star_color }};
+    margin-bottom: 16px;
+    font-size: var(--icon-sm);
+  }
+  .b2b-{{ section.id }} .b2b-quote {
+    color: {{ card_quote_color }};
+    margin-bottom: 24px;
+    flex: 1;
+    font-size: {{ quote_size_desktop }}px;
+    line-height: 1.4;
+  }
+  .b2b-{{ section.id }} .b2b-author {
+    padding-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .b2b-{{ section.id }} .b2b-author-info { min-width: 0; flex: 1 1 auto; }
+  .b2b-{{ section.id }} .b2b-author-name { color: {{ heading_color }}; display: block; margin-bottom: 4px; }
+  .b2b-{{ section.id }} .b2b-author-role { color: {{ eye_color }}; display: block; }
+  .b2b-{{ section.id }} .b2b-stats {
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .b2b-{{ section.id }} .b2b-stat-num {
+    color: {{ eye_color }};
+    line-height: 1;
+    display: block;
+    margin-bottom: 4px;
+    font-size: {{ card_stat_size_desktop }}px;
+    white-space: nowrap;
+  }
+  .b2b-{{ section.id }} .b2b-stat-lbl { color: {{ heading_color }}; display: block; white-space: nowrap; }
+
+  .b2b-{{ section.id }} .b2b-band {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: {{ band_bg_color }};
+    padding: 32px 24px;
+  }
+  .b2b-{{ section.id }} .b2b-band-item {
+    text-align: center;
+    padding: 0 16px;
+    border-right: 1px solid rgba(216, 174, 130, 0.2);
+  }
+  .b2b-{{ section.id }} .b2b-band-item:last-child { border-right: none; }
+  .b2b-{{ section.id }} .b2b-band-num {
+    color: {{ band_num_color }};
+    line-height: 1;
+    margin-bottom: 8px;
+    font-size: {{ band_num_size_desktop }}px;
+  }
+  .b2b-{{ section.id }} .b2b-band-lbl { color: var(--Bu); line-height: 1.4; }
+
+  .b2b-{{ section.id }} .b2b-dots { display: none; }
+
+  /* Tablet + mobile (<=989px): testimonials become a swipe slider with dots,
+     header stacks, stats wrap to 2-up. (Tablet was a 1-col stack before.) */
+  @media (max-width: 989px) {
+    .b2b-{{ section.id }} .b2b-top {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-bottom: 40px;
+    }
+    .b2b-{{ section.id }} .b2b-hdr { text-align: left; }
+    .b2b-{{ section.id }} .b2b-hdr .t-eyebrow { display: inline-flex; justify-content: flex-start; }
+    .b2b-{{ section.id }} .b2b-hdr .t-display { text-align: left; }
+    .b2b-{{ section.id }} .b2b-sub { margin-left: 0; margin-right: 0; text-align: left; }
+    .b2b-{{ section.id }} .b2b-grid {
+      display: grid;
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: {{ card_width_mobile }}%;
+      gap: {{ card_gap_mobile }}px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      padding: 0 20px 8px;
+      margin: 0 -20px 32px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .b2b-{{ section.id }} .b2b-grid::-webkit-scrollbar { display: none; }
+    .b2b-{{ section.id }} .b2b-card { scroll-snap-align: center; }
+    .b2b-{{ section.id }} .b2b-body { padding: {{ card_padding_mobile }}px; }
+    .b2b-{{ section.id }} .b2b-author { gap: 8px; flex-wrap: nowrap; align-items: flex-start; }
+    .b2b-{{ section.id }} .b2b-stats { flex: 0 0 auto; text-align: right; margin-left: auto; }
+    .b2b-{{ section.id }} .b2b-inner {
+      padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    }
+    .b2b-{{ section.id }} .t-display { font-size: {{ heading_size_mobile }}px; }
+    .b2b-{{ section.id }} .b2b-sub { font-size: {{ sub_size_mobile }}px; }
+    .b2b-{{ section.id }} .b2b-strip { padding: 18px 0; max-width: 100%; }
+    .b2b-{{ section.id }} .b2b-strip-label { font-size: {{ strip_label_size_mobile }}px; }
+    .b2b-{{ section.id }} .b2b-client { min-width: 140px; max-width: 180px; width: auto; padding: 4px 16px; }
+    .b2b-{{ section.id }} .b2b-logo { max-height: 36px; }
+    .b2b-{{ section.id }} .b2b-quote { font-size: {{ quote_size_mobile }}px; }
+    .b2b-{{ section.id }} .b2b-property-name { font-size: {{ property_name_size_mobile }}px; }
+    .b2b-{{ section.id }} .b2b-property-loc  { font-size: {{ property_loc_size_mobile }}px; }
+    .b2b-{{ section.id }} .b2b-stat-num { font-size: {{ card_stat_size_mobile }}px; }
+    .b2b-{{ section.id }} .b2b-band { grid-template-columns: 1fr 1fr; padding: 24px; gap: 24px 0; }
+    .b2b-{{ section.id }} .b2b-band-item { border-right: none; padding: 12px 8px; }
+    .b2b-{{ section.id }} .b2b-band-item:nth-child(odd) { border-right: 1px solid rgba(216, 174, 130, 0.2); }
+    .b2b-{{ section.id }} .b2b-band-num { font-size: {{ band_num_size_mobile }}px; }
+    {%- if section.settings.show_dots -%}
+    .b2b-{{ section.id }} .b2b-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: -16px 0 32px;
+    }
+    .b2b-{{ section.id }} .b2b-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: 0;
+      padding: 0;
+      background: rgba(107, 60, 35, .22);
+      cursor: pointer;
+      transition: background .25s, width .25s;
+    }
+    .b2b-{{ section.id }} .b2b-dot.is-active {
+      background: {{ eye_color }};
+      width: 22px;
+      border-radius: var(--r-sm);
+    }
+    .b2b-{{ section.id }} .b2b-dot:focus-visible {
+      outline: 2px solid {{ eye_color }};
+      outline-offset: 3px;
+    }
+    {%- endif -%}
+  }
+
+  {%- if section.settings.hide_desktop -%}
+    @media (min-width: 750px) { .b2b-{{ section.id }} { display: none; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+    @media (max-width: 749px) { .b2b-{{ section.id }} { display: none; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section class="b2b-trust b2b-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="b2b-trust"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-interval="{{ section.settings.autoplay_interval }}"
+  data-dots="{{ section.settings.show_dots }}"
+  aria-labelledby="b2b-h-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="b2b-inner">
+
+    <div class="b2b-top{% if clients.size == 0 %} b2b-top--solo{% endif %}">
+
+      <div class="b2b-hdr">
+        {%- if eyebrow != blank -%}
+          <span class="t-eyebrow t-eyebrow--dash">{{ eyebrow | escape }}</span>
+        {%- endif -%}
+        {%- if heading != blank or heading_italic != blank -%}
+          <h2 class="t-display" id="b2b-h-{{ section.id }}">
+            {{ heading | escape }}{%- if heading_italic != blank -%}<em>{{ heading_italic | escape }}</em>{%- endif -%}
+          </h2>
+        {%- else -%}
+          <h2 class="t-display" id="b2b-h-{{ section.id }}" hidden>{{ 'general.accessibility.skip_to_content' | t | default: 'Trust' }}</h2>
+        {%- endif -%}
+        {%- if sub != blank -%}
+          <p class="b2b-sub t-body-sm">{{ sub | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if clients.size > 0 -%}
+      <div class="b2b-strip">
+        {%- if strip_label != blank -%}
+          <span class="b2b-strip-label t-eyebrow">{{ strip_label | escape }}</span>
+        {%- endif -%}
+        {%- comment -%} Static, screen-reader-only list so the partner names aren't lost to AT. {%- endcomment -%}
+        <ul class="visually-hidden">
+          {%- for block in clients -%}
+            {%- if block.settings.name != blank -%}<li>{{ block.settings.name | escape }}</li>{%- endif -%}
+          {%- endfor -%}
+        </ul>
+        {%- comment -%} Animated visual marquee — hidden from AT (the list above covers it). {%- endcomment -%}
+        <div class="b2b-strip-list" aria-hidden="true">
+          <div class="b2b-strip-track">
+            {%- for pass in (1..2) -%}
+              {%- for block in clients -%}
+                {%- assign cname     = block.settings.name -%}
+                {%- assign curl      = block.settings.url -%}
+                {%- assign clogo     = block.settings.logo -%}
+                {%- assign clogo_url = block.settings.logo_url -%}
+                {%- capture inner -%}
+                  {%- if clogo != blank -%}
+                    {{
+                      clogo
+                      | image_url: width: 400
+                      | image_tag:
+                        class: 'b2b-logo',
+                        loading: 'lazy',
+                        alt: '',
+                        width: 200,
+                        height: 60
+                    }}
+                  {%- elsif clogo_url != blank -%}
+                    <img class="b2b-logo" src="{{ clogo_url | escape }}" alt="" loading="lazy" width="200" height="60">
+                  {%- else -%}
+                    <span class="t-card-title-serif-italic">{{ cname | escape }}</span>
+                  {%- endif -%}
+                {%- endcapture -%}
+                {%- if cname != blank or clogo != blank or clogo_url != blank -%}
+                  {%- assign dup_class = '' -%}
+                  {%- if pass == 2 -%}{%- assign dup_class = ' b2b-client--dup' -%}{%- endif -%}
+                  {%- if curl != blank -%}
+                    <a class="b2b-client{{ dup_class }}" href="{{ curl }}" target="_blank" rel="noopener" data-block-id="{{ block.id }}"{% if pass == 2 %} tabindex="-1"{% endif %} {{ block.shopify_attributes }}>{{ inner }}</a>
+                  {%- else -%}
+                    <span class="b2b-client{{ dup_class }}" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>{{ inner }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+      {%- endif -%}
+    </div>
+
+    {%- if testimonials.size > 0 -%}
+      <div class="b2b-grid" role="list">
+        {%- for block in testimonials -%}
+          {%- assign t_img_url = '' -%}
+          {%- if block.settings.image_url != blank -%}{%- assign t_img_url = block.settings.image_url -%}{%- endif -%}
+          <article class="b2b-card" role="listitem" data-b2b-slide="{{ forloop.index0 }}" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
+            <div class="b2b-img"{% if t_img_url != blank %} style="background-image:url('{{ t_img_url | escape }}');"{% endif %}></div>
+            <div class="b2b-body">
+              {%- if block.settings.property_name != blank -%}
+                <div class="b2b-property">
+                  <div class="b2b-property-name t-card-title">{{ block.settings.property_name | escape }}</div>
+                  {%- if block.settings.property_loc != blank -%}
+                    <div class="b2b-property-loc t-label">{{ block.settings.property_loc | escape }}</div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.show_stars -%}
+                <div class="b2b-stars t-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              {%- endif -%}
+              {%- if block.settings.quote != blank -%}
+                <p class="b2b-quote t-body-sm">{{ block.settings.quote | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.author_name != blank or block.settings.stat_num != blank -%}
+                <div class="b2b-author">
+                  <div class="b2b-author-info">
+                    {%- if block.settings.author_name != blank -%}
+                      <span class="b2b-author-name t-label">{{ block.settings.author_name | escape }}</span>
+                    {%- endif -%}
+                    {%- if block.settings.author_role != blank -%}
+                      <span class="b2b-author-role t-eyebrow">{{ block.settings.author_role | escape }}</span>
+                    {%- endif -%}
+                  </div>
+                  {%- if block.settings.stat_num != blank -%}
+                    <div class="b2b-stats">
+                      <span class="b2b-stat-num t-stat-serif-upright">{{ block.settings.stat_num | escape }}</span>
+                      {%- if block.settings.stat_label != blank -%}
+                        <span class="b2b-stat-lbl t-eyebrow">{{ block.settings.stat_label | escape }}</span>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.show_dots and testimonials.size > 1 -%}
+        <div class="b2b-dots" role="tablist" aria-label="Testimonial cards">
+          {%- for block in testimonials -%}
+            <button type="button"
+              class="b2b-dot{% if forloop.first %} is-active{% endif %}"
+              data-b2b-dot="{{ forloop.index0 }}"
+              aria-label="Go to slide {{ forloop.index }} of {{ testimonials.size }}"></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- assign has_band = false -%}
+    {%- for i in (1..4) -%}
+      {%- assign key = 'band_' | append: i | append: '_num' -%}
+      {%- if section.settings[key] != blank -%}{%- assign has_band = true -%}{%- endif -%}
+    {%- endfor -%}
+    {%- if has_band -%}
+      <div class="b2b-band">
+        {%- for i in (1..4) -%}
+          {%- assign num_key = 'band_' | append: i | append: '_num' -%}
+          {%- assign lbl_key = 'band_' | append: i | append: '_label' -%}
+          {%- assign bnum = section.settings[num_key] -%}
+          {%- assign blbl = section.settings[lbl_key] -%}
+          {%- if bnum != blank -%}
+            <div class="b2b-band-item">
+              <div class="b2b-band-num t-stat-serif-upright">{{ bnum | escape }}</div>
+              {%- if blbl != blank -%}<div class="b2b-band-lbl t-label">{{ blbl | escape }}</div>{%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "B2B Trust",
+  "tag": "section",
+  "class": "kw-b2b-trust",
+  "max_blocks": 20,
+  "settings": [
+    { "type": "checkbox", "id": "hide_desktop", "label": "Hide on desktop", "default": false },
+    { "type": "checkbox", "id": "hide_mobile",  "label": "Hide on mobile",  "default": false },
+
+    { "type": "header", "content": "Section header" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Trusted Tables" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Where India's" },
+    { "type": "text", "id": "heading_italic", "label": "Heading italic", "default": "finest kitchens choose us." },
+    { "type": "textarea", "id": "sub", "label": "Subtitle", "default": "When restaurants, resorts and commercial brands need handcrafted ware that survives daily commercial use, they come to Sihor." },
+
+    { "type": "header", "content": "Client strip" },
+    { "type": "paragraph", "content": "Add each partner brand as a Client block below — upload a logo for each (transparent PNG/SVG works best). Falls back to the brand name if no logo is uploaded. Logos auto-scroll left in a continuous loop; pause on hover." },
+    { "type": "text", "id": "strip_label", "label": "Strip label", "default": "Our Partner Properties" },
+    { "type": "range", "id": "strip_speed", "label": "Auto-scroll duration (seconds, lower = faster)", "min": 30, "max": 120, "step": 2, "unit": "s", "default": 40 },
+
+    { "type": "header", "content": "Stats bar" },
+    { "type": "text", "id": "band_1_num",   "label": "Stat 1 number", "default": "65+" },
+    { "type": "text", "id": "band_1_label", "label": "Stat 1 label",  "default": "Partner Properties" },
+    { "type": "text", "id": "band_2_num",   "label": "Stat 2 number", "default": "4+" },
+    { "type": "text", "id": "band_2_label", "label": "Stat 2 label",  "default": "Countries Served" },
+    { "type": "text", "id": "band_3_num",   "label": "Stat 3 number", "default": "25,000+" },
+    { "type": "text", "id": "band_3_label", "label": "Stat 3 label",  "default": "Pieces in Service" },
+    { "type": "text", "id": "band_4_num",   "label": "Stat 4 number", "default": "100%" },
+    { "type": "text", "id": "band_4_label", "label": "Stat 4 label",  "default": "Renewal Rate" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "container_width", "label": "Container width",
+      "options": [{ "value": "boxed", "label": "Boxed" }, { "value": "full", "label": "Full width" }],
+      "default": "boxed"
+    },
+    { "type": "range", "id": "max_width", "label": "Max width", "min": 800, "max": 1920, "step": 20, "unit": "px", "default": 1500 },
+
+    { "type": "header", "content": "Spacing — Desktop" },
+    { "type": "range", "id": "padding_top",    "label": "Padding top",    "min": 0, "max": 200, "step": 5, "unit": "px", "default": 75 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 200, "step": 5, "unit": "px", "default": 75 },
+    { "type": "range", "id": "padding_x",      "label": "Padding x",      "min": 0, "max": 120, "step": 5, "unit": "px", "default": 40 },
+
+    { "type": "header", "content": "Spacing — Mobile" },
+    { "type": "range", "id": "padding_top_mobile",    "label": "Padding top",    "min": 0, "max": 120, "step": 5, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom", "min": 0, "max": 120, "step": 5, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_x_mobile",      "label": "Padding x",      "min": 0, "max": 40,  "step": 1, "unit": "px", "default": 17 },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 24, "max": 72, "step": 1, "unit": "px", "default": 43 },
+    { "type": "range", "id": "heading_size_mobile",  "label": "Heading size mobile",  "min": 20, "max": 48, "step": 2, "unit": "px", "default": 30 },
+    { "type": "range", "id": "strip_label_size_desktop", "label": "Strip label size desktop", "min": 10, "max": 28, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "strip_label_size_mobile",  "label": "Strip label size mobile",  "min": 10, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "sub_size_desktop", "label": "Subtitle size desktop", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "sub_size_mobile",  "label": "Subtitle size mobile",  "min": 10, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "quote_size_desktop", "label": "Card quote size desktop", "min": 12, "max": 28, "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "quote_size_mobile",  "label": "Card quote size mobile",  "min": 10, "max": 24, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "property_name_size_desktop", "label": "Property name size desktop", "min": 16, "max": 40, "step": 1, "unit": "px", "default": 24 },
+    { "type": "range", "id": "property_name_size_mobile",  "label": "Property name size mobile",  "min": 14, "max": 32, "step": 1, "unit": "px", "default": 20 },
+    { "type": "range", "id": "property_loc_size_desktop",  "label": "Property location size desktop", "min": 8,  "max": 18, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "property_loc_size_mobile",   "label": "Property location size mobile",  "min": 8,  "max": 16, "step": 1, "unit": "px", "default": 10 },
+    { "type": "range", "id": "card_stat_size_desktop", "label": "Card stat number size desktop", "min": 14, "max": 64, "step": 1, "unit": "px", "default": 42 },
+    { "type": "range", "id": "card_stat_size_mobile",  "label": "Card stat number size mobile",  "min": 12, "max": 48, "step": 1, "unit": "px", "default": 32 },
+    { "type": "range", "id": "band_num_size_desktop", "label": "Band number size desktop", "min": 20, "max": 64, "step": 1, "unit": "px", "default": 42 },
+    { "type": "range", "id": "band_num_size_mobile",  "label": "Band number size mobile",  "min": 18, "max": 48, "step": 1, "unit": "px", "default": 32 },
+
+    { "type": "header", "content": "Card layout — Mobile" },
+    { "type": "range", "id": "card_width_mobile",   "label": "Card width (% of viewport)", "min": 70, "max": 100, "step": 1, "unit": "%",  "default": 88 },
+    { "type": "range", "id": "card_padding_mobile", "label": "Card body padding",          "min": 12, "max": 32,  "step": 1, "unit": "px", "default": 18 },
+    { "type": "range", "id": "card_gap_mobile",     "label": "Gap between cards",          "min": 8,  "max": 24,  "step": 1, "unit": "px", "default": 14 },
+    { "type": "checkbox", "id": "show_dots", "label": "Show pagination dots", "default": true },
+    { "type": "checkbox", "id": "autoplay",  "label": "Auto-slide on mobile", "default": true },
+    { "type": "range", "id": "autoplay_interval", "label": "Auto-slide interval", "min": 2, "max": 12, "step": 1, "unit": "s", "default": 5 },
+
+    { "type": "header", "content": "Colors — Section" },
+    { "type": "color", "id": "bg_color",             "label": "Background",     "default": "#faf5ee" },
+    { "type": "color", "id": "eye_color",            "label": "Eyebrow + accents", "default": "#bc843f" },
+    { "type": "color", "id": "heading_color",        "label": "Heading",        "default": "#6b3c23" },
+    { "type": "color", "id": "heading_italic_color", "label": "Heading italic", "default": "#bc843f" },
+    { "type": "color", "id": "sub_color",            "label": "Subtitle / body", "default": "#6b3c23" },
+    { "type": "color", "id": "client_color",      "label": "Client name",  "default": "#6b3c23" },
+
+    { "type": "header", "content": "Colors — Cards" },
+    { "type": "color", "id": "card_bg",             "label": "Card background",  "default": "#ffffff" },
+    { "type": "color", "id": "card_border",         "label": "Card border",      "default": "#6b3c231f" },
+    { "type": "color", "id": "card_quote_color",    "label": "Quote",            "default": "#6b3c23" },
+    { "type": "color", "id": "star_color",          "label": "Stars",            "default": "#bc843f" },
+
+    { "type": "header", "content": "Colors — Stats bar" },
+    { "type": "color", "id": "band_bg_color",    "label": "Band background", "default": "#6b3c23" },
+    { "type": "color", "id": "band_num_color",   "label": "Band number",     "default": "#d8ae82" }
+  ],
+  "blocks": [
+    {
+      "type": "client",
+      "name": "Client (logo strip)",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Brand name", "default": "Brand Name" },
+        { "type": "image_picker", "id": "logo", "label": "Logo (PNG/SVG)" },
+        { "type": "url", "id": "logo_url", "label": "Logo URL fallback (optional)" },
+        { "type": "url", "id": "url",  "label": "Brand link (optional)" }
+      ]
+    },
+    {
+      "type": "testimonial",
+      "name": "Testimonial card",
+      "settings": [
+        { "type": "url", "id": "image_url", "label": "Image URL" },
+        { "type": "text", "id": "property_name", "label": "Property name", "default": "Brigadiers London" },
+        { "type": "text", "id": "property_loc",  "label": "Property location", "default": "London · UK" },
+        { "type": "checkbox", "id": "show_stars", "label": "Show 5 stars", "default": true },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Two thousand pieces in active rotation, and not one of them has let our brigade down. Kansawala builds for the kind of pressure a real kitchen puts on a plate — that is why we keep ordering." },
+        { "type": "text", "id": "author_name", "label": "Author name", "default": "[Author Name]" },
+        { "type": "text", "id": "author_role", "label": "Author role", "default": "Chef" },
+        { "type": "text", "id": "stat_num",    "label": "Stat number", "default": "2000+" },
+        { "type": "text", "id": "stat_label",  "label": "Stat label",  "default": "Pieces in Service" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "B2B Trust",
+      "blocks": [
+        {
+          "type": "client",
+          "settings": {
+            "name": "BiBi Restaurant, Mayfair, London",
+            "logo_url": "https://www.bibirestaurants.com/wp-content/uploads/2021/09/BiBi-logo.svg",
+            "url": ""
+          }
+        },
+        {
+          "type": "client",
+          "settings": {
+            "name": "Brand Name",
+            "logo_url": "",
+            "url": ""
+          }
+        },
+        {
+          "type": "client",
+          "settings": {
+            "name": "Brand Name",
+            "logo_url": "",
+            "url": ""
+          }
+        },
+        {
+          "type": "client",
+          "settings": {
+            "name": "HOLYWATER Hotel",
+            "logo_url": "",
+            "url": ""
+          }
+        },
+        {
+          "type": "client",
+          "settings": {
+            "name": "K P Sanghvi",
+            "logo_url": "https://kpsanghvi.com/wp-content/uploads/2025/07/kp-logo-l.png",
+            "url": ""
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "image_url": "https://brigadierslondon.com/wp-content/uploads/2024/01/Brigadiers.jpg",
+            "property_name": "Brigadiers",
+            "property_loc": "London · UK",
+            "show_stars": true,
+            "quote": "Two thousand pieces in active rotation, and not one of them has let our brigade down. Kansawala builds for the kind of pressure a real kitchen puts on a plate — that is why we keep ordering.",
+            "author_name": "Shantibhushan",
+            "author_role": "CHEF",
+            "stat_num": "2000+",
+            "stat_label": "Pieces in Service"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "image_url": "https://rajwadu.com/wp-content/uploads/2014/05/gujarati_restaurant_in_gujarat.jpg",
+            "property_name": "Rajwadu",
+            "property_loc": "Ahmedabad · Gujarat",
+            "show_stars": true,
+            "quote": "Twenty years on the same kansa, and our guests still tell us the food tastes the way it did the day we opened. There is a reason we never looked elsewhere — Sihor sends us metal we can trust.",
+            "author_name": "Mr. Paresh",
+            "author_role": "Director",
+            "stat_num": "20 Yrs",
+            "stat_label": "Continuous Use"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "image_url": "https://dt4l9bx31tioh.cloudfront.net/eazymedia/restaurant/693228/restaurant020240131110702.jpg",
+            "property_name": "Dakshin Bhojnam",
+            "property_loc": "All branch · Gujarat",
+            "show_stars": true,
+            "quote": "Across every branch we have opened, Kansawala has been the one constant on the table. Five years of consistent finish, consistent delivery, consistent care — that is what a real partnership looks like.",
+            "author_name": "VISHWASKUMAR",
+            "author_role": "Director",
+            "stat_num": "5 Yrs",
+            "stat_label": "Partnership"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

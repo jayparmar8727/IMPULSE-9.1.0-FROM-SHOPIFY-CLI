@@ -1,109 +1,1331 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "slideshow_xGViHJ": {
-      "type": "slideshow",
+    "hero_slider_DXzcFa": {
+      "type": "hero-slider",
       "blocks": {
-        "image_9f4HFj": {
-          "type": "image",
+        "slide_ybDzNj": {
+          "type": "slide",
           "settings": {
-            "top_subheading": "MADE FOR EATING",
-            "title": "BRONZE UTENSILS",
-            "title_size": 80,
-            "subheading": "",
-            "link": "",
-            "link_text": "SHOP NOW",
-            "link_2": "",
-            "link_text_2": "",
-            "color_accent": "rgba(0,0,0,0)",
-            "text_align": "vertical-center horizontal-center",
+            "image": "shopify://shop_images/DSC6798.jpg",
+            "image_url": "",
+            "image_mobile_url": "",
+            "eyebrow": "Est. 1945 . Sihor, Gujarat",
+            "tag": "Made for Eating",
+            "heading": "Kansa",
+            "heading_italic": "Dinnerware",
+            "paragraph": "Hand-beaten by the Mukundray Fulchand family for over 75 years. Ayurvedic metals that nourish your body with every meal.",
+            "btn1_text": "Shop Kansa",
+            "btn1_url": "shopify://collections/kansa",
+            "btn2_text": "See Our Craft",
+            "btn2_url": "https://www.youtube.com/watch?v=eOReVSOW3W8",
+            "btn2_new_tab": false
+          }
+        },
+        "slide_4pJJjE": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Brass_Banner.jpg",
+            "image_url": "",
+            "image_mobile_url": "",
+            "eyebrow": "Pure . Natural . Non-Toxic",
+            "tag": "Made for Cooking",
+            "heading": "Brass",
+            "heading_italic": "Cookware",
+            "paragraph": "No teflon. No coatings. Just pure brass - naturally non-stick, naturally healthy. Trusted by Indian families since 1945.",
+            "btn1_text": "Shop Brass",
+            "btn1_url": "shopify://collections/brass",
+            "btn2_text": "All Cookware",
+            "btn2_url": "shopify://collections/cookware-and-kitchenware",
+            "btn2_new_tab": false
+          }
+        },
+        "slide_copper01": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/EMP03127_8af5b176-3740-4610-98d7-905f02340b11.png",
+            "image_url": "",
+            "image_mobile_url": "",
+            "eyebrow": "Antibacterial . Mineral-Rich",
+            "tag": "Made for Drinking",
+            "heading": "Copper",
+            "heading_italic": "Vessels",
+            "paragraph": "Copper vessels destroy 99.9% of harmful bacteria within 4 hours. Rich in essential minerals that boost digestion, immunity, and overall wellbeing.",
+            "btn1_text": "Shop Copper",
+            "btn1_url": "shopify://collections/copper",
+            "btn2_text": "Health Benefits",
+            "btn2_url": "shopify://collections/copper",
+            "btn2_new_tab": false
+          }
+        },
+        "slide_7ctaEV": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
             "image": "shopify://shop_images/KANSA_TABLEWARE_52Pc.jpg",
-            "image_mobile": "shopify://shop_images/KANSA_TABLEWARE_52Pc_Mobile.jpg",
-            "parallax_direction": "top",
-            "overlay_opacity": 20
+            "image_url": "",
+            "image_mobile_url": "",
+            "eyebrow": "75+ Years . 40+ Countries",
+            "tag": "Legacy of Craftsmanship",
+            "heading": "Sets &",
+            "heading_italic": "Combos",
+            "paragraph": "Complete dinner sets, thali sets and gift combos. Crafted with soulful precision - the perfect heirloom for your family.",
+            "btn1_text": "Shop Sets",
+            "btn1_url": "shopify://collections/sets-and-combo",
+            "btn2_text": "All Products",
+            "btn2_url": "shopify://collections",
+            "btn2_new_tab": false
           }
         }
       },
       "block_order": [
-        "image_9f4HFj"
+        "slide_ybDzNj",
+        "slide_4pJJjE",
+        "slide_copper01",
+        "slide_7ctaEV"
       ],
-      "name": "t:sections.slideshow.presets.hero_optional_slideshow.name",
+      "name": "Hero Slider",
       "settings": {
-        "section_height": "650px",
-        "mobile_height": "auto",
-        "parallax": true,
-        "style": "bars",
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "aria_label": "Hero banner",
+        "height_mode": "vh",
+        "desktop_height": 70,
+        "desktop_height_px": 1200,
+        "mobile_height": 70,
+        "mobile_height_px": 500,
+        "min_height": 580,
+        "min_height_mobile": 60,
+        "heading_size_desktop": 68,
+        "heading_size_mobile": 36,
+        "tag_size_desktop": 13,
+        "paragraph_size_desktop": 17,
+        "paragraph_size_mobile": 16,
+        "btn_size_desktop": 14,
+        "btn_size_mobile": 14,
+        "badge_year_size_desktop": 32,
+        "badge_year_size_mobile": 24,
+        "badge_label_size_desktop": 11,
+        "badge_label_size_mobile": 12,
+        "container_width": "boxed",
+        "max_width": 1500,
+        "text_align": "left",
+        "text_align_mobile": "left",
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
         "autoplay": true,
-        "autoplay_speed": 5
+        "autoplay_speed": 8,
+        "transition_speed": 0.6,
+        "arrow_display": "none",
+        "arrow_style": "arrows",
+        "show_dots": true,
+        "show_badge": true,
+        "badge_year": "1945",
+        "badge_label": "Founded in Sihor",
+        "overlay_gradient": "linear-gradient(110deg,rgba(42,21,8,.88) 0%,rgba(42,21,8,.5) 52%,transparent 100%)",
+        "eye_color": "#d8ae82",
+        "tag_color": "#d8ae82",
+        "heading_color": "#ffffff",
+        "heading_italic_color": "#d8ae82",
+        "paragraph_color": "#ffffffad",
+        "btn_primary_bg": "#6b3c23",
+        "btn_primary_color": "#fee8d9",
+        "btn_primary_hover_bg": "#bc843f",
+        "btn_outline_color": "#fee8d9",
+        "btn_outline_border": "#fee8d961",
+        "arrow_color": "#d8ae82",
+        "arrow_bg": "#2a150859",
+        "dot_color": "#fee8d959",
+        "dot_active_color": "#d8ae82"
       }
     },
-    "collection_grid_2_Y3MmTk": {
-      "type": "collection-grid-2",
+    "marquee_strip_BJBhWn": {
+      "type": "marquee-strip",
       "blocks": {
-        "collection_E3JLfr": {
-          "type": "collection",
+        "text_gtB4pd": {
+          "type": "text",
           "settings": {
-            "collection": "gifting",
-            "title": "KANSA",
-            "metal": "Eating",
-            "focal_point": "center center"
+            "text": "Handcrafted Bronze Utensils"
           }
         },
-        "collection_CfDWma": {
-          "type": "collection",
+        "text_3nF7AW": {
+          "type": "text",
           "settings": {
-            "collection": "gifting",
-            "title": "BRASS",
-            "metal": "Cooking",
-            "focal_point": "center center"
+            "text": "75+ Years of Legacy"
           }
         },
-        "collection_3mJjeJ": {
-          "type": "collection",
+        "text_cA9hpi": {
+          "type": "text",
           "settings": {
-            "collection": "gifting",
-            "title": "COPPER",
-            "metal": "Drinkware",
-            "focal_point": "center center"
+            "text": "NABL Certified Products"
           }
         },
-        "collection_VrPWzF": {
-          "type": "collection",
+        "text_nnMEqh": {
+          "type": "text",
           "settings": {
-            "collection": "gifting",
-            "title": "BESTSELLER",
-            "metal": "SD",
-            "focal_point": "center center"
+            "text": "Free Shipping Pan India"
+          }
+        },
+        "text_DHFrAB": {
+          "type": "text",
+          "settings": {
+            "text": "Eco-Friendly & Sustainable"
           }
         }
       },
       "block_order": [
-        "collection_E3JLfr",
-        "collection_CfDWma",
-        "collection_3mJjeJ",
-        "collection_VrPWzF"
+        "text_gtB4pd",
+        "text_3nF7AW",
+        "text_cA9hpi",
+        "text_nnMEqh",
+        "text_DHFrAB"
       ],
-      "name": "Collection Grid 2",
+      "name": "Marquee Strip",
       "settings": {
+        "show_section": true,
+        "speed": 30,
+        "direction": "left",
+        "text_size": 16,
+        "text_size_mobile": 14,
+        "text_weight": "400",
+        "separator": "|",
+        "padding_v": 18,
+        "gap": 40,
+        "bg_color": "#6b3c23",
+        "text_color": "#e5c2a0",
+        "separator_color": "#bc843f",
+        "show_border": false,
+        "border_color": "#6b3c23"
+      }
+    },
+    "collections_grid_fE8tJr": {
+      "type": "collections-grid",
+      "blocks": {
+        "card_t9bPKk": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa",
+            "image": "shopify://shop_images/DSC6810.jpg",
+            "image_url": "",
+            "alt": "",
+            "metal": "Eating",
+            "name": "Kansa",
+            "link": "shopify://collections/kansa"
+          }
+        },
+        "card_Gmd6Ue": {
+          "type": "card",
+          "settings": {
+            "collection": "brass",
+            "image": "shopify://shop_images/DSC6798.jpg",
+            "image_url": "",
+            "alt": "",
+            "metal": "Cooking",
+            "name": "Brass",
+            "link": "shopify://collections/brass"
+          }
+        },
+        "card_Ti3k3r": {
+          "type": "card",
+          "settings": {
+            "collection": "copper",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-05-12_at_3.21.07_PM.jpg",
+            "image_url": "",
+            "alt": "",
+            "metal": "Drinkware",
+            "name": "Copper",
+            "link": "shopify://collections/copper"
+          }
+        },
+        "card_jM4U74": {
+          "type": "card",
+          "settings": {
+            "collection": "avada-best-sellers",
+            "image": "shopify://shop_images/DSC6827.jpg",
+            "image_url": "",
+            "alt": "",
+            "metal": "Best Value",
+            "name": "Bestsellers",
+            "link": "shopify://collections/avada-best-sellers"
+          }
+        }
+      },
+      "block_order": [
+        "card_t9bPKk",
+        "card_Gmd6Ue",
+        "card_Ti3k3r",
+        "card_jM4U74"
+      ],
+      "name": "Collections Grid Style 1",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
         "eyebrow": "Shop by Metal",
-        "title": "Ayurveda's",
+        "heading": "Ayurveda's",
         "heading_italic": "Recommended Metals",
-        "heading_size": "h2",
-        "divider": false,
-        "per_row": 4
+        "container_width": "boxed",
+        "max_width": 1500,
+        "text_align": "left",
+        "text_align_mobile": "left",
+        "cols_desktop": 4,
+        "gap": 24,
+        "padding_x": 40,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "metal_color": "#bc843f",
+        "name_color": "#6b3c23"
+      }
+    },
+    "global_presence_9Qg7DN": {
+      "type": "global-presence",
+      "blocks": {
+        "stat_YJ8Tej": {
+          "type": "stat",
+          "settings": {
+            "number": "1945",
+            "label": "Year Founded"
+          }
+        },
+        "stat_RLDmcq": {
+          "type": "stat",
+          "settings": {
+            "number": "75+",
+            "label": "Years of Legacy"
+          }
+        },
+        "stat_Q8eA4b": {
+          "type": "stat",
+          "settings": {
+            "number": "40+",
+            "label": "Countries Reached"
+          }
+        },
+        "stat_gqWrAJ": {
+          "type": "stat",
+          "settings": {
+            "number": "NABL",
+            "label": "Certified Purity"
+          }
+        },
+        "panel_origin": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify://shop_images/IMG_3157.heic",
+            "eyebrow": "The Origin",
+            "title": "The fire that has not gone out.",
+            "sub": "Lit · 1945"
+          }
+        },
+        "panel_craft": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify://shop_images/Handmade.jpg",
+            "eyebrow": "The Craft",
+            "title": "Twenty-five hand operations. One piece.",
+            "sub": "By hand · always"
+          }
+        },
+        "panel_family": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2026-05-07_162016.png",
+            "eyebrow": "The Family",
+            "title": "Four generations of one furnace.",
+            "sub": "Mukundray · Fulchand"
+          }
+        }
+      },
+      "block_order": [
+        "stat_YJ8Tej",
+        "stat_RLDmcq",
+        "stat_Q8eA4b",
+        "stat_gqWrAJ",
+        "panel_origin",
+        "panel_craft",
+        "panel_family"
+      ],
+      "name": "Global Presence",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Our Global Presence",
+        "heading": "From Sihor to the",
+        "heading_italic": "world's tables.",
+        "body_text": "What began as a humble family workshop in Sihor is now part of kitchens and conversations across the globe. In 1945, our grandfather lit the first fire. Today, that fire burns in homes across 40+ countries.",
+        "right_panel_width": 60,
+        "map_height_desktop": 610,
+        "map_height_mobile": 200,
+        "text_alignment": "left",
+        "container_width": "boxed",
+        "max_width": 1500,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "stat_number_size_desktop": 44,
+        "stat_number_size_mobile": 28,
+        "stat_label_size_mobile": 10,
+        "stat_label_size_desktop": 11,
+        "bg_color": "#faf5ee",
+        "left_bg": "#faf5ee",
+        "right_bg": "#6b3c23",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "body_color": "#6b3c23",
+        "stat_num_color": "#bc843f",
+        "stat_label_color": "#6b3c23",
+        "panel_title_size_desktop": 20,
+        "panel_title_size_mobile": 20,
+        "panel_overlay": 85,
+        "panel_eye_color": "#bc843f",
+        "panel_title_color": "#faf5ee",
+        "panel_sub_color": "#d8ae82"
+      }
+    },
+    "bestsellers_6agc6r": {
+      "type": "bestsellers",
+      "blocks": {
+        "tab_DipBBi": {
+          "type": "tab",
+          "settings": {
+            "label": "Best Sellers",
+            "collection": "avada-best-sellers",
+            "product_count": 4
+          }
+        },
+        "tab_miFyHP": {
+          "type": "tab",
+          "settings": {
+            "label": "KANSA",
+            "collection": "kansa",
+            "product_count": 4
+          }
+        },
+        "tab_kxXVrQ": {
+          "type": "tab",
+          "settings": {
+            "label": "BRASS",
+            "collection": "brass",
+            "product_count": 4
+          }
+        },
+        "tab_HnCEDp": {
+          "type": "tab",
+          "settings": {
+            "label": "COPPER",
+            "collection": "copper",
+            "product_count": 4
+          }
+        }
+      },
+      "block_order": [
+        "tab_DipBBi",
+        "tab_miFyHP",
+        "tab_kxXVrQ",
+        "tab_HnCEDp"
+      ],
+      "name": "Bestsellers",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Featured Products",
+        "heading": "Timeless",
+        "heading_italic": "Bestsellers",
+        "empty": "Products coming soon.",
+        "tab_size_desktop": 14,
+        "tab_size_mobile": 12,
+        "empty_size_desktop": 16,
+        "empty_size_mobile": 16,
+        "container_width": "boxed",
+        "max_width": 1500,
+        "text_align": "left",
+        "text_align_mobile": "left",
+        "gap": 2,
+        "padding_x": 40,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f"
+      }
+    },
+    "brand_story_JxKJHW": {
+      "type": "brand-story",
+      "blocks": {
+        "pill_bXfhCL": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Traditional"
+          }
+        },
+        "pill_8CmPHB": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Authentic"
+          }
+        },
+        "pill_Bbgyzw": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Reliable"
+          }
+        },
+        "pill_wTQYFK": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Nurturing"
+          }
+        },
+        "pill_rtCiWE": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Generational"
+          }
+        }
+      },
+      "block_order": [
+        "pill_bXfhCL",
+        "pill_8CmPHB",
+        "pill_Bbgyzw",
+        "pill_wTQYFK",
+        "pill_rtCiWE"
+      ],
+      "name": "Brand Story ",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "main_image": "shopify://shop_images/Mukundray_Fulchand_c428a607-bae7-4702-bf4b-a08d778f242e.jpg",
+        "main_image_url": "https://kansawalas.com/cdn/shop/files/DSC_1327.jpg?v=1723204617",
+        "accent_image_url": "",
+        "show_badge": true,
+        "badge_year": "1945",
+        "badge_label": "Est. Sihor, Gujarat",
+        "eyebrow": "Our Story",
+        "heading": "A guardian of",
+        "heading_italic": "Indian heritage.",
+        "body1": "For over 75 years, Kansawala has been a cherished family tradition — crafting Kansa, Brass, Copper and German Silver utensils the way Ayurveda prescribed. Our journey began in 1945 in Sihor, Gujarat, with our grandfather, Sh. Mukundray Fulchand.",
+        "quote_text": "\"We don't just make utensils. We pass down a way of living — one that Ayurveda has celebrated for thousands of years.\"",
+        "body2": "Through four generations, we have refined our artistry. Today our family and skilled artisans unite to uphold Kansawala's legacy — meticulously handcrafting each piece with soulful precision.",
+        "cta_text": "Discover Our Full Story",
+        "cta_link": "shopify://pages/about-us",
+        "image_position": "left",
+        "container_width": "boxed",
+        "gap": 88,
+        "max_width": 1500,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "quote_size_desktop": 20,
+        "quote_size_mobile": 18,
+        "pill_size_desktop": 12,
+        "pill_size_mobile": 12,
+        "cta_size_desktop": 13,
+        "cta_size_mobile": 14,
+        "badge_year_size_desktop": 24,
+        "badge_year_size_mobile": 20,
+        "badge_label_size_desktop": 11,
+        "badge_label_size_mobile": 12,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "body_color": "#6b3c23",
+        "quote_color": "#6b3c23",
+        "pill_color": "#6b3c23",
+        "pill_border_color": "#6b3c2338",
+        "cta_color": "#6b3c23",
+        "cta_hover_color": "#bc843f",
+        "badge_bg": "#6b3c23",
+        "badge_num_color": "#d8ae82",
+        "badge_label_color": "#fee8d98c"
+      }
+    },
+    "heritage_timeline_qnerXB": {
+      "type": "heritage-timeline",
+      "blocks": {
+        "era_wnkmDA": {
+          "type": "era",
+          "settings": {
+            "era": "1945",
+            "title": "The Beginning",
+            "description": "Sh. Mukundray Fulchand lights the first furnace in Sihor, Gujarat. A family legacy begins."
+          }
+        },
+        "era_DMAfFe": {
+          "type": "era",
+          "settings": {
+            "era": "1970s",
+            "title": "Second Generation",
+            "description": "The craft passes to the next generation. Range expands to Brass and Copper alongside Kansa."
+          }
+        },
+        "era_DLGy7L": {
+          "type": "era",
+          "settings": {
+            "era": "2000s",
+            "title": "India & Beyond",
+            "description": "Kansawala begins serving households across India. Quality earns accolades near and far."
+          }
+        },
+        "era_dMAmCj": {
+          "type": "era",
+          "settings": {
+            "era": "Today",
+            "title": "Global Family",
+            "description": "4th generation. 40+ countries. 1000+ homes. The same fire, the same hands, the same love."
+          }
+        }
+      },
+      "block_order": [
+        "era_wnkmDA",
+        "era_DMAfFe",
+        "era_DLGy7L",
+        "era_dMAmCj"
+      ],
+      "name": "Heritage Timeline",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "aria_label": "Kansawala heritage timeline",
+        "era_size_desktop": 44,
+        "era_size_mobile": 32,
+        "title_size_desktop": 16,
+        "title_size_mobile": 16,
+        "desc_size_desktop": 15,
+        "gap": 40,
+        "container_width": "boxed",
+        "max_width": 1500,
+        "padding_x": 40,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48,
+        "padding_x_mobile": 17,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "body_size_mobile": 16,
+        "bg_color": "#6b3c23",
+        "dot_color": "#bc843f",
+        "era_color": "#d8ae82",
+        "title_color": "#faf5ee",
+        "desc_color": "#fee8d9",
+        "divider_color": "#d8ae821a"
+      }
+    },
+    "three_sacred_metals_c9LJw4": {
+      "type": "three-sacred-metals",
+      "blocks": {
+        "metal_card_PcxNF3": {
+          "type": "metal_card",
+          "settings": {
+            "image": "shopify://shop_images/kansawala-kansa-soundwave-background.png",
+            "image_alt": "",
+            "metal_label": "For Eating",
+            "metal_name": "Kansa",
+            "metal_subtitle": "The Sacred Alloy",
+            "description": "78% copper, 22% tin — the ancient Ayurvedic alloy that balances all three doshas with every meal. Prescribed by Ayurveda for over 3,000 years.",
+            "benefit_1": "Balances Vata, Pitta & Kapha",
+            "benefit_2": "Naturally antibacterial",
+            "benefit_3": "Zero toxins, zero coatings",
+            "cta_url": "shopify://collections/kansa",
+            "cta_text": "Shop Kansa"
+          }
+        },
+        "metal_card_xChBwY": {
+          "type": "metal_card",
+          "settings": {
+            "image": "shopify://shop_images/kansawala-brass-soundwave-background.png",
+            "image_alt": "",
+            "metal_label": "For Cooking",
+            "metal_name": "Brass",
+            "metal_subtitle": "Naturally Non-Stick",
+            "description": "No teflon. No coatings. Just pure brass — naturally non-stick, naturally healthy. Trusted by Indian families since 1945 for safe, flavourful cooking.",
+            "benefit_1": "Naturally non-stick surface",
+            "benefit_2": "Free from nickel & aluminium",
+            "benefit_3": "Retains minerals in food",
+            "cta_url": "shopify://collections/brass",
+            "cta_text": "Shop Brass"
+          }
+        },
+        "metal_card_yaUAcG": {
+          "type": "metal_card",
+          "settings": {
+            "image": "shopify://shop_images/kansawala-copper-soundwave-background.png",
+            "image_alt": "",
+            "metal_label": "For Drinking",
+            "metal_name": "Copper",
+            "metal_subtitle": "Ancient Water Vessel",
+            "description": "Copper vessels destroy 99.9% of harmful bacteria within 4 hours. Rich in essential minerals that boost digestion, immunity, and overall wellbeing.",
+            "benefit_1": "Kills bacteria naturally",
+            "benefit_2": "Boosts immunity & digestion",
+            "benefit_3": "Alkalises water overnight",
+            "cta_url": "shopify://collections/copper",
+            "cta_text": "Shop Copper"
+          }
+        }
+      },
+      "block_order": [
+        "metal_card_PcxNF3",
+        "metal_card_xChBwY",
+        "metal_card_yaUAcG"
+      ],
+      "name": "Three Sacred Metals",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Know Your Metal",
+        "heading": "Three Sacred Metals",
+        "heading_italic": "Three Healing Purposes",
+        "container_width": "boxed",
+        "max_width": 1500,
+        "mobile_layout": "slider",
+        "show_dots": true,
+        "autoplay": true,
+        "autoplay_interval": 5,
+        "metal_label_size_desktop": 12,
+        "metal_label_size_mobile": 12,
+        "metal_name_size_desktop": 24,
+        "metal_name_size_mobile": 20,
+        "benefit_size_desktop": 12,
+        "benefit_size_mobile": 12,
+        "cta_size_desktop": 14,
+        "cta_size_mobile": 14,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_em_color": "#bc843f"
+      }
+    },
+    "ayurveda_aqnfaP": {
+      "type": "ayurveda",
+      "blocks": {
+        "benefit_EggEB9": {
+          "type": "benefit",
+          "settings": {
+            "tag": "01 · DOSHAS",
+            "title": "Balances Doshas",
+            "description": "Kansa bronze balances Vata, Pitta and Kapha — the three doshas Ayurveda prescribes for total body harmony. Every meal becomes a ritual."
+          }
+        },
+        "benefit_MqzkP7": {
+          "type": "benefit",
+          "settings": {
+            "tag": "02 · PURITY",
+            "title": "Zero Toxins",
+            "description": "No teflon, no nickel, no aluminium, no chemical coatings. Pure Kansa, pure Brass, pure Copper — exactly as nature intended."
+          }
+        },
+        "benefit_mtFttp": {
+          "type": "benefit",
+          "settings": {
+            "tag": "03 · LEGACY",
+            "title": "Lasts Generations",
+            "description": "With proper care, a Kansawala piece lasts decades and improves with age. Not a purchase — an heirloom passed from parent to child."
+          }
+        },
+        "benefit_8KqqL6": {
+          "type": "benefit",
+          "settings": {
+            "tag": "04 · WELLNESS",
+            "title": "Boosts Immunity",
+            "description": "Copper vessels destroy harmful bacteria within hours. Brass and Kansa leach beneficial minerals that aid digestion and immunity."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_EggEB9",
+        "benefit_MqzkP7",
+        "benefit_mtFttp",
+        "benefit_8KqqL6"
+      ],
+      "name": "Ayurveda ",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Why Kansa . Brass . Copper",
+        "heading": "Ayurveda's most",
+        "heading_italic": "trusted metals.",
+        "cols_desktop": 4,
+        "container_width": "boxed",
+        "max_width": 1500,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "tag_size_desktop": 14,
+        "tag_size_mobile": 13,
+        "title_size_desktop": 16,
+        "title_size_mobile": 16,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "num_color": "#6b3c23",
+        "title_color": "#bc843f",
+        "desc_color": "#6b3c23",
+        "divider_color": "#6b3c231f",
+        "top_border": "#6b3c2326"
+      }
+    },
+    "b2b_trust_GVVRxg": {
+      "type": "b2b-trust",
+      "blocks": {
+        "client_bzbhHx": {
+          "type": "client",
+          "settings": {
+            "name": "BiBi Restaurant, Mayfair, London",
+            "logo": "shopify://shop_images/BiBi-logo.svg",
+            "logo_url": "https://www.bibirestaurants.com/wp-content/uploads/2021/09/BiBi-logo.svg",
+            "url": ""
+          }
+        },
+        "client_gcRVq6": {
+          "type": "client",
+          "settings": {
+            "name": "Brand Name",
+            "logo": "shopify://shop_images/jdp-logo.png",
+            "logo_url": "",
+            "url": ""
+          }
+        },
+        "client_aXxDn6": {
+          "type": "client",
+          "settings": {
+            "name": "Brand Name",
+            "logo": "shopify://shop_images/sarovar_hotels.svg",
+            "logo_url": "",
+            "url": ""
+          }
+        },
+        "client_NGiW4k": {
+          "type": "client",
+          "settings": {
+            "name": "HOLYWATER Hotel",
+            "logo": "shopify://shop_images/holywater.svg",
+            "logo_url": "",
+            "url": ""
+          }
+        },
+        "client_iU8yzp": {
+          "type": "client",
+          "settings": {
+            "name": "K P Sanghvi",
+            "logo_url": "https://kpsanghvi.com/wp-content/uploads/2025/07/kp-logo-l.png",
+            "url": ""
+          }
+        },
+        "testimonial_6y9gcD": {
+          "type": "testimonial",
+          "settings": {
+            "image_url": "https://brigadierslondon.com/wp-content/uploads/2024/01/Brigadiers.jpg",
+            "property_name": "Brigadiers",
+            "property_loc": "London · UK",
+            "show_stars": true,
+            "quote": "Two thousand pieces in active rotation, and not one of them has let our brigade down. Kansawala builds for the kind of pressure a real kitchen puts on a plate — that is why we keep ordering.",
+            "author_name": "Shantibhushan",
+            "author_role": "CHEF",
+            "stat_num": "2000+",
+            "stat_label": "Pieces in Service"
+          }
+        },
+        "testimonial_L9TanA": {
+          "type": "testimonial",
+          "settings": {
+            "image_url": "https://rajwadu.com/wp-content/uploads/2014/05/gujarati_restaurant_in_gujarat.jpg",
+            "property_name": "Rajwadu",
+            "property_loc": "Ahmedabad · Gujarat",
+            "show_stars": true,
+            "quote": "Twenty years on the same kansa, and our guests still tell us the food tastes the way it did the day we opened. There is a reason we never looked elsewhere — Sihor sends us metal we can trust.",
+            "author_name": "Mr. Paresh",
+            "author_role": "Director",
+            "stat_num": "20 Yrs",
+            "stat_label": "Continuous Use"
+          }
+        },
+        "testimonial_MyWpkh": {
+          "type": "testimonial",
+          "settings": {
+            "image_url": "https://dt4l9bx31tioh.cloudfront.net/eazymedia/restaurant/693228/restaurant020240131110702.jpg",
+            "property_name": "Dakshin Bhojnam",
+            "property_loc": "All branches · Gujarat",
+            "show_stars": true,
+            "quote": "Across every branch we have opened, Kansawala has been the one constant on the table. Five years of consistent finish, consistent delivery, consistent care — that is what a real partnership looks like.",
+            "author_name": "VISHWASKUMAR",
+            "author_role": "Director",
+            "stat_num": "5 Yrs",
+            "stat_label": "Partnership"
+          }
+        }
+      },
+      "block_order": [
+        "client_bzbhHx",
+        "client_gcRVq6",
+        "client_aXxDn6",
+        "client_NGiW4k",
+        "client_iU8yzp",
+        "testimonial_6y9gcD",
+        "testimonial_L9TanA",
+        "testimonial_MyWpkh"
+      ],
+      "name": "B2B Trust",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Trusted Tables",
+        "heading": "Where India's",
+        "heading_italic": "finest kitchens choose us.",
+        "sub": "When restaurants, resorts and commercial brands need handcrafted ware that survives daily commercial use, they come to Sihor.",
+        "strip_label": "Our Partner Properties",
+        "strip_speed": 40,
+        "band_1_num": "65+",
+        "band_1_label": "Partner Properties",
+        "band_2_num": "4+",
+        "band_2_label": "Countries Served",
+        "band_3_num": "25,000+",
+        "band_3_label": "Pieces in Service",
+        "band_4_num": "100%",
+        "band_4_label": "Renewal Rate",
+        "container_width": "boxed",
+        "max_width": 1500,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "strip_label_size_desktop": 16,
+        "strip_label_size_mobile": 14,
+        "quote_size_desktop": 16,
+        "quote_size_mobile": 15,
+        "property_name_size_desktop": 24,
+        "property_name_size_mobile": 20,
+        "property_loc_size_desktop": 12,
+        "property_loc_size_mobile": 12,
+        "card_stat_size_desktop": 44,
+        "card_stat_size_mobile": 32,
+        "band_num_size_desktop": 44,
+        "band_num_size_mobile": 32,
+        "card_width_mobile": 88,
+        "card_padding_mobile": 18,
+        "card_gap_mobile": 14,
+        "show_dots": true,
+        "autoplay": true,
+        "autoplay_interval": 5,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "sub_color": "#6b3c23",
+        "client_color": "#6b3c23",
+        "card_bg": "#ffffff",
+        "card_border": "#6b3c231f",
+        "card_quote_color": "#6b3c23",
+        "star_color": "#bc843f",
+        "band_bg_color": "#6b3c23",
+        "band_num_color": "#d8ae82"
+      }
+    },
+    "meaning_legacy_akGCiX": {
+      "type": "meaning-legacy",
+      "blocks": {
+        "step_TnJmBD": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/DSC_4765.jpg",
+            "image_url": "https://ptal.in/cdn/shop/files/kansa_dinner_thaali_5_piece_0_c62b73bf-06d6-4857-aab2-2e68a265c563.jpg?v=1770879514&width=1800",
+            "alt": "",
+            "focal": "bottom",
+            "label": "Wedding",
+            "title": "A Wedding Gift",
+            "description": "A dinner set they'll use every day for decades. Not a trinket that collects dust — an heirloom that nourishes a new family.",
+            "cta_text": "6-Piece Dinner Set",
+            "cta_link": "shopify://collections/kansa-bronze-dinner-set-orignal"
+          }
+        },
+        "step_bC4DjD": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/DSC6810.jpg",
+            "image_url": "https://ptal.in/cdn/shop/files/DSC_7643.jpg?v=1760098518&width=1800",
+            "alt": "",
+            "focal": "center",
+            "label": "Housewarming",
+            "title": "A New Home",
+            "description": "Begin a new home with Ayurveda's most trusted metal. A meaningful gift that whispers wellness and warmth from the very first meal.",
+            "cta_text": "Thali Set Combo",
+            "cta_link": "shopify://collections/sets-and-combo"
+          }
+        },
+        "step_Pw3tJX": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/DSC6798.jpg",
+            "image_url": "https://ptal.in/cdn/shop/files/2_30a140de-4e90-47bc-8a6e-c4767a37ffd5.jpg?v=1760098252&width=1800",
+            "alt": "",
+            "focal": "center",
+            "label": "Festival",
+            "title": "Festive Gifting",
+            "description": "Diwali, Navratri, Pongal — traditions deserve traditional gifts. Custom gift packaging available on all sets.",
+            "cta_text": "Small Bowl or Glass",
+            "cta_link": "shopify://collections/gifting"
+          }
+        },
+        "step_j4NPJe": {
+          "type": "step",
+          "settings": {
+            "image": "shopify://shop_images/DSC6808.jpg",
+            "image_url": "https://ptal.in/cdn/shop/files/Ptal-31_Aug0096.jpg?v=1760098651&width=1800",
+            "alt": "",
+            "focal": "center",
+            "label": "Corporate",
+            "title": "Corporate & Bulk",
+            "description": "Premium gifting for hotels, restaurants and corporate events. Custom monogramming and dedicated support for bulk orders.",
+            "cta_text": "Enquire Now",
+            "cta_link": "shopify://pages/bulk-order"
+          }
+        }
+      },
+      "block_order": [
+        "step_TnJmBD",
+        "step_bC4DjD",
+        "step_Pw3tJX",
+        "step_j4NPJe"
+      ],
+      "name": "Meaning & Legacy",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Gifting",
+        "heading": "A gift with",
+        "heading_italic": "meaning & legacy.",
+        "subtitle": "",
+        "footer_text": "",
+        "cta_text": "",
+        "cta_link": "shopify://collections/gifting",
+        "container_width": "boxed",
+        "max_width": 1500,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "dot_num_size_desktop": 12,
+        "dot_num_size_mobile": 12,
+        "step_num_size_desktop": 48,
+        "step_num_size_mobile": 32,
+        "label_size_desktop": 14,
+        "label_size_mobile": 12,
+        "step_title_size_desktop": 32,
+        "step_title_size_mobile": 24,
+        "link_size_desktop": 14,
+        "link_size_mobile": 14,
+        "footer_cta_size_desktop": 14,
+        "footer_cta_size_mobile": 14,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "sub_color": "#6b3c23",
+        "label_color": "#bc843f",
+        "step_num_color": "#bc843f",
+        "step_title_color": "#6b3c23",
+        "step_desc_color": "#6b3c23",
+        "step_link_color": "#6b3c23",
+        "step_line_color": "#bc843f",
+        "dot_bg_color": "#faf5ee",
+        "dot_border_color": "#bc843f",
+        "dot_hover_color": "#6b3c23",
+        "dot_num_color": "#6b3c23",
+        "img_bg_color": "#faf5ee",
+        "spine_color": "#6b3c2314",
+        "footer_text_color": "#6b3c23",
+        "footer_line_color": "#bc843f",
+        "footer_cta_color": "#6b3c23",
+        "footer_cta_hover": "#bc843f"
+      }
+    },
+    "customer_reviews_yEGHD6": {
+      "type": "customer-reviews",
+      "name": "Customer Reviews",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "The Table Talk",
+        "heading": "Trusted in Indian homes",
+        "heading_italic": "across generations",
+        "sub": "",
+        "show_rating_badge": true,
+        "rating_score": "4.8",
+        "rating_count_text": "From verified Judge.me reviews",
+        "cta_text": "Read All Reviews",
+        "cta_link": "shopify://pages/reviews",
+        "empty_message": "Verified reviews are loading.",
+        "container_width": "boxed",
+        "max_width": 1500,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "rating_score_size_desktop": 28,
+        "rating_score_size_mobile": 24,
+        "cta_size_desktop": 13,
+        "cta_size_mobile": 14,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "sub_color": "#6b3c23",
+        "accent_color": "#bc843f",
+        "rating_bg": "#faf5ee",
+        "rating_border": "#6b3c231f",
+        "rating_star_color": "#bc843f",
+        "rating_score_color": "#6b3c23",
+        "rating_count_color": "#6b3c23",
+        "widget_color": "#6b3c23",
+        "widget_link_color": "#bc843f"
+      }
+    },
+    "craft_process_LPqad3": {
+      "type": "craft-process",
+      "blocks": {
+        "step_qXYAJk": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "title": "Metal Selection",
+            "description": "Only the purest alloys — 78% copper, 22% tin for Kansa. No additives. Purity is the foundation of health benefit and longevity."
+          }
+        },
+        "step_3yypAC": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "title": "Fire & Casting",
+            "description": "Metal melted at 1000°C+. Our artisans read colour and behaviour — knowledge passed through generations, impossible to write down."
+          }
+        },
+        "step_YmMGjM": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "title": "Hand Beating",
+            "description": "Each piece is hammered hundreds of times by hand. The rhythm of the hammer creates the finish you see and feel."
+          }
+        },
+        "step_zHGyj6": {
+          "type": "step",
+          "settings": {
+            "step_number": "04",
+            "title": "Quality & Finish",
+            "description": "Final polish, careful inspection. Only then does a piece earn the Kansawala name — the standard our family has held for 75+ years."
+          }
+        }
+      },
+      "block_order": [
+        "step_qXYAJk",
+        "step_3yypAC",
+        "step_YmMGjM",
+        "step_zHGyj6"
+      ],
+      "name": "Craft Process ",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "aria_label": "Craft process",
+        "eyebrow": "How It's Made",
+        "heading": "The ancient art",
+        "heading_italic": "of metal shaping.",
+        "subtitle": "No machines. No shortcuts. Every piece follows the same four-step process our grandfather's grandfather used in Sihor since 1945.",
+        "max_width": 1500,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "step_num_size_desktop": 44,
+        "step_num_size_mobile": 36,
+        "step_title_size_desktop": 16,
+        "step_title_size_mobile": 16,
+        "bg_color": "#6b3c23",
+        "eye_color": "#e5c2a0",
+        "heading_color": "#faf5ee",
+        "heading_italic_color": "#e5c2a0",
+        "subtitle_color": "#fee8d9",
+        "step_num_color": "#d8ae82",
+        "step_title_color": "#faf5ee",
+        "step_desc_color": "#fee8d9",
+        "divider_color": "#d8ae8224"
+      }
+    },
+    "buy_back_promise_McUdDQ": {
+      "type": "buy-back-promise",
+      "name": "Buy-Back Promise",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "The Buy-Back Promise",
+        "heading": "Like gold & silver, our metals",
+        "heading_italic": "only go up.",
+        "sub": "Kansa, Pital, Tamba — three metals that nourish your family for a lifetime. And pay you back.",
+        "proof_label": "Copper Price · Source: MCX India",
+        "proof_1_year": "2014",
+        "proof_1_price": "₹420/kg",
+        "proof_1_detail": "A decade ago",
+        "proof_2_year": "2026",
+        "proof_2_price": "₹1344/kg",
+        "proof_2_detail": "Nearly doubled",
+        "proof_3_year": "Future",
+        "proof_3_price": "↑",
+        "proof_3_detail": "The trend continues",
+        "metal_note": "Kansa is 78% copper. Pital is 65–70% copper. Tamba is 100% copper. All three move with the copper market. All three appreciate.",
+        "promise_h": "You already invest in <em>gold</em> and <em>silver</em>. Our three metals work the same way.",
+        "promise_p1": "Indian families have always held metals as wealth. Kansa, Pital, and Tamba are no different. Every Kansawala piece you bring home is a real metal asset, not a depreciating product.",
+        "promise_p2": "Use it for a decade of healthier living. Then return any Kansawala piece to us. We'll buy it back at the original price you paid.",
+        "pillar_1_num": "3",
+        "pillar_1_label": "Metals that appreciate",
+        "pillar_2_num": "10–12 Yrs",
+        "pillar_2_label": "Of Ayurvedic daily use",
+        "pillar_3_num": "100%",
+        "pillar_3_label": "Original price returned",
+        "btn2_text": "Shop Heirloom Metals",
+        "btn2_link": "shopify://collections",
+        "container_width": "boxed",
+        "max_width": 1500,
+        "frame_padding": 40,
+        "right_offset_desktop": 0,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "frame_padding_mobile": 16,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "price_size_desktop": 44,
+        "price_size_mobile": 36,
+        "promise_h_size_desktop": 26,
+        "promise_h_size_mobile": 22,
+        "pillar_num_size_desktop": 32,
+        "btn_size_desktop": 14,
+        "left_bg_color": "#faf5ee",
+        "left_eye_color": "#bc843f",
+        "left_heading_color": "#6b3c23",
+        "left_heading_italic_color": "#bc843f",
+        "left_sub_color": "#6b3c23",
+        "left_frame_border": "#6b3c2333",
+        "left_year_color": "#bc843f",
+        "left_price_color": "#6b3c23",
+        "bg_color": "#6b3c23",
+        "heading_color": "#faf5ee",
+        "sub_color": "#fee8d9",
+        "frame_border": "#d8ae822e",
+        "pillar_num_color": "#d8ae82",
+        "btn_outline_color": "#6b3c23",
+        "btn_outline_border": "#6b3c23"
+      }
+    },
+    "kw_newsletter_UJGtCg": {
+      "type": "kw-newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Stay Connected",
+        "heading": "Stories, Recipes",
+        "heading_italic": "& Exclusive Offers",
+        "subtext": "Join thousands of homes that have brought Kansawala craftsmanship into their kitchens.",
+        "placeholder": "Your email address",
+        "btn_text": "Subscribe",
+        "success_message": "Thank you for subscribing!",
+        "show_consent": false,
+        "consent_label": "I agree to receive marketing emails from Kansawala. I can unsubscribe at any time.",
+        "consent_required": true,
+        "container_width": "boxed",
+        "max_width": 1500,
+        "padding_x": 40,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "sub_color": "#6b3c2394",
+        "input_bg": "#faf5ee",
+        "input_color": "#6b3c23",
+        "input_border": "#6b3c232e",
+        "input_placeholder": "#6b3c2359",
+        "btn_bg": "#6b3c23",
+        "btn_color": "#fee8d9",
+        "btn_hover_bg": "#bc843f",
+        "success_color": "#bc843f"
       }
     }
   },
   "order": [
-    "slideshow_xGViHJ",
-    "collection_grid_2_Y3MmTk"
+    "hero_slider_DXzcFa",
+    "marquee_strip_BJBhWn",
+    "collections_grid_fE8tJr",
+    "global_presence_9Qg7DN",
+    "bestsellers_6agc6r",
+    "brand_story_JxKJHW",
+    "heritage_timeline_qnerXB",
+    "three_sacred_metals_c9LJw4",
+    "ayurveda_aqnfaP",
+    "b2b_trust_GVVRxg",
+    "meaning_legacy_akGCiX",
+    "customer_reviews_yEGHD6",
+    "craft_process_LPqad3",
+    "buy_back_promise_McUdDQ",
+    "kw_newsletter_UJGtCg"
   ]
 }

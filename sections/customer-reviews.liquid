@@ -1,0 +1,434 @@
+{%- liquid
+  assign eyebrow            = section.settings.eyebrow
+  assign heading            = section.settings.heading
+  assign heading_italic     = section.settings.heading_italic
+  assign sub                = section.settings.sub
+  assign show_rating_badge  = section.settings.show_rating_badge
+  assign rating_score       = section.settings.rating_score
+  assign rating_count_text  = section.settings.rating_count_text
+  assign cta_text           = section.settings.cta_text
+  assign cta_link           = section.settings.cta_link
+  assign empty_message      = section.settings.empty_message
+
+  assign bg_color                 = section.settings.bg_color
+  assign eye_color                = section.settings.eye_color
+  assign heading_color            = section.settings.heading_color
+  assign heading_italic_color     = section.settings.heading_italic_color
+  assign sub_color                = section.settings.sub_color
+  assign rating_bg                = section.settings.rating_bg
+  assign rating_border            = section.settings.rating_border
+  assign rating_star_color        = section.settings.rating_star_color
+  assign rating_score_color       = section.settings.rating_score_color
+  assign rating_count_color       = section.settings.rating_count_color
+  assign accent_color             = section.settings.accent_color
+  assign widget_color             = section.settings.widget_color
+  assign widget_link_color        = section.settings.widget_link_color
+
+  assign container_width   = section.settings.container_width
+  assign max_width         = section.settings.max_width
+  assign padding_top       = section.settings.padding_top
+  assign padding_bottom    = section.settings.padding_bottom
+  assign padding_x         = section.settings.padding_x
+  assign padding_top_mobile    = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile      = section.settings.padding_x_mobile
+
+  assign heading_size_desktop = section.settings.heading_size_desktop
+  assign heading_size_mobile  = section.settings.heading_size_mobile
+
+  assign sub_size_desktop      = section.settings.sub_size_desktop
+  assign sub_size_mobile       = section.settings.sub_size_mobile
+  assign rating_score_size_desktop = section.settings.rating_score_size_desktop
+  assign rating_score_size_mobile  = section.settings.rating_score_size_mobile
+  assign cta_size_desktop      = section.settings.cta_size_desktop
+  assign cta_size_mobile       = section.settings.cta_size_mobile
+
+  assign app_block_count = 0
+  for block in section.blocks
+    if block.type == '@app'
+      assign app_block_count = app_block_count | plus: 1
+    endif
+  endfor
+-%}
+
+{%- style -%}
+  .crv-{{ section.id }} { background: {{ bg_color }}; box-sizing: border-box; overflow-x: hidden; position: relative; }
+  .crv-{{ section.id }} .crv-inner {
+    padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin: 0 auto;
+    {%- endif -%}
+    box-sizing: border-box;
+  }
+  .crv-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    width: 100px; height: 1px;
+    background: {{ accent_color }};
+    transform: translateX(-50%);
+  }
+  @media (min-width: 750px) {
+    .crv-{{ section.id }}::before { display: none; }
+  }
+
+  /* HEADER */
+  .crv-{{ section.id }} .crv-hdr-left .t-eyebrow { color: {{ eye_color }}; margin-bottom: 14px; }
+  .crv-{{ section.id }} .crv-hdr-left .t-eyebrow--dash::before { background: {{ eye_color }}; width: 28px; }
+  .crv-{{ section.id }} .t-display { color: {{ heading_color }}; font-size: {{ heading_size_desktop }}px; max-width: 620px; }
+  .crv-{{ section.id }} .t-display em { color: {{ heading_italic_color }}; }
+  .crv-{{ section.id }} .crv-sub {
+    color: {{ sub_color }};
+    margin-top: 14px;
+    font-size: {{ sub_size_desktop }}px;
+    max-width: 620px;
+  }
+
+  /* HEADER ROW — heading left, rating badge lifted to the right. Double-class
+     specificity beats any centered default regardless of load order. */
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-hdr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 32px;
+    align-items: center;
+    margin-bottom: 48px;
+  }
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-hdr--solo { display: block; }
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-badge-row {
+    padding: 0;
+    text-align: right;
+    margin-bottom: 0;
+  }
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-badge {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+  }
+  .crv-{{ section.id }} .crv-badge-rating { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+  /* RATING BADGE — colors. */
+  .crv-{{ section.id }} .crv-badge-stars {
+    color: {{ rating_star_color }};
+    font-size: var(--icon-md);
+    line-height: 1;
+    letter-spacing: 4px;
+  }
+  .crv-{{ section.id }} .crv-badge-score {
+    color: {{ rating_score_color }};
+    line-height: 1;
+    font-size: {{ rating_score_size_desktop }}px;
+  }
+  .crv-{{ section.id }} .crv-badge-count { color: {{ rating_count_color }}; display: block; }
+
+  /* APP BLOCK SLOT */
+  .crv-{{ section.id }} .crv-slot .shopify-app-block,
+  .crv-{{ section.id }} .crv-slot .shopify-block {
+    padding: 0;
+  }
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-wrapper,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-wrapper > *:not(.jdgm-carousel):not(.jdgm-carousel-arrows),
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-wrapper__title,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-title,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-title-and-link,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-title-link {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    float: none !important;
+  }
+  .crv-{{ section.id }} .crv-slot .jdgm-prev-badge,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel__sub-title,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-num-published-reviews,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-wrapper__rating,
+  .crv-{{ section.id }} .crv-slot .jdgm-rev-widg__summary,
+  .crv-{{ section.id }} .crv-slot [class*="prev-badge"],
+  .crv-{{ section.id }} .crv-slot [class*="num-published-reviews"],
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-wrapper__title,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-title,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-title-and-link,
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-title-link,
+  .crv-{{ section.id }} .crv-slot [class*="carousel-title"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+  .crv-{{ section.id }} .crv-slot .jdgm-carousel-wrapper { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot *:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h1:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h2:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h3:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h4:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h5:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h6:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot p:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot a:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot span:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot button:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot div:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot li:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot strong:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot em:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot small:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot label:not([class*="star"]):not([class*="icon"]) {
+    font-family: var(--d) !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+  }
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-rev__body,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-rev__body *:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-rev__title,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-rev__title *:not([class*="star"]):not([class*="icon"]),
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__review-body,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__review-body *:not([class*="star"]):not([class*="icon"]) {
+    font-family: var(--s) !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+  }
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot *:not([class*="star"]):not([class*="icon"]) {
+    color: {{ widget_color }} !important;
+  }
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot a,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot a *:not([class*="star"]):not([class*="icon"]) {
+    color: {{ widget_link_color }} !important;
+  }
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__review-body,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__reviewer,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__product-info,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__product-title {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  @media (max-width: 749px) {
+    .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__review-body,
+    .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__reviewer,
+    .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__product-info,
+    .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-item__product-title {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+  }
+
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h1,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h2,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h3,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot h4,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-wrapper__title,
+  .crv-{{ section.id }}.crv-{{ section.id }} .crv-slot .jdgm-carousel-title {
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    letter-spacing: .12em !important;
+    text-transform: uppercase !important;
+  }
+  .crv-{{ section.id }} .crv-empty {
+    padding: 48px 24px;
+    text-align: center;
+    color: {{ sub_color }};
+    border: 1px dashed {{ rating_border }};
+    background: {{ rating_bg }};
+  }
+
+  /* CTA */
+  .crv-{{ section.id }} .crv-cta { text-align: center; margin-top: 36px; }
+  .crv-{{ section.id }} .crv-cta .btn-o {
+    font-size: {{ cta_size_desktop }}px;
+  }
+  .crv-{{ section.id }} .crv-cta .btn-o:focus-visible {
+    outline: 2px solid {{ eye_color }};
+    outline-offset: 4px;
+  }
+
+  /* TABLET + MOBILE — stack the header and CENTER the rating badge (was right/left-aligned). */
+  @media (max-width: 1024px) {
+    .crv-{{ section.id }}.crv-{{ section.id }} .crv-hdr { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
+    .crv-{{ section.id }}.crv-{{ section.id }} .crv-badge-row { margin-bottom: 0; padding: 0; text-align: center; }
+    .crv-{{ section.id }}.crv-{{ section.id }} .crv-badge { justify-content: center; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 749px) {
+    .crv-{{ section.id }} .crv-inner {
+      padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    }
+    .crv-{{ section.id }} .t-display { font-size: {{ heading_size_mobile }}px; }
+    .crv-{{ section.id }} .crv-sub { font-size: {{ sub_size_mobile }}px; }
+    .crv-{{ section.id }} .crv-badge-score { font-size: {{ rating_score_size_mobile }}px; }
+    .crv-{{ section.id }} .crv-cta .btn-o { font-size: {{ cta_size_mobile }}px; }
+  }
+
+  {%- if section.settings.hide_desktop -%}
+    @media (min-width: 750px) { .crv-{{ section.id }} { display: none; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+    @media (max-width: 749px) { .crv-{{ section.id }} { display: none; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section class="customer-reviews crv-{{ section.id }}" aria-labelledby="crv-h-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="crv-inner">
+
+    {%- comment -%} HEADER — heading left, rating badge lifted to the right. Stacks left-aligned on mobile. {%- endcomment -%}
+    {%- if eyebrow != blank or heading != blank or heading_italic != blank or sub != blank or show_rating_badge -%}
+      <div class="crv-hdr{% unless show_rating_badge %} crv-hdr--solo{% endunless %}">
+        <div class="crv-hdr-left">
+          {%- if eyebrow != blank -%}
+            <span class="t-eyebrow t-eyebrow--dash">{{ eyebrow | escape }}</span>
+          {%- endif -%}
+          <h2 class="t-display" id="crv-h-{{ section.id }}">
+            {%- if heading != blank -%}{{ heading | escape }}{%- endif -%}{%- if heading_italic != blank -%}<em>{{ heading_italic | escape }}</em>{%- endif -%}
+          </h2>
+          {%- if sub != blank -%}
+            <p class="crv-sub t-body">{{ sub | escape }}</p>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} RATING BADGE — right column on desktop. {%- endcomment -%}
+        {%- if show_rating_badge -%}
+          <div class="crv-badge-row">
+            <div class="crv-badge">
+              <div class="crv-badge-rating">
+                {%- if rating_score != blank -%}
+                  <span class="crv-badge-score t-stat-serif-upright">{{ rating_score | escape }}</span>
+                {%- endif -%}
+                <div class="crv-badge-stars t-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              </div>
+              {%- if rating_count_text != blank -%}
+                <span class="crv-badge-count t-eyebrow">{{ rating_count_text | escape }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} JUDGE.ME APP BLOCK SLOT — render placed @app blocks. {%- endcomment -%}
+    <div class="crv-slot">
+      {%- if app_block_count > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}
+            <div class="crv-app" {{ block.shopify_attributes }}>{% render block %}</div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif empty_message != blank -%}
+        <div class="crv-empty t-body-serif">{{ empty_message | escape }}</div>
+      {%- elsif request.design_mode -%}
+        <div class="crv-empty t-body-serif">
+          Add a Judge.me block here in the theme editor (e.g. "All Reviews" or "Reviews Carousel") to display real customer reviews inside this section.
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} CTA {%- endcomment -%}
+    {%- if cta_text != blank -%}
+      <div class="crv-cta">
+        <a class="btn-o t-link" href="{{ cta_link | default: '#' }}">{{ cta_text | escape }}</a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Reviews",
+  "tag": "section",
+  "class": "kw-customer-reviews",
+  "settings": [
+    { "type": "checkbox", "id": "hide_desktop", "label": "Hide on desktop", "default": false },
+    { "type": "checkbox", "id": "hide_mobile",  "label": "Hide on mobile",  "default": false },
+
+    { "type": "header", "content": "Section header" },
+    { "type": "text", "id": "eyebrow",        "label": "Eyebrow",        "default": "The Table Talk" },
+    { "type": "text", "id": "heading",        "label": "Heading",        "default": "Trusted in Indian homes" },
+    { "type": "text", "id": "heading_italic", "label": "Heading italic", "default": "across generations" },
+    { "type": "textarea", "id": "sub", "label": "Subtitle" },
+
+    { "type": "header", "content": "Rating badge (optional)" },
+    { "type": "paragraph", "content": "Shows a static rating summary at the top right. The actual review cards below come from the Judge.me block you add in the theme editor." },
+    { "type": "checkbox", "id": "show_rating_badge", "label": "Show rating badge", "default": true },
+    { "type": "text", "id": "rating_score", "label": "Rating score", "default": "4.8" },
+    { "type": "text", "id": "rating_count_text", "label": "Count text", "default": "From verified Judge.me reviews" },
+
+    { "type": "header", "content": "Bottom CTA" },
+    { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Read All Reviews" },
+    { "type": "url",  "id": "cta_link", "label": "CTA link" },
+    {
+      "type": "textarea",
+      "id": "empty_message",
+      "label": "Fallback message",
+      "info": "Shown to shoppers when no Judge.me block is installed. Leave blank to hide the slot entirely.",
+      "default": "Verified reviews are loading."
+    },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "container_width", "label": "Container width",
+      "options": [{ "value": "boxed", "label": "Boxed" }, { "value": "full", "label": "Full width" }],
+      "default": "boxed"
+    },
+    { "type": "range", "id": "max_width", "label": "Max width", "min": 800, "max": 1920, "step": 20, "unit": "px", "default": 1500 },
+
+    { "type": "header", "content": "Spacing — Desktop" },
+    { "type": "range", "id": "padding_top",    "label": "Padding top",    "min": 0, "max": 200, "step": 5, "unit": "px", "default": 75 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 200, "step": 5, "unit": "px", "default": 75 },
+    { "type": "range", "id": "padding_x",      "label": "Padding x",      "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+
+    { "type": "header", "content": "Spacing — Mobile" },
+    { "type": "range", "id": "padding_top_mobile",    "label": "Padding top",    "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_x_mobile",      "label": "Padding x",      "min": 0, "max": 40,  "step": 1, "unit": "px", "default": 17 },
+
+    { "type": "header", "content": "Typography — Heading" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 24, "max": 72, "step": 1, "unit": "px", "default": 43 },
+    { "type": "range", "id": "heading_size_mobile",  "label": "Heading size mobile",  "min": 20, "max": 48, "step": 2, "unit": "px", "default": 30 },
+
+    { "type": "header", "content": "Typography — Body roles" },
+    { "type": "range", "id": "sub_size_desktop", "label": "Subtitle size desktop", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "sub_size_mobile",  "label": "Subtitle size mobile",  "min": 10, "max": 20, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "rating_score_size_desktop", "label": "Rating score size desktop", "min": 18, "max": 40, "step": 1, "unit": "px", "default": 28 },
+    { "type": "range", "id": "rating_score_size_mobile",  "label": "Rating score size mobile",  "min": 16, "max": 32, "step": 1, "unit": "px", "default": 24 },
+    { "type": "range", "id": "cta_size_desktop", "label": "CTA size desktop", "min": 10, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "cta_size_mobile",  "label": "CTA size mobile",  "min": 10, "max": 16, "step": 1, "unit": "px", "default": 12 },
+
+    { "type": "header", "content": "Colors — Section" },
+    { "type": "color", "id": "bg_color",             "label": "Background",     "default": "#faf5ee" },
+    { "type": "color", "id": "eye_color",            "label": "Eyebrow",        "default": "#bc843f" },
+    { "type": "color", "id": "heading_color",        "label": "Heading",        "default": "#6b3c23" },
+    { "type": "color", "id": "heading_italic_color", "label": "Heading italic", "default": "#bc843f" },
+    { "type": "color", "id": "sub_color",            "label": "Subtitle",       "default": "#6b3c23" },
+    { "type": "color", "id": "accent_color",         "label": "Top accent line", "default": "#bc843f" },
+
+    { "type": "header", "content": "Colors — Rating badge" },
+    { "type": "color", "id": "rating_bg",          "label": "Badge background", "default": "#faf5ee" },
+    { "type": "color", "id": "rating_border",      "label": "Badge border",     "default": "#6b3c231f" },
+    { "type": "color", "id": "rating_star_color",  "label": "Stars",            "default": "#bc843f" },
+    { "type": "color", "id": "rating_score_color", "label": "Score",            "default": "#6b3c23" },
+    { "type": "color", "id": "rating_count_color", "label": "Count text",       "default": "#6b3c23" },
+
+    { "type": "header", "content": "Colors — Judge.me widget" },
+    { "type": "paragraph", "content": "Pins the colors of the embedded Judge.me reviews block (titles, quotes, names, arrows) so it matches the homepage palette. Stars keep their own brass color from the rating-badge setting above." },
+    { "type": "color", "id": "widget_color",      "label": "Widget text",  "default": "#6b3c23" },
+    { "type": "color", "id": "widget_link_color", "label": "Widget links", "default": "#bc843f" }
+  ],
+  "blocks": [
+    { "type": "@app" }
+  ],
+  "presets": [
+    { "name": "Customer Reviews" }
+  ]
+}
+{% endschema %}

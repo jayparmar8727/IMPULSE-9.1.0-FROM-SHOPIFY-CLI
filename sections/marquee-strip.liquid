@@ -1,0 +1,297 @@
+{%- liquid
+  assign show_section    = section.settings.show_section
+  assign speed           = section.settings.speed
+  assign direction       = section.settings.direction
+  assign text_size       = section.settings.text_size
+  assign text_size_mob   = section.settings.text_size_mobile
+  assign text_weight     = section.settings.text_weight
+  assign separator       = section.settings.separator
+  assign padding_v       = section.settings.padding_v
+  assign gap             = section.settings.gap
+  assign bg_color        = section.settings.bg_color
+  assign text_color      = section.settings.text_color
+  assign separator_color = section.settings.separator_color
+  assign show_border     = section.settings.show_border
+  assign border_color    = section.settings.border_color
+  assign uid             = section.id | replace: '-', ''
+  if direction == 'right'
+    assign anim_dir = 'reverse'
+  else
+    assign anim_dir = 'normal'
+  endif
+-%}
+
+{%- unless show_section == false -%}
+
+{%- style -%}
+  .kw-strip-{{ section.id }} {
+    background: {{ bg_color }};
+    padding: {{ padding_v }}px 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    {%- if show_border -%}
+    border-top: 1px solid {{ border_color }};
+    border-bottom: 1px solid {{ border_color }};
+    {%- endif -%}
+  }
+  .kw-strip-{{ section.id }} .strip-track {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: kw-strip-{{ uid }} {{ speed }}s linear infinite {{ anim_dir }};
+  }
+  .kw-strip-{{ section.id }} .strip-track:hover {
+    animation-play-state: paused;
+  }
+  .kw-strip-{{ section.id }} .strip-item {
+    font-size: {{ text_size }}px;
+    font-weight: {{ text_weight }};
+    color: {{ text_color }};
+    padding: 0 {{ gap }}px;    /* Override .t-label's .28em (too wide on moving text). */
+    letter-spacing: 0.12em;
+  }
+  .kw-strip-{{ section.id }} .strip-sep {
+    color: {{ separator_color }};
+    font-size: {{ text_size }}px;
+    flex-shrink: 0;  }
+  @keyframes kw-strip-{{ uid }} {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* Stop the scroll AND let the content wrap so nothing stays clipped by
+       overflow:hidden — reduced-motion users get a readable centered list. */
+    .kw-strip-{{ section.id }} .strip-track {
+      animation: none !important;
+      white-space: normal;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .kw-strip-{{ section.id }} .strip-dup,
+    .kw-strip-{{ section.id }} .strip-trail { display: none; }
+  }
+  @media (max-width: 749px) {
+    .kw-strip-{{ section.id }} .strip-item,
+    .kw-strip-{{ section.id }} .strip-sep {
+      font-size: {{ text_size_mob }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="kw-strip-{{ section.id }}" {{ section.shopify_attributes }}>
+  {%- comment -%} Static, screen-reader-only copy so the trust claims aren't lost to AT. {%- endcomment -%}
+  {%- if section.blocks.size > 0 -%}
+    <ul class="visually-hidden">
+      {%- for block in section.blocks -%}
+        <li>{{ block.settings.text | escape }}</li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+  {%- comment -%} Animated visual marquee — hidden from AT (the list above covers it). {%- endcomment -%}
+  <div class="strip-track" aria-hidden="true">
+    {%- for block in section.blocks -%}
+      <span class="strip-item t-label" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+      {%- unless forloop.last -%}<span class="strip-sep">{{ separator | escape }}</span>{%- endunless -%}
+    {%- endfor -%}
+    {%- if section.blocks.size > 0 -%}<span class="strip-sep strip-trail">{{ separator | escape }}</span>{%- endif -%}
+    {%- comment -%}Duplicate for seamless loop{%- endcomment -%}
+    {%- for block in section.blocks -%}
+      <span class="strip-item strip-dup t-label">{{ block.settings.text | escape }}</span>
+      {%- unless forloop.last -%}<span class="strip-sep strip-dup">{{ separator | escape }}</span>{%- endunless -%}
+    {%- endfor -%}
+    {%- if section.blocks.size > 0 -%}<span class="strip-sep strip-dup">{{ separator | escape }}</span>{%- endif -%}
+  </div>
+</div>
+
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Marquee Strip",
+  "tag": "section",
+  "class": "kw-marquee-strip",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed (seconds)",
+      "min": 8,
+      "max": 80,
+      "step": 2,
+      "default": 30,
+      "unit": "s"
+    },
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Scroll direction",
+      "options": [
+        { "value": "left",  "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size (px)",
+      "min": 9,
+      "max": 20,
+      "step": 1,
+      "default": 14,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "text_size_mobile",
+      "label": "Text size mobile (px)",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "600", "label": "Semi-Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator character",
+      "default": "·"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Vertical padding (px)",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Item gap (px)",
+      "min": 12,
+      "max": 80,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#d8ae82"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Show top/bottom border",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#6b3c23"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Strip Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Handcrafted Since 1945"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee Strip",
+      "blocks": [
+        {
+          "type": "text",
+          "settings": {
+            "text": "Handcrafted Bronze Utensils"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "75+ Years of Legacy"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "NABL Certified Products"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "Free Shipping Pan India"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "Eco-Friendly and Sustainable"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

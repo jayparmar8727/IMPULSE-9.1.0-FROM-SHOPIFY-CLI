@@ -1,0 +1,219 @@
+{%- liquid
+  assign eyebrow        = section.settings.eyebrow
+  assign heading        = section.settings.heading
+  assign heading_italic = section.settings.heading_italic
+  assign bg_color       = section.settings.bg_color
+  assign eye_color      = section.settings.eye_color
+  assign heading_color  = section.settings.heading_color
+  assign heading_italic_color = section.settings.heading_italic_color
+  assign num_color      = section.settings.num_color
+  assign title_color    = section.settings.title_color
+  assign desc_color     = section.settings.desc_color
+  assign divider_color  = section.settings.divider_color
+  assign top_border     = section.settings.top_border
+  assign container_width = section.settings.container_width
+  assign padding_top    = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_x      = section.settings.padding_x
+  assign max_width      = section.settings.max_width
+  assign cols_desktop   = section.settings.cols_desktop
+  assign tag_size_desktop = section.settings.tag_size_desktop
+  assign tag_size_mobile = section.settings.tag_size_mobile
+  assign title_size_desktop = section.settings.title_size_desktop
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign desc_size_desktop = section.settings.desc_size_desktop
+  assign desc_size_mobile = section.settings.desc_size_mobile
+-%}
+
+{%- style -%}
+  .ayv-{{ section.id }} {
+    background: {{ bg_color }};
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  .ayv-{{ section.id }} .ayv-inner {
+    padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin: 0 auto;
+    {%- endif -%}
+    box-sizing: border-box;
+  }
+  .ayv-{{ section.id }} .eye { color: {{ eye_color }}; margin-bottom: 14px; }
+  .ayv-{{ section.id }} .eye.t-eyebrow--dash::before { background: {{ eye_color }}; width: 28px; }
+  .ayv-{{ section.id }} .ttl { color: {{ heading_color }}; font-size: {{ section.settings.heading_size_desktop }}px; }
+  .ayv-{{ section.id }} .ttl em { color: {{ heading_italic_color }}; }
+  .ayv-{{ section.id }} .ayur-grid {
+    display: grid;
+    grid-template-columns: repeat({{ cols_desktop }}, 1fr);
+    gap: 0;
+    margin-top: 40px;
+    border-top: 1px solid {{ top_border }};
+  }
+  .ayv-{{ section.id }} .ag {
+    padding: 44px 28px 12px 0;
+    border-right: 1px solid {{ divider_color }};
+  }
+  .ayv-{{ section.id }} .ag:last-child { border-right: none; }
+  .ayv-{{ section.id }} .ag:not(:first-child) { padding-left: 28px; }
+  .ayv-{{ section.id }} .ag-num {
+    color: {{ num_color }};
+    margin-bottom: 22px;
+    font-size: {{ tag_size_desktop }}px;
+  }
+  .ayv-{{ section.id }} .ag-t {
+    color: {{ title_color }};
+    margin-bottom: 14px;
+    font-size: {{ title_size_desktop }}px;
+  }
+  .ayv-{{ section.id }} .ag-d {
+    color: {{ desc_color }};
+    font-size: {{ desc_size_desktop }}px;
+  }
+  /* fade-up — only when JS active (no hidden-content trap) */
+  .js-kw-fadeup .ayv-{{ section.id }} .fu {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+  }
+  .js-kw-fadeup .ayv-{{ section.id }} .fu.in { opacity: 1; transform: none; }
+  .js-kw-fadeup .ayv-{{ section.id }} .fu:nth-child(2) { transition-delay: .1s; }
+  .js-kw-fadeup .ayv-{{ section.id }} .fu:nth-child(3) { transition-delay: .2s; }
+  .js-kw-fadeup .ayv-{{ section.id }} .fu:nth-child(4) { transition-delay: .3s; }
+  .js-kw-fadeup .ayv-{{ section.id }} .fu:nth-child(5) { transition-delay: .4s; }
+  .js-kw-fadeup .ayv-{{ section.id }} .fu:nth-child(6) { transition-delay: .5s; }
+  .js-kw-fadeup .ayv-{{ section.id }} .fu:nth-child(7) { transition-delay: .6s; }
+  .js-kw-fadeup .ayv-{{ section.id }} .fu:nth-child(8) { transition-delay: .7s; }
+  @media (max-width: 900px) {
+    /* 2-col tablet/mobile: drop the grid's top rule so we show ONE line
+       between the rows (like craft-process), not a top line + a row line. */
+    .ayv-{{ section.id }} .ayur-grid { grid-template-columns: repeat(2, 1fr); border-top: none; }
+    .ayv-{{ section.id }} .ag { border-right: none; border-bottom: 1px solid {{ divider_color }}; padding: 32px 0; }
+    /* Kill the desktop column gutter (.ag:not(:first-child){padding-left:28px},
+       specificity 0,3,0) so it can't outrank the padding:32px 0 above and
+       indent every non-first card. Tablet re-adds a gutter on even cells below;
+       mobile stays flush-left. */
+    .ayv-{{ section.id }} .ag:not(:first-child) { padding-left: 0; }
+  }
+  /* 2-col tablet ONLY (750-900px): add the column gutter + drop the bottom
+     divider from the whole LAST ROW (last two cards). Scoped with min-width so
+     these do NOT leak into the 1-col mobile layout below — in a single column
+     nth-child(odd/even) would shove alternate rows right by 24px, and
+     nth-last-child(-n+2) would clear one divider too many. */
+  @media (min-width: 750px) and (max-width: 900px) {
+    .ayv-{{ section.id }} .ag:nth-child(odd)  { padding-right: 24px; }
+    .ayv-{{ section.id }} .ag:nth-child(even) { padding-left: 24px; }
+    .ayv-{{ section.id }} .ag:nth-last-child(-n+2) { border-bottom: none; }
+  }
+  @media (max-width: 749px) {
+    .ayv-{{ section.id }} .ayv-inner { padding: {{ section.settings.padding_top_mobile }}px {{ section.settings.padding_x_mobile }}px {{ section.settings.padding_bottom_mobile }}px; }
+    .ayv-{{ section.id }} .ayur-grid { grid-template-columns: 1fr; }
+    /* 1-col: every card flush-left, only the very last loses its divider. */
+    .ayv-{{ section.id }} .ag:last-child { border-bottom: none; }
+    .ayv-{{ section.id }} .ttl { font-size: {{ section.settings.heading_size_mobile }}px; }
+    .ayv-{{ section.id }} .ag-num { font-size: {{ tag_size_mobile }}px; }
+    .ayv-{{ section.id }} .ag-t { font-size: {{ title_size_mobile }}px; }
+    .ayv-{{ section.id }} .ag-d { font-size: {{ desc_size_mobile }}px; }
+  }
+  {%- if section.settings.hide_desktop -%}
+  @media (min-width: 768px) { .ayv-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media (max-width: 749px) { .ayv-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section class="ayurveda ayv-{{ section.id }}" data-kw-fade-up{% if heading != blank %} aria-labelledby="ayv-h-{{ section.id }}"{% else %} aria-label="{{ eyebrow | default: 'Ayurveda benefits' | escape }}"{% endif %} {{ section.shopify_attributes }}>
+  <div class="ayv-inner">
+    {%- if eyebrow != blank -%}<div class="eye t-eyebrow t-eyebrow--dash">{{ eyebrow | escape }}</div>{%- endif -%}
+    {%- if heading != blank -%}
+      <h2 class="ttl t-display" id="ayv-h-{{ section.id }}">{{ heading | escape }}{%- if heading_italic != blank -%}<em>{{ heading_italic | escape }}</em>{%- endif -%}</h2>
+    {%- endif -%}
+    <div class="ayur-grid">
+      {%- for block in section.blocks -%}
+        <div class="ag fu" {{ block.shopify_attributes }}>
+          {%- if block.settings.tag != blank -%}<div class="ag-num t-label">{{ block.settings.tag | escape }}</div>{%- endif -%}
+          {%- if block.settings.title != blank -%}<h3 class="ag-t t-label">{{ block.settings.title | escape }}</h3>{%- endif -%}
+          {%- if block.settings.description != blank -%}<p class="ag-d t-body-sm">{{ block.settings.description | escape }}</p>{%- endif -%}
+        </div>
+      {%- endfor -%}
+      {%- if section.blocks.size == 0 and request.design_mode -%}
+        <div class="ag"><div class="ag-num t-label">/ 01 · DOSHAS</div><p class="ag-d t-body-sm">Add “Benefit” blocks to build the grid.</p></div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Fade-up reveal handled by the shared self-booting IIFE in assets/theme.js
+  (data-kw-fade-up → adds .js-kw-fadeup to <html>, reveals .fu on scroll).
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Ayurveda",
+  "tag": "section",
+  "class": "kw-ayurveda",
+  "settings": [
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_desktop", "label": "Hide on desktop", "default": false },
+    { "type": "checkbox", "id": "hide_mobile", "label": "Hide on mobile", "default": false },
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Kansa . Brass . Copper" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Ayurveda's most" },
+    { "type": "text", "id": "heading_italic", "label": "Heading italic line", "default": "trusted metals." },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "cols_desktop", "label": "Desktop columns", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "select", "id": "container_width", "label": "Container width", "options": [ { "value": "boxed", "label": "Boxed (centered)" }, { "value": "full", "label": "Full width" } ], "default": "boxed" },
+    { "type": "range", "id": "max_width", "label": "Max width (px)", "min": 800, "max": 1800, "step": 20, "default": 1500, "unit": "px" },
+    { "type": "range", "id": "padding_top", "label": "Padding top (px)", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (px)", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+    { "type": "range", "id": "padding_x", "label": "Horizontal padding (px)", "min": 0, "max": 120, "step": 4, "default": 40, "unit": "px" },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top (px)", "min": 0, "max": 120, "step": 4, "default": 40, "unit": "px" },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom (px)", "min": 0, "max": 120, "step": 4, "default": 40, "unit": "px" },
+    { "type": "range", "id": "padding_x_mobile", "label": "Mobile horizontal padding (px)", "min": 0, "max": 40, "step": 1, "default": 17, "unit": "px" },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop (px)", "min": 24, "max": 72, "step": 1, "default": 43, "unit": "px" },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile (px)", "min": 20, "max": 48, "step": 2, "default": 30, "unit": "px" },
+    { "type": "range", "id": "tag_size_desktop", "label": "Tag / number size desktop (px)", "min": 8, "max": 20, "step": 1, "default": 11, "unit": "px" },
+    { "type": "range", "id": "tag_size_mobile", "label": "Tag / number size mobile (px)", "min": 8, "max": 18, "step": 1, "default": 10, "unit": "px" },
+    { "type": "range", "id": "title_size_desktop", "label": "Benefit title size desktop (px)", "min": 10, "max": 32, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "title_size_mobile", "label": "Benefit title size mobile (px)", "min": 10, "max": 28, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "desc_size_desktop", "label": "Description size desktop (px)", "min": 10, "max": 24, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "desc_size_mobile", "label": "Description size mobile (px)", "min": 10, "max": 20, "step": 1, "default": 16, "unit": "px" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#faf5ee" },
+    { "type": "color", "id": "eye_color", "label": "Eyebrow color", "default": "#bc843f" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#6b3c23" },
+    { "type": "color", "id": "heading_italic_color", "label": "Heading italic color", "default": "#bc843f" },
+    { "type": "color", "id": "num_color", "label": "Tag / number color", "default": "#6b3c23" },
+    { "type": "color", "id": "title_color", "label": "Benefit title color", "default": "#bc843f" },
+    { "type": "color", "id": "desc_color", "label": "Benefit description color", "default": "#6b3c23" },
+    { "type": "color", "id": "divider_color", "label": "Column divider color", "default": "#6b3c231f" },
+    { "type": "color", "id": "top_border", "label": "Top border color", "default": "#6b3c2326" }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "tag", "label": "Tag / number", "default": "/ 01 · DOSHAS" },
+        { "type": "text", "id": "title", "label": "Benefit title", "default": "Balances Doshas" },
+        { "type": "textarea", "id": "description", "label": "Benefit description", "default": "Kansa bronze balances Vata, Pitta and Kapha — the three doshas Ayurveda prescribes for total body harmony. Every meal becomes a ritual." }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Ayurveda",
+      "blocks": [
+        { "type": "benefit", "settings": { "tag": "/ 01 · DOSHAS", "title": "Balances Doshas", "description": "Kansa bronze balances Vata, Pitta and Kapha — the three doshas Ayurveda prescribes for total body harmony. Every meal becomes a ritual." } },
+        { "type": "benefit", "settings": { "tag": "/ 02 · PURITY", "title": "Zero Toxins", "description": "No teflon, no nickel, no aluminium, no chemical coatings. Pure Kansa, pure Brass, pure Copper — exactly as nature intended." } },
+        { "type": "benefit", "settings": { "tag": "/ 03 · LEGACY", "title": "Lasts Generations", "description": "With proper care, a Kansawala piece lasts decades and improves with age. Not a purchase — an heirloom passed from parent to child." } },
+        { "type": "benefit", "settings": { "tag": "/ 04 · WELLNESS", "title": "Boosts Immunity", "description": "Copper vessels destroy harmful bacteria within hours. Brass and Kansa leach beneficial minerals that aid digestion and immunity." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

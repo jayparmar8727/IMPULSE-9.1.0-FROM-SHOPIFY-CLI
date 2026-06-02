@@ -1,0 +1,535 @@
+{%- liquid
+  assign bg_color = section.settings.bg_color
+  assign number_color = section.settings.number_color
+  assign label_color = section.settings.label_color
+  assign border_color = section.settings.border_color
+  assign number_size = section.settings.number_size
+  assign number_size_mobile = section.settings.number_size_mobile
+  assign label_size = section.settings.label_size
+  assign item_padding = section.settings.item_padding
+  assign padding_x = section.settings.padding_x
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_top_mobile = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile = section.settings.padding_x_mobile
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_top_mobile = section.settings.margin_top_mobile
+  assign margin_bottom_mobile = section.settings.margin_bottom_mobile
+  assign max_width = section.settings.max_width
+  assign text_align = section.settings.text_align
+  assign text_align_mobile = section.settings.text_align_mobile
+  assign body_size_mobile = section.settings.body_size_mobile
+-%}
+
+{%- style -%}
+  .trust-{{ section.id }} {
+    background: {{ bg_color }};
+    padding: {{ padding_top_mobile }}px 0 {{ padding_bottom_mobile }}px;
+    margin: {{ margin_top_mobile }}px 0 {{ margin_bottom_mobile }}px;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: {{ text_align_mobile }};
+  }
+  .trust-{{ section.id }} .tn-inner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0 {{ padding_x_mobile }}px;
+    box-sizing: border-box;
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .trust-{{ section.id }} .ti {
+    text-align: center;
+    padding: {{ item_padding }}px 8px;
+    border-right: none;
+    border-bottom: 1px solid {{ border_color }};
+    min-width: 0;
+  }
+  .trust-{{ section.id }} .ti:nth-child(odd) {
+    border-right: 1px solid {{ border_color }};
+  }
+  .trust-{{ section.id }} .ti:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+  .trust-{{ section.id }} .tn {
+    color: {{ number_color }};
+    margin-bottom: 10px;
+    font-size: {{ number_size_mobile }}px;
+    line-height: 1.1;
+    overflow-wrap: normal;
+    /* Equal-width figures so the numeral doesn't jitter while counting up. */
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;  }
+  .trust-{{ section.id }} .tl {
+    color: {{ label_color }};
+    font-size: {{ body_size_mobile }}px;
+    line-height: 1.4;
+    word-spacing: normal;
+    white-space: normal;
+    overflow-wrap: anywhere;  }
+  .trust-{{ section.id }} .ts {
+    color: {{ label_color }};
+    margin-top: 6px;
+  }
+  @media (max-width: 749px) {
+    .trust-{{ section.id }} {
+      padding: {{ padding_top_mobile }}px 0 {{ padding_bottom_mobile }}px !important;
+      margin-top: {{ margin_top_mobile }}px !important;
+      margin-bottom: {{ margin_bottom_mobile }}px !important;
+      text-align: {{ text_align_mobile }};
+    }
+    .trust-{{ section.id }} .tn-inner {
+      padding: 0 {{ padding_x_mobile }}px;
+    }
+  }
+  /* Reveal is gated on .js-kw-fadeup (set by the count-up IIFE) so the band
+     stays visible if JS never runs — no hidden-content trap. */
+  .js-kw-fadeup .trust-{{ section.id }} .fu {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+  }
+  .js-kw-fadeup .trust-{{ section.id }} .fu.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .js-kw-fadeup .trust-{{ section.id }} .fu:nth-child(2) { transition-delay: 0.09s; }
+  .js-kw-fadeup .trust-{{ section.id }} .fu:nth-child(3) { transition-delay: 0.18s; }
+  .js-kw-fadeup .trust-{{ section.id }} .fu:nth-child(4) { transition-delay: 0.27s; }
+  @media(min-width: 1024px) {
+    .trust-{{ section.id }} {
+      padding: {{ padding_top }}px 0 {{ padding_bottom }}px;
+      margin: {{ margin_top }}px 0 {{ margin_bottom }}px;
+      text-align: {{ text_align }};
+    }
+    .trust-{{ section.id }} .tn-inner {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      padding: 0 {{ padding_x }}px;
+    }
+    .trust-{{ section.id }} .ti {
+      padding: {{ item_padding }}px 20px;
+      border-right: 1px solid {{ border_color }};
+      border-bottom: none;
+    }
+    .trust-{{ section.id }} .ti:nth-last-child(-n+2) {
+      border-bottom: none;
+    }
+    .trust-{{ section.id }} .ti:last-child {
+      border-right: none;
+    }
+    .trust-{{ section.id }} .tn { font-size: {{ number_size }}px; }
+    .trust-{{ section.id }} .tl {
+      font-size: {{ label_size }}px;
+      letter-spacing: var(--ls-label);
+      line-height: 1;
+    }
+  }
+  {%- if section.settings.hide_desktop -%}
+  @media (min-width: 768px) { .trust-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media (max-width: 749px) { .trust-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<div class="trust-{{ section.id }}" data-kw-trust-numbers role="region" aria-labelledby="tn-h-{{ section.id }}" {{ section.shopify_attributes }}>
+  <h2 id="tn-h-{{ section.id }}" class="t-display" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;">{{ section.settings.aria_label | default: 'Brand achievements' | escape }}</h2>
+  <div class="tn-inner">
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign target = block.settings.target_number | strip
+      assign target_digits = target | replace: '0', '' | replace: '1', '' | replace: '2', '' | replace: '3', '' | replace: '4', '' | replace: '5', '' | replace: '6', '' | replace: '7', '' | replace: '8', '' | replace: '9', ''
+      assign target_is_numeric = false
+      if target != blank and target_digits == blank
+        assign target_is_numeric = true
+      endif
+    -%}
+    <div class="ti fu" {{ block.shopify_attributes }}>
+      {%- if block.settings.animate_count and target_is_numeric -%}
+        {%- comment -%} Animating numeral is hidden from AT; the visually-hidden span carries the real final value. {%- endcomment -%}
+        <div class="tn t-stat-serif-upright trust-num" data-target="{{ target | escape }}" data-suffix="{{ block.settings.suffix | escape }}" aria-hidden="true">0{{ block.settings.suffix | escape }}</div>
+        <span class="visually-hidden">{{ target | escape }}{{ block.settings.suffix | escape }}</span>
+      {%- elsif block.settings.animate_count and target != blank -%}
+        <div class="tn t-stat-serif-upright">{{ target | escape }}{{ block.settings.suffix | escape }}</div>
+      {%- else -%}
+        <div class="tn t-stat-serif-upright">{{ block.settings.number | escape }}</div>
+      {%- endif -%}
+      <div class="tl t-label t-label-stat">{{ block.settings.label | escape }}</div>
+      {%- if block.settings.source != blank -%}
+        <div class="ts t-eyebrow">{{ block.settings.source | escape }}</div>
+      {%- endif -%}
+    </div>
+  {%- endfor -%}
+  {%- if section.blocks.size == 0 and request.design_mode -%}
+    <div class="ti"><div class="tn t-stat-serif-upright">0+</div><div class="tl t-label t-label-stat">Add “Stat” blocks</div></div>
+  {%- endif -%}
+  </div>
+</div>
+
+{%- comment -%}
+  Count-up + fade-up logic lives in the shared self-booting IIFE in
+  assets/theme.js (ported from 9.0.0 theme.custom.js initTrustNumbers).
+  Section root carries data-kw-trust-numbers; the IIFE finds it, counts
+  the .trust-num numerals up, and reveals the .fu items on scroll.
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Trust Numbers",
+  "tag": "section",
+  "class": "kw-trust-numbers",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Accessibility"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "ARIA label",
+      "default": "Brand achievements"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "number_size",
+      "label": "Number size desktop (px)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "default": 42,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "number_size_mobile",
+      "label": "Number size mobile (px)",
+      "min": 20,
+      "max": 56,
+      "step": 2,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label size (px)",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "default": 9,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max content width (px)",
+      "min": 800,
+      "max": 1800,
+      "step": 20,
+      "default": 1500,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "text_align_mobile",
+      "label": "Text alignment (mobile)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "item_padding",
+      "label": "Item vertical padding (px)",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "default": 36,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top (px)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom (px)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Mobile horizontal padding (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 17,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Mobile margin top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Mobile margin bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Typography"
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Label font size mobile (px)",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "default": 10,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "Number color",
+      "default": "#d8ae82"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label color",
+      "default": "#fee8d9d9"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#fee8d914"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "animate_count",
+          "label": "Animate counting",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "target_number",
+          "label": "Target number (for counting)",
+          "default": "75"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix",
+          "default": "+"
+        },
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Static number (when counting is off)",
+          "default": "4th"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Years of Legacy"
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Source / citation",
+          "info": "Optional small caption below the label (e.g. \"NABL Cert. 12345\", \"MCX India 2024\"). Leave blank to hide."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Numbers",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "animate_count": true,
+            "target_number": "75",
+            "suffix": "+",
+            "number": "4th",
+            "label": "Years of Legacy",
+            "source": ""
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "animate_count": false,
+            "target_number": "75",
+            "suffix": "+",
+            "number": "4th",
+            "label": "Generation Family",
+            "source": ""
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "animate_count": true,
+            "target_number": "40",
+            "suffix": "+",
+            "number": "4th",
+            "label": "Countries We Deliver To",
+            "source": ""
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "animate_count": true,
+            "target_number": "10000",
+            "suffix": "+",
+            "number": "4th",
+            "label": "Families Who Trust Us",
+            "source": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

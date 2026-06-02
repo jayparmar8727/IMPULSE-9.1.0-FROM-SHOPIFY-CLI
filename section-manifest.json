@@ -1,5 +1,5 @@
 {
-  "_comment": "Working base = complete true-stock Impulse 9.1.0 (Shopify CLI pull, rev 40d0dcd). owner: custom = ported Kansawala section, stock = untouched Impulse. No custom sections are present yet — the homepage migration is pending (see pending_migration below and docs/). Check this manifest, not filenames, to tell stock vs custom.",
+  "_comment": "Working base = true-stock Impulse 9.1.0 (Shopify CLI pull, rev 40d0dcd). owner: custom = ported Kansawala code, stock = untouched Impulse. The Kansawala custom sections have now been migrated in (Phase 1 foundation + Phase 2 sections). Check this manifest, not filenames, to tell stock vs custom.",
   "baseline": {
     "theme": "Impulse 9.1.0 (Archetype)",
     "git_rev": "40d0dcd",
@@ -7,36 +7,35 @@
     "complete_stock": true
   },
   "sections": {
-    "collection-grid-2": {
-      "owner": "custom",
-      "note": "Duplicate of stock sections/featured-collections.liquid renamed \"Collection Grid 2\". Added three fields ported from the custom collections-grid section: Eyebrow + Heading italic line (section settings) and Metal label (per-block setting). Renders cards via the custom snippet collection-grid-item-2 instead of the shared stock snippet. A scoped {% style %} block restyles it to match the original collections-grid design (gold dashed eyebrow/metal label, brown heading with gold italic line, square cards) with colors hardcoded; stock files untouched.",
-      "snippets": ["collection-grid-item-2"]
-    }
+    "hero-slider": { "owner": "custom", "note": "Homepage hero carousel (self-contained; inline style + JS engine theme.HeroSlider)." },
+    "marquee-strip": { "owner": "custom", "note": "Scrolling marquee strip of trust phrases (self-contained)." },
+    "collections-grid": { "owner": "custom", "note": "Shop-by-metal collection cards grid (self-contained). Supersedes the removed stock-based collection-grid-2 experiment." },
+    "global-presence": { "owner": "custom", "note": "Stats + panels 'global presence' section (self-contained)." },
+    "trust-numbers": { "owner": "custom", "note": "Trust/stat numbers section (self-contained). Migrated as a file; not on the homepage." },
+    "heritage-timeline": { "owner": "custom", "note": "Heritage era timeline (self-contained)." },
+    "bestsellers": { "owner": "custom", "note": "Tabbed bestsellers product grid (self-contained; inline tab engine)." },
+    "brand-story": { "owner": "custom", "note": "Brand story with image + pills (self-contained)." },
+    "three-sacred-metals": { "owner": "custom", "note": "Kansa/Brass/Copper metal cards (self-contained; mobile slider engine)." },
+    "ayurveda": { "owner": "custom", "note": "Ayurveda benefits grid (self-contained)." },
+    "b2b-trust": { "owner": "custom", "note": "B2B client logos + testimonials + stat bands (self-contained; inline slider)." },
+    "meaning-legacy": { "owner": "custom", "note": "Gifting steps section (self-contained)." },
+    "customer-reviews": { "owner": "custom", "note": "Customer reviews / Judge.me widget wrapper (self-contained)." },
+    "craft-process": { "owner": "custom", "note": "Four-step craft process (self-contained)." },
+    "buy-back-promise": { "owner": "custom", "note": "Buy-back promise + metal price proof (self-contained)." },
+    "kw-newsletter": { "owner": "custom", "note": "Kansawala newsletter signup (self-contained)." },
+    "footer-kansawala": { "owner": "custom", "note": "Custom footer section (self-contained). Migrated as a file; NOT yet wired into a footer group." }
   },
   "snippets": {
-    "collection-grid-item-2": {
-      "owner": "custom",
-      "note": "Copy of stock snippets/collection-grid-item.liquid with a Metal label (block.settings.metal) rendered above the title. Used only by collection-grid-2; stock snippet left untouched."
-    }
+    "kw-fonts": { "owner": "custom", "note": "Loads Cormorant Garamond (Google Fonts); reuses theme Jost. Rendered in layout/theme.liquid <head>." },
+    "kw-schema-organization": { "owner": "custom", "note": "Organization JSON-LD; rendered in <head> on the index template only." }
   },
-  "pending_migration": [
-    "hero-slider",
-    "marquee-strip",
-    "collections-grid",
-    "global-presence",
-    "trust-numbers",
-    "heritage-timeline",
-    "bestsellers",
-    "brand-story",
-    "three-sacred-metals",
-    "ayurveda",
-    "b2b-trust",
-    "meaning-legacy",
-    "customer-reviews",
-    "craft-process",
-    "buy-back-promise",
-    "kw-newsletter",
-    "footer-kansawala"
-  ],
-  "foundation": {}
+  "assets": {
+    "kw-tokens.css": { "owner": "custom", "note": "Kansawala design tokens (colors, spacing). Loaded in theme.liquid <head>." },
+    "kw-typography.css": { "owner": "custom", "note": "Kansawala .t-* typography classes used by all custom sections. Loaded in theme.liquid <head>." }
+  },
+  "foundation": {
+    "layout/theme.liquid": "Surgically edited (+4 head lines after css-variables) to load kw-tokens.css, kw-typography.css, kw-fonts, and kw-schema-organization (index only). Additive; stock structure intact.",
+    "templates/index.json": "Replaced with the Kansawala homepage layout (15 custom sections in order). Prior stock/experiment homepage preserved in git history."
+  },
+  "pending_migration": []
 }

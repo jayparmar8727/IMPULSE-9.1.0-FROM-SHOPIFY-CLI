@@ -1,0 +1,856 @@
+{%- liquid
+  assign bg_color = section.settings.bg_color
+  assign heading_color = section.settings.heading_color
+  assign link_color = section.settings.link_color
+  assign link_hover_color = section.settings.link_hover_color
+  assign social_border = section.settings.social_border
+  assign social_color = section.settings.social_color
+  assign border_color = section.settings.border_color
+  assign copy_color = section.settings.copy_color
+  assign desc_color = section.settings.desc_color
+  assign contact_color = section.settings.contact_color
+  assign strip_bg = section.settings.strip_bg
+  assign strip_color = section.settings.strip_color
+  assign strip_border = section.settings.strip_border
+  assign disc_border = section.settings.disc_border
+  assign disc_pct_color = section.settings.disc_pct_color
+  assign disc_val_color = section.settings.disc_val_color
+  assign disc_cond_color = section.settings.disc_cond_color
+  assign padding_x = section.settings.padding_x
+  assign strip_speed = section.settings.strip_speed
+  assign uid = section.id | replace: '-', ''
+  assign padding_x_mobile = section.settings.padding_x_mobile
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_top_mobile = section.settings.margin_top_mobile
+  assign margin_bottom_mobile = section.settings.margin_bottom_mobile
+  assign container_width = section.settings.container_width
+  assign max_width = section.settings.max_width
+
+  assign strip_blocks = section.blocks | where: 'type', 'strip_item'
+  assign disc_blocks = section.blocks | where: 'type', 'discount'
+  assign menu_blocks = section.blocks | where: 'type', 'menu'
+  assign logo_alt = section.settings.brand_name | default: shop.name
+
+  comment
+    Social links: prefer the 9.1.0 theme settings (Theme settings → Social media),
+    fall back to the 9.0.0 brand-metafield namespace so existing data still shows.
+  endcomment
+  assign ig = settings.social_instagram_link | default: shop.brand.metafields.social.instagram
+  assign fb = settings.social_facebook_link | default: shop.brand.metafields.social.facebook
+  assign yt = settings.social_youtube_link | default: shop.brand.metafields.social.youtube
+  assign tw = settings.social_twitter_link | default: shop.brand.metafields.social.twitter
+  assign pt = settings.social_pinterest_link | default: shop.brand.metafields.social.pinterest
+-%}
+
+{%- comment -%}
+  Footer Kansawala — custom section (ported 9.0.0 → 9.1.0). Replaces the stock
+  footer in footer-group.json (stock `footer` + `footer-promotions` disabled;
+  both kept on disk for rollback). Parts: (1) a CSS-only auto-scrolling promo
+  strip (sr-only real list for AT, aria-hidden animated copies, reduced-motion
+  static), (2) optional discount-tier grid, (3) the main grid — brand block
+  (logo/name, description, contact, socials) + menu columns that are native
+  <details> accordions on mobile and flat on desktop, and (4) a payment +
+  copyright bottom bar. Structural CSS is inline + scoped to .ftr-{{ section.id }};
+  typography (.t-*) from assets/kw-typography.css, tokens from assets/kw-tokens.css.
+  The accordion mobile-collapse is progressive enhancement (initFooter IIFE in
+  assets/theme.js, [data-kw-footer]); it degrades to open accordions with no JS.
+{%- endcomment -%}
+
+{%- style -%}
+  /* Footer top marquee */
+  .ftr-strip-{{ section.id }} {
+    background: {{ strip_bg }};
+    padding: 4px 0;
+    overflow: hidden;
+  }
+  .ftr-strip-{{ section.id }} .ftr-strip-track {
+    display: inline-flex;
+    gap: 0;
+    animation: fstrip-{{ uid }} {{ strip_speed }}s linear infinite;
+    white-space: nowrap;
+  }
+  .ftr-strip-{{ section.id }} .ftt {
+    color: {{ strip_color }};
+    padding: 8px 28px;
+    border-right: 1px solid {{ strip_border }};
+  }
+  @keyframes fstrip-{{ uid }} {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  /* Reduced motion: stop the scroll and let the strip wrap so nothing stays
+     clipped by overflow:hidden; drop the duplicate (aria-hidden) pass. */
+  @media (prefers-reduced-motion: reduce) {
+    .ftr-strip-{{ section.id }} { overflow: visible; }
+    .ftr-strip-{{ section.id }} .ftr-strip-track {
+      animation: none;
+      flex-wrap: wrap;
+      white-space: normal;
+      justify-content: center;
+    }
+    .ftr-strip-{{ section.id }} .ftt--dup { display: none; }
+  }
+
+  /* Main footer */
+  .ftr-{{ section.id }} {
+    background: {{ bg_color }};
+    padding: 0 {{ padding_x_mobile }}px;
+    margin: {{ margin_top_mobile }}px 0 {{ margin_bottom_mobile }}px;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  {%- if container_width == 'boxed' -%}
+  .ftr-{{ section.id }} > * {
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  {%- endif -%}
+
+  /* Discount tiers */
+  .ftr-{{ section.id }} .footer-disc {
+    border-bottom: 1px solid {{ border_color }};
+    padding: 22px 0;
+  }
+  .ftr-{{ section.id }} .disc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .ftr-{{ section.id }} .dg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px 14px 16px;
+    border: 1px solid {{ disc_border }};
+    border-radius: 14px;
+  }
+  .ftr-{{ section.id }} .dg-pct {
+    color: {{ disc_pct_color }};
+    line-height: 1;
+  }
+  .ftr-{{ section.id }} .dg-body { min-width: 0; width: 100%; }
+  .ftr-{{ section.id }} .dg-val {
+    color: {{ disc_val_color }};
+    margin-bottom: 4px;
+    line-height: 1.25;
+  }
+  .ftr-{{ section.id }} .dg-cond {
+    color: {{ disc_cond_color }};
+    line-height: 1.4;
+  }
+  @media(min-width: 640px) {
+    .ftr-{{ section.id }} .dg {
+      flex-direction: row;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 20px;
+      min-height: 84px;
+    }
+    .ftr-{{ section.id }} .dg-pct {
+      flex-shrink: 0;
+      min-width: 54px;
+      text-align: center;
+    }
+    .ftr-{{ section.id }} .dg-body { flex: 1; }
+    .ftr-{{ section.id }} .disc-grid { gap: 12px; }
+  }
+
+  /* Footer grid */
+  .ftr-{{ section.id }} .footer-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 0 36px;
+  }
+
+  /* Brand col */
+  .ftr-{{ section.id }} .fb-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .ftr-{{ section.id }} .fb-logo-img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: {{ section.settings.logo_height_mobile | default: 72 }}px;
+  }
+  @media(min-width: 1024px) {
+    .ftr-{{ section.id }} .fb-logo-img {
+      max-height: {{ section.settings.logo_height | default: 84 }}px;
+    }
+  }
+  .ftr-{{ section.id }} .fb-logo-main {
+    color: {{ heading_color }};
+    display: block;
+  }
+  .ftr-{{ section.id }} .fb-logo-sub {
+    color: {{ link_hover_color }};
+    margin-top: 3px;
+    display: block;
+  }
+  .ftr-{{ section.id }} .fb-desc { color: {{ desc_color }}; margin-bottom: 22px; }
+  .ftr-{{ section.id }} .fb-contact { margin-bottom: 22px; }
+  .ftr-{{ section.id }} .fb-contact a,
+  .ftr-{{ section.id }} .fb-contact p {
+    color: {{ contact_color }};
+    margin-bottom: 7px;
+    display: block;
+    transition: color var(--dur-quick);
+    text-decoration: none;
+  }
+  .ftr-{{ section.id }} .fb-contact a:hover { color: {{ link_hover_color }}; }
+  .ftr-{{ section.id }} .fb-socials {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+  }
+  .ftr-{{ section.id }} .fs {
+    width: 34px;
+    height: 34px;
+    border: 1px solid {{ social_border }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ social_color }};
+    transition: border-color var(--dur-quick), color var(--dur-quick);
+    text-decoration: none;
+  }
+  .ftr-{{ section.id }} .fs:hover {
+    border-color: {{ link_hover_color }};
+    color: {{ link_hover_color }};
+  }
+
+  /* Nav cols — collapsible accordions on mobile */
+  .ftr-{{ section.id }} .fc {
+    border-top: 1px solid {{ border_color }};
+  }
+  .ftr-{{ section.id }} .fc-sum {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .ftr-{{ section.id }} .fc-sum::-webkit-details-marker { display: none; }
+  .ftr-{{ section.id }} .fc-sum::marker { content: ''; }
+  .ftr-{{ section.id }} .fc h4 {
+    color: {{ heading_color }};
+    margin: 0;
+  }
+  .ftr-{{ section.id }} .fc-chv {
+    display: inline-flex;
+    color: {{ heading_color }};
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+  }
+  .ftr-{{ section.id }} .fc[open] .fc-chv { transform: rotate(180deg); }
+  .ftr-{{ section.id }} .fc-links { padding: 2px 0 18px; }
+  .ftr-{{ section.id }} .fc a {
+    display: block;
+    color: {{ link_color }};
+    margin-bottom: 11px;
+    transition: color var(--dur-quick);
+    text-decoration: none;
+  }
+  .ftr-{{ section.id }} .fc a:hover { color: {{ link_hover_color }}; }
+
+  /* Bottom row */
+  .ftr-{{ section.id }} .footer-btm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 0;
+    gap: 16px;
+  }
+  .ftr-{{ section.id }} .pay-icons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .ftr-{{ section.id }} .copy {
+    color: {{ copy_color }};
+  }
+  .ftr-{{ section.id }} .copy a {
+    color: {{ copy_color }};
+    transition: color var(--dur-quick);
+    text-decoration: none;
+  }
+  .ftr-{{ section.id }} .copy a:hover { color: {{ link_hover_color }}; }
+
+  /* Visible keyboard focus (was hover-only in 9.0.0) */
+  .ftr-strip-{{ section.id }} a:focus-visible,
+  .ftr-{{ section.id }} a:focus-visible,
+  .ftr-{{ section.id }} .fc-sum:focus-visible {
+    outline: 2px solid {{ link_hover_color }};
+    outline-offset: 2px;
+  }
+
+  {%- if section.settings.hide_desktop -%}
+  @media(min-width: 768px) { .ftr-{{ section.id }}, .ftr-strip-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media(max-width: 749px) { .ftr-{{ section.id }}, .ftr-strip-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  @media(min-width: 1024px) {
+    .ftr-{{ section.id }} { padding: 0 {{ padding_x }}px; margin: {{ margin_top }}px 0 {{ margin_bottom }}px; }
+    .ftr-{{ section.id }} .footer-main {
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      padding: 60px 0 48px;
+    }
+    /* Flatten accordions on desktop */
+    .ftr-{{ section.id }} .fc { border: 0; }
+    .ftr-{{ section.id }} .fc-sum {
+      padding: 0;
+      cursor: default;
+      pointer-events: none;
+    }
+    .ftr-{{ section.id }} .fc h4 { margin-bottom: 20px; }
+    .ftr-{{ section.id }} .fc-chv { display: none; }
+    .ftr-{{ section.id }} .fc-links { padding: 0; }
+    .ftr-{{ section.id }} .disc-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .ftr-{{ section.id }} .footer-btm {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+{%- endstyle -%}
+
+{%- comment -%} Footer top marquee strip {%- endcomment -%}
+{%- if section.settings.show_strip and strip_blocks.size > 0 -%}
+<div class="ftr-strip-{{ section.id }}">
+  {%- comment -%} Real list for assistive tech (animated copies below are aria-hidden). {%- endcomment -%}
+  <ul class="visually-hidden">
+    {%- for block in strip_blocks -%}
+      {%- if block.settings.text != blank -%}<li>{{ block.settings.text | escape }}</li>{%- endif -%}
+    {%- endfor -%}
+  </ul>
+  <div class="ftr-strip-track" aria-hidden="true">
+    {%- for block in strip_blocks -%}
+      <span class="ftt t-label" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+    {%- endfor -%}
+    {%- for block in strip_blocks -%}
+      <span class="ftt ftt--dup t-label">{{ block.settings.text | escape }}</span>
+    {%- endfor -%}
+  </div>
+</div>
+{%- endif -%}
+
+<footer class="ftr-{{ section.id }}" data-kw-footer role="contentinfo" {{ section.shopify_attributes }}>
+
+  {%- comment -%} Discount tiers {%- endcomment -%}
+  {%- if disc_blocks.size > 0 -%}
+  <div class="footer-disc">
+    <div class="disc-grid">
+      {%- for block in disc_blocks -%}
+        <div class="dg" {{ block.shopify_attributes }}>
+          <div class="dg-pct t-card-title-serif">{{ block.settings.percent | escape }}</div>
+          <div class="dg-body">
+            <div class="dg-val t-label">{{ block.settings.label | escape }}</div>
+            <div class="dg-cond t-body-sm">{{ block.settings.condition | escape }}</div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- endif -%}
+
+  {%- comment -%} Main footer grid {%- endcomment -%}
+  <div class="footer-main">
+    {%- comment -%} Brand column {%- endcomment -%}
+    <div>
+      <div class="fb-logo">
+        {%- if section.settings.logo != blank -%}
+          {{
+            section.settings.logo
+            | image_url: width: 480
+            | image_tag:
+              class: 'fb-logo-img',
+              alt: logo_alt,
+              loading: 'lazy',
+              decoding: 'async',
+              widths: '120, 180, 240, 360, 480',
+              sizes: '180px'
+          }}
+        {%- else -%}
+          <div>
+            <span class="fb-logo-main t-logo">{{ section.settings.brand_name | default: shop.name | escape }}</span>
+            <span class="fb-logo-sub t-logo-sub">{{ section.settings.brand_tagline | default: 'Legacy of Craftsmanship' | escape }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.description != blank -%}
+        <p class="fb-desc t-body-sm">{{ section.settings.description | escape }}</p>
+      {%- endif -%}
+      <div class="fb-contact t-body-sm">
+        {%- if section.settings.email != blank -%}
+          <a href="mailto:{{ section.settings.email | escape }}">{{ section.settings.email | escape }}</a>
+        {%- endif -%}
+        {%- if section.settings.contact_link_text != blank -%}
+          <a href="{{ section.settings.contact_link | default: '#' }}">{{ section.settings.contact_link_text | escape }}</a>
+        {%- endif -%}
+        {%- if section.settings.address != blank -%}
+          <p>{{ section.settings.address | escape }}</p>
+        {%- endif -%}
+      </div>
+      <div class="fb-socials">
+        {%- if ig != blank -%}<a href="{{ ig | escape }}" class="fs t-label" aria-label="Instagram" target="_blank" rel="noopener">IG</a>{%- endif -%}
+        {%- if fb != blank -%}<a href="{{ fb | escape }}" class="fs t-label" aria-label="Facebook" target="_blank" rel="noopener">FB</a>{%- endif -%}
+        {%- if yt != blank -%}<a href="{{ yt | escape }}" class="fs t-label" aria-label="YouTube" target="_blank" rel="noopener">YT</a>{%- endif -%}
+        {%- if tw != blank -%}<a href="{{ tw | escape }}" class="fs t-label" aria-label="X / Twitter" target="_blank" rel="noopener">TW</a>{%- endif -%}
+        {%- if pt != blank -%}<a href="{{ pt | escape }}" class="fs t-label" aria-label="Pinterest" target="_blank" rel="noopener">PT</a>{%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Menu columns — collapsible accordions on mobile, flat on desktop {%- endcomment -%}
+    {%- for block in menu_blocks -%}
+      <details class="fc t-body-sm" open {{ block.shopify_attributes }}>
+        <summary class="fc-sum">
+          {%- if block.settings.heading != blank -%}
+            <h4 class="t-label">{{ block.settings.heading | escape }}</h4>
+          {%- else -%}
+            <span></span>
+          {%- endif -%}
+          <span class="fc-chv" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </summary>
+        <div class="fc-links">
+          {%- if block.settings.menu != blank -%}
+            {%- for link in linklists[block.settings.menu].links -%}
+              <a href="{{ link.url }}">{{ link.title | escape }}</a>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </details>
+    {%- endfor -%}
+
+    {%- if menu_blocks.size == 0 and request.design_mode -%}
+      <div class="fc"><p class="fc-links t-body-sm" style="color:{{ link_color }}">Add “Menu Column” blocks to build the footer navigation.</p></div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} Bottom row {%- endcomment -%}
+  <div class="footer-btm">
+    {%- if section.settings.show_payment -%}
+      <div class="pay-icons" aria-label="Accepted payment methods">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag }}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    <p class="copy t-body-sm">{{ section.settings.copyright | default: shop.name | escape }} &copy; {{ 'now' | date: '%Y' }}. All rights reserved.</p>
+  </div>
+
+</footer>
+
+{% schema %}
+{
+  "name": "Footer Kansawala",
+  "tag": "section",
+  "class": "kw-footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "When set, the full logo replaces the brand name and tagline."
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height (desktop)",
+      "min": 40,
+      "max": 160,
+      "step": 4,
+      "default": 84,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile",
+      "label": "Logo height (mobile)",
+      "min": 32,
+      "max": 120,
+      "step": 2,
+      "default": 72,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name",
+      "info": "Used when no logo is set, and for the logo alt text.",
+      "default": "Kansawala"
+    },
+    {
+      "type": "text",
+      "id": "brand_tagline",
+      "label": "Brand tagline",
+      "default": "Legacy of Craftsmanship"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Four generations of the Mukundray Fulchand family, shaping metal into memory since 1945. Every purchase supports an ancient Indian craft from Sihor, Gujarat."
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "info@kansawalas.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_link_text",
+      "label": "Contact link text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "contact_link",
+      "label": "Contact link"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Address",
+      "default": "Sihor, Gujarat, India - 364240"
+    },
+    {
+      "type": "header",
+      "content": "Bottom bar"
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright text",
+      "default": "Kansawala Mukundray Fulchand . Sihor, Gujarat"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Top strip"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_strip",
+      "label": "Show marquee strip",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "strip_speed",
+      "label": "Strip speed (s)",
+      "min": 10,
+      "max": 80,
+      "step": 2,
+      "default": 24,
+      "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "boxed", "label": "Boxed" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 960, "max": 1920, "step": 20, "default": 1500, "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal padding desktop (px)",
+      "min": 16,
+      "max": 100,
+      "step": 4,
+      "default": 52,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Mobile horizontal padding (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Mobile margin top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Mobile margin bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description color",
+      "default": "#fee8d9"
+    },
+    {
+      "type": "color",
+      "id": "contact_color",
+      "label": "Contact color",
+      "default": "#fee8d9"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#fee8d9"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#d8ae82"
+    },
+    {
+      "type": "color",
+      "id": "social_border",
+      "label": "Social border",
+      "default": "#d8ae8240"
+    },
+    {
+      "type": "color",
+      "id": "social_color",
+      "label": "Social icon color",
+      "default": "#fee8d9"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#d8ae8224"
+    },
+    {
+      "type": "color",
+      "id": "copy_color",
+      "label": "Copyright color",
+      "default": "#d8ae82"
+    },
+    {
+      "type": "color",
+      "id": "strip_bg",
+      "label": "Strip background",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "strip_color",
+      "label": "Strip text color",
+      "default": "#d8ae82"
+    },
+    {
+      "type": "color",
+      "id": "strip_border",
+      "label": "Strip divider",
+      "default": "#d8ae8226"
+    },
+    {
+      "type": "color",
+      "id": "disc_border",
+      "label": "Discount border",
+      "default": "#d8ae8240"
+    },
+    {
+      "type": "color",
+      "id": "disc_pct_color",
+      "label": "Discount % color",
+      "default": "#d8ae82"
+    },
+    {
+      "type": "color",
+      "id": "disc_val_color",
+      "label": "Discount label color",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "disc_cond_color",
+      "label": "Discount condition",
+      "default": "#fee8d9"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "strip_item",
+      "name": "Strip Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free Worldwide Shipping"
+        }
+      ]
+    },
+    {
+      "type": "discount",
+      "name": "Discount Tier",
+      "settings": [
+        {
+          "type": "text",
+          "id": "percent",
+          "label": "Percentage",
+          "default": "5%"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Off All Orders"
+        },
+        {
+          "type": "text",
+          "id": "condition",
+          "label": "Condition",
+          "default": "No minimum purchase"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer Kansawala",
+      "blocks": [
+        { "type": "strip_item", "settings": { "text": "Free Worldwide Shipping" } },
+        { "type": "strip_item", "settings": { "text": "5% Off All Orders" } },
+        { "type": "strip_item", "settings": { "text": "Handcrafted Since 1945" } },
+        { "type": "strip_item", "settings": { "text": "Sihor, Gujarat, India" } },
+        { "type": "strip_item", "settings": { "text": "Pure Kansa . Brass . Copper" } },
+        { "type": "strip_item", "settings": { "text": "No Teflon . No Chemicals" } },
+        { "type": "discount", "settings": { "percent": "5%", "label": "Off All Orders", "condition": "No minimum purchase" } },
+        { "type": "discount", "settings": { "percent": "8%", "label": "Off Your Order", "condition": "On orders above Rs. 8,500" } },
+        { "type": "discount", "settings": { "percent": "12%", "label": "Off Your Order", "condition": "On orders above Rs. 16,000" } },
+        { "type": "discount", "settings": { "percent": "15%", "label": "Off Your Order", "condition": "On orders above Rs. 32,000" } },
+        { "type": "menu", "settings": { "heading": "Shop by Metal" } },
+        { "type": "menu", "settings": { "heading": "Shop by Use" } },
+        { "type": "menu", "settings": { "heading": "Company" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,618 @@
+{%- liquid
+  assign eyebrow              = section.settings.eyebrow
+  assign heading              = section.settings.heading
+  assign heading_italic       = section.settings.heading_italic
+  assign subtitle             = section.settings.subtitle
+
+  assign footer_text          = section.settings.footer_text
+  assign cta_text             = section.settings.cta_text
+  assign cta_link             = section.settings.cta_link
+
+  assign bg_color             = section.settings.bg_color
+  assign eye_color            = section.settings.eye_color
+  assign heading_color        = section.settings.heading_color
+  assign heading_italic_color = section.settings.heading_italic_color
+  assign sub_color            = section.settings.sub_color
+
+  assign label_color          = section.settings.label_color
+  assign step_num_color       = section.settings.step_num_color
+  assign step_title_color     = section.settings.step_title_color
+  assign step_desc_color      = section.settings.step_desc_color
+  assign step_link_color      = section.settings.step_link_color
+  assign step_line_color      = section.settings.step_line_color
+  assign img_bg_color         = section.settings.img_bg_color
+
+  assign spine_color          = section.settings.spine_color
+
+  assign dot_bg_color         = section.settings.dot_bg_color
+  assign dot_border_color     = section.settings.dot_border_color
+  assign dot_hover_color      = section.settings.dot_hover_color
+  assign dot_num_color        = section.settings.dot_num_color
+
+  assign footer_text_color    = section.settings.footer_text_color
+  assign footer_line_color    = section.settings.footer_line_color
+  assign footer_cta_color     = section.settings.footer_cta_color
+  assign footer_cta_hover     = section.settings.footer_cta_hover
+
+  assign container_width      = section.settings.container_width
+  assign max_width            = section.settings.max_width
+
+  assign padding_top           = section.settings.padding_top
+  assign padding_bottom        = section.settings.padding_bottom
+  assign padding_x             = section.settings.padding_x
+  assign padding_top_mobile    = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile      = section.settings.padding_x_mobile
+
+  assign heading_size_desktop    = section.settings.heading_size_desktop
+  assign heading_size_mobile     = section.settings.heading_size_mobile
+  assign sub_size_desktop        = section.settings.sub_size_desktop
+  assign sub_size_mobile         = section.settings.sub_size_mobile
+  assign dot_num_size_desktop    = section.settings.dot_num_size_desktop
+  assign dot_num_size_mobile     = section.settings.dot_num_size_mobile
+  assign step_num_size_desktop   = section.settings.step_num_size_desktop
+  assign step_num_size_mobile    = section.settings.step_num_size_mobile
+  assign label_size_desktop      = section.settings.label_size_desktop
+  assign label_size_mobile       = section.settings.label_size_mobile
+  assign step_title_size_desktop = section.settings.step_title_size_desktop
+  assign step_title_size_mobile  = section.settings.step_title_size_mobile
+  assign step_desc_size_desktop  = section.settings.step_desc_size_desktop
+  assign step_desc_size_mobile   = section.settings.step_desc_size_mobile
+  assign link_size_desktop       = section.settings.link_size_desktop
+  assign link_size_mobile        = section.settings.link_size_mobile
+  assign footer_text_size_desktop = section.settings.footer_text_size_desktop
+  assign footer_text_size_mobile  = section.settings.footer_text_size_mobile
+  assign footer_cta_size_desktop  = section.settings.footer_cta_size_desktop
+  assign footer_cta_size_mobile   = section.settings.footer_cta_size_mobile
+-%}
+
+{%- style -%}
+  .mlg-{{ section.id }} {
+    background: {{ bg_color }};
+    box-sizing: border-box;
+    overflow-x: hidden;
+    position: relative;
+  }
+  .mlg-{{ section.id }} .mlg-inner {
+    padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin: 0 auto;
+    {%- endif -%}
+    box-sizing: border-box;
+  }
+
+  /* Header */
+  .mlg-{{ section.id }} .mlg-hdr {
+    margin-bottom: 56px;
+    max-width: 600px;
+  }
+  .mlg-{{ section.id }} .t-eyebrow { color: {{ eye_color }}; margin-bottom: 14px; }
+  .mlg-{{ section.id }} .t-eyebrow--dash::before { background: {{ eye_color }}; width: 28px; }
+  .mlg-{{ section.id }} .t-display {
+    color: {{ heading_color }};
+    font-size: {{ heading_size_desktop }}px;
+    margin-bottom: 24px;
+  }
+  .mlg-{{ section.id }} .t-display em {
+    color: {{ heading_italic_color }};
+  }
+  .mlg-{{ section.id }} .mlg-sub {
+    color: {{ sub_color }};
+    max-width: 520px;
+    font-size: {{ sub_size_desktop }}px;
+  }
+
+  /* Journey wrapper + center spine */
+  .mlg-{{ section.id }} .mlg-journey { position: relative; }
+  .mlg-{{ section.id }} .mlg-spine {
+    position: absolute;
+    left: 50%;
+    top: 60px;
+    bottom: 60px;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent 0%, {{ spine_color }} 10%, {{ spine_color }} 90%, transparent 100%);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  /* Step row */
+  .mlg-{{ section.id }} .mlg-step {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    align-items: center;
+    position: relative;
+    text-decoration: none;
+  }
+  .mlg-{{ section.id }} .mlg-step:last-child { margin-bottom: 0; }
+  .mlg-{{ section.id }} .mlg-step:nth-child(even) { direction: rtl; }
+  .mlg-{{ section.id }} .mlg-step:nth-child(even) > * { direction: ltr; }
+  .mlg-{{ section.id }} .mlg-step:focus-visible {
+    outline: 2px solid {{ step_link_color }};
+    outline-offset: 4px;
+  }
+
+  /* Center connector dot */
+  .mlg-{{ section.id }} .mlg-dot-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+  .mlg-{{ section.id }} .mlg-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: {{ dot_bg_color }};
+    border: 1px solid {{ dot_border_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width var(--dur-base) var(--ease), height var(--dur-base) var(--ease), border-color var(--dur-base) var(--ease), border-width var(--dur-base) var(--ease);
+    position: relative;
+  }
+  .mlg-{{ section.id }} .mlg-step:hover .mlg-dot {
+    border-color: {{ dot_hover_color }};
+    border-width: 2px;
+  }
+  .mlg-{{ section.id }} .mlg-dot-num {
+    color: {{ dot_num_color }};
+    opacity: 0;
+    transition: opacity .3s .1s;
+    font-size: {{ dot_num_size_desktop }}px;
+  }
+  .mlg-{{ section.id }} .mlg-step:hover .mlg-dot-num { opacity: 1; }
+
+  /* Image side */
+  .mlg-{{ section.id }} .mlg-visual { position: relative; }
+  .mlg-{{ section.id }} .mlg-img-frame {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: {{ img_bg_color }};
+  }
+  .mlg-{{ section.id }} .mlg-img,
+  .mlg-{{ section.id }} .mlg-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--focal, center);
+    display: block;
+    opacity: 1;
+  }
+
+  /* Content side */
+  .mlg-{{ section.id }} .mlg-content { padding-right: 40px; }
+  .mlg-{{ section.id }} .mlg-step:nth-child(even) .mlg-content {
+    padding-right: 0;
+    padding-left: 40px;
+  }
+  .mlg-{{ section.id }} .mlg-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .mlg-{{ section.id }} .mlg-num {
+    color: {{ step_num_color }};
+    transition: opacity .5s;
+    font-size: {{ step_num_size_desktop }}px;
+  }
+  .mlg-{{ section.id }} .mlg-step:hover .mlg-num { opacity: 1; }
+  .mlg-{{ section.id }} .mlg-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, {{ step_line_color }}, transparent);
+    opacity: .3;
+  }
+  .mlg-{{ section.id }} .mlg-label {
+    color: {{ label_color }};
+    font-size: {{ label_size_desktop }}px;
+  }
+  .mlg-{{ section.id }} .mlg-title {
+    color: {{ step_title_color }};
+    margin-bottom: 24px;
+    font-size: {{ step_title_size_desktop }}px;
+    line-height: 1.2;
+  }
+  .mlg-{{ section.id }} .mlg-desc {
+    color: {{ step_desc_color }};
+    margin-bottom: 40px;
+    max-width: 480px;
+    font-size: {{ step_desc_size_desktop }}px;
+    line-height: 1.4;
+  }
+  .mlg-{{ section.id }} .mlg-link {
+    color: {{ step_link_color }};
+    padding-bottom: 8px;
+    border-bottom: 1px solid transparent;
+    transition: gap .3s, border-color .3s;
+    font-size: {{ link_size_desktop }}px;
+  }
+  .mlg-{{ section.id }} .mlg-step:hover .mlg-link { border-bottom-color: {{ step_link_color }}; }
+
+  /* Footer */
+  .mlg-{{ section.id }} .mlg-footer {
+    text-align: center;
+    margin-top: 64px;
+  }
+  .mlg-{{ section.id }} .mlg-footer-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, {{ footer_line_color }}, transparent);
+    margin: 0 auto 24px;
+    opacity: .3;
+  }
+  .mlg-{{ section.id }} .mlg-footer-text {
+    color: {{ footer_text_color }};
+    max-width: 520px;
+    margin: 0 auto 36px;
+    font-size: {{ footer_text_size_desktop }}px;
+  }
+  .mlg-{{ section.id }} .mlg-cta {
+    color: {{ footer_cta_color }};
+    border-bottom: 2px solid {{ footer_cta_color }};
+    padding-bottom: 20px;
+    transition: gap .3s, color .3s, border-color .3s;
+    font-size: {{ footer_cta_size_desktop }}px;
+  }
+  .mlg-{{ section.id }} .mlg-cta:hover {
+    color: {{ footer_cta_hover }};
+    border-bottom-color: {{ footer_cta_hover }};
+  }
+  .mlg-{{ section.id }} .mlg-cta:focus-visible {
+    outline: 2px solid {{ footer_cta_color }};
+    outline-offset: 4px;
+  }
+
+  /* fade-up — only when JS active; band stays visible if JS never runs */
+  .js-kw-fadeup .mlg-{{ section.id }} .fu {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+  }
+  .js-kw-fadeup .mlg-{{ section.id }} .fu.in { opacity: 1; transform: none; }
+  .js-kw-fadeup .mlg-{{ section.id }} .fu:nth-child(2) { transition-delay: .1s; }
+  .js-kw-fadeup .mlg-{{ section.id }} .fu:nth-child(3) { transition-delay: .2s; }
+  .js-kw-fadeup .mlg-{{ section.id }} .fu:nth-child(4) { transition-delay: .3s; }
+  .js-kw-fadeup .mlg-{{ section.id }} .fu:nth-child(5) { transition-delay: .4s; }
+  .js-kw-fadeup .mlg-{{ section.id }} .fu:nth-child(6) { transition-delay: .5s; }
+  .js-kw-fadeup .mlg-{{ section.id }} .fu:nth-child(7) { transition-delay: .6s; }
+  .js-kw-fadeup .mlg-{{ section.id }} .fu:nth-child(8) { transition-delay: .7s; }
+
+  /* Tablet — collapse spine, stack image/content */
+  @media (max-width: 1024px) {
+    .mlg-{{ section.id }} .mlg-step {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .mlg-{{ section.id }} .mlg-step:nth-child(even) { direction: ltr; }
+    .mlg-{{ section.id }} .mlg-spine { display: none; }
+    .mlg-{{ section.id }} .mlg-content { padding-right: 0 !important; padding-left: 0 !important; }
+  }
+
+  /* Mobile */
+  @media (max-width: 749px) {
+    .mlg-{{ section.id }} .mlg-inner {
+      padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    }
+    .mlg-{{ section.id }} .mlg-hdr { margin-bottom: 40px; }
+    .mlg-{{ section.id }} .mlg-step { margin-bottom: 56px; }
+    .mlg-{{ section.id }} .mlg-footer { margin-top: 48px; }
+    .mlg-{{ section.id }} .t-display { font-size: {{ heading_size_mobile }}px; }
+    .mlg-{{ section.id }} .mlg-sub { font-size: {{ sub_size_mobile }}px; }
+    .mlg-{{ section.id }} .mlg-dot-num { font-size: {{ dot_num_size_mobile }}px; }
+    .mlg-{{ section.id }} .mlg-num { font-size: {{ step_num_size_mobile }}px; }
+    .mlg-{{ section.id }} .mlg-label { font-size: {{ label_size_mobile }}px; }
+    .mlg-{{ section.id }} .mlg-title { font-size: {{ step_title_size_mobile }}px; }
+    .mlg-{{ section.id }} .mlg-desc { font-size: {{ step_desc_size_mobile }}px; }
+    .mlg-{{ section.id }} .mlg-link { font-size: {{ link_size_mobile }}px; }
+    .mlg-{{ section.id }} .mlg-footer-text { font-size: {{ footer_text_size_mobile }}px; }
+    .mlg-{{ section.id }} .mlg-cta { font-size: {{ footer_cta_size_mobile }}px; }
+  }
+
+  {%- if section.settings.hide_desktop -%}
+  @media (min-width: 750px) { .mlg-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media (max-width: 749px) { .mlg-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section class="meaning-legacy mlg-{{ section.id }}" data-kw-fade-up aria-labelledby="mlg-h-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="mlg-inner">
+    {%- if eyebrow != blank or heading != blank or subtitle != blank -%}
+      <div class="mlg-hdr fu">
+        {%- if eyebrow != blank -%}
+          <div class="t-eyebrow t-eyebrow--dash">{{ eyebrow | escape }}</div>
+        {%- endif -%}
+        <h2 class="t-display" id="mlg-h-{{ section.id }}">
+          {%- if heading != blank -%}{{ heading | escape }}{%- else -%}{{ 'A gift with' | escape }}{%- endif -%}
+          {%- if heading_italic != blank -%}<em>{{ heading_italic | escape }}</em>{%- endif -%}
+        </h2>
+        {%- if subtitle != blank -%}
+          <p class="mlg-sub t-body">{{ subtitle | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- else -%}
+      <h2 class="t-display" id="mlg-h-{{ section.id }}" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;">{{ 'Meaning & legacy' | escape }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="mlg-journey">
+        <div class="mlg-spine"></div>
+
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign step_num = forloop.index | prepend: '0' | slice: -2, 2
+            assign b = block.settings
+            assign b_focal = b.focal | default: 'center'
+            assign b_alt = b.alt | default: ''
+            assign b_link = b.cta_link | default: '#'
+          -%}
+          <a href="{{ b_link }}" class="mlg-step fu" {{ block.shopify_attributes }}>
+            <div class="mlg-visual">
+              <div class="mlg-img-frame" style="--focal: {{ b_focal | escape }};">
+                {%- if b.image != blank -%}
+                  {{ b.image | image_url: width: 1200 | image_tag:
+                    class: 'mlg-img',
+                    widths: '400, 600, 800, 1000, 1200',
+                    sizes: '(max-width: 749px) 100vw, 50vw',
+                    loading: 'lazy',
+                    decoding: 'async',
+                    alt: b_alt
+                  }}
+                {%- elsif b.image_url != blank -%}
+                  <img
+                    class="mlg-img"
+                    src="{{ b.image_url }}"
+                    alt="{{ b_alt | escape }}"
+                    loading="lazy"
+                    decoding="async"
+                    width="1200"
+                    height="800">
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'mlg-img placeholder-svg' }}
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="mlg-content">
+              <div class="mlg-meta">
+                <span class="mlg-num t-stat-serif-upright">{{ step_num }}</span>
+                <span class="mlg-line"></span>
+                {%- if b.label != blank -%}
+                  <span class="mlg-label t-label">{{ b.label | escape }}</span>
+                {%- endif -%}
+              </div>
+              {%- if b.title != blank -%}
+                <h3 class="mlg-title t-heading">{{ b.title | escape }}</h3>
+              {%- endif -%}
+              {%- if b.description != blank -%}
+                <p class="mlg-desc t-body-sm">{{ b.description | escape }}</p>
+              {%- endif -%}
+              {%- if b.cta_text != blank -%}
+                <span class="mlg-link t-link">{{ b.cta_text | escape }} &rarr;</span>
+              {%- endif -%}
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- elsif request.design_mode -%}
+      <p class="t-body" style="color:{{ sub_color }};opacity:.55;">Add &ldquo;Step&rdquo; blocks to build the gifting journey.</p>
+    {%- endif -%}
+
+    {%- if footer_text != blank or cta_text != blank -%}
+      <div class="mlg-footer fu">
+        <div class="mlg-footer-line"></div>
+        {%- if footer_text != blank -%}
+          <p class="mlg-footer-text t-body">{{ footer_text | escape }}</p>
+        {%- endif -%}
+        {%- if cta_text != blank -%}
+          <a href="{{ cta_link | default: '#' }}" class="mlg-cta t-link">{{ cta_text | escape }} &rarr;</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%}
+  Fade-up reveal handled by the shared self-booting IIFE in assets/theme.js
+  (data-kw-fade-up → adds .js-kw-fadeup to <html>, reveals .fu on scroll).
+{%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Meaning & Legacy",
+  "tag": "section",
+  "class": "kw-meaning-legacy",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_desktop", "label": "Hide on desktop", "default": false },
+    { "type": "checkbox", "id": "hide_mobile",  "label": "Hide on mobile",  "default": false },
+
+    { "type": "header", "content": "Header" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Gifting" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A gift with" },
+    { "type": "text", "id": "heading_italic", "label": "Heading italic line", "default": "meaning & legacy." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" },
+
+    { "type": "header", "content": "Bottom CTA" },
+    { "type": "text", "id": "footer_text", "label": "Bottom text" },
+    { "type": "text", "id": "cta_text", "label": "Bottom CTA text" },
+    { "type": "url",  "id": "cta_link", "label": "Bottom CTA link" },
+
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "boxed", "label": "Boxed (max width)" },
+        { "value": "full",  "label": "Full width" }
+      ],
+      "default": "boxed"
+    },
+    { "type": "range", "id": "max_width", "label": "Max width", "min": 800, "max": 1920, "step": 20, "default": 1500, "unit": "px" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+    { "type": "range", "id": "padding_x", "label": "Horizontal padding", "min": 0, "max": 120, "step": 4, "default": 40, "unit": "px" },
+
+    { "type": "header", "content": "Spacing — Mobile" },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 120, "step": 4, "default": 40, "unit": "px" },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "default": 40, "unit": "px" },
+    { "type": "range", "id": "padding_x_mobile", "label": "Mobile horizontal padding", "min": 0, "max": 40, "step": 1, "default": 17, "unit": "px" },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 24, "max": 72, "step": 1, "default": 43, "unit": "px" },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile", "min": 20, "max": 48, "step": 2, "default": 30, "unit": "px" },
+    { "type": "range", "id": "sub_size_desktop", "label": "Subtitle size desktop (px)", "min": 12, "max": 28, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "sub_size_mobile", "label": "Subtitle size mobile (px)", "min": 10, "max": 24, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "dot_num_size_desktop", "label": "Connector dot numeral size desktop (px)", "min": 8, "max": 32, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "dot_num_size_mobile", "label": "Connector dot numeral size mobile (px)", "min": 8, "max": 28, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "step_num_size_desktop", "label": "Step number size desktop (px)", "min": 14, "max": 96, "step": 1, "default": 48, "unit": "px" },
+    { "type": "range", "id": "step_num_size_mobile", "label": "Step number size mobile (px)", "min": 12, "max": 56, "step": 1, "default": 32, "unit": "px" },
+    { "type": "range", "id": "label_size_desktop", "label": "Step label size desktop (px)", "min": 8, "max": 22, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "label_size_mobile", "label": "Step label size mobile (px)", "min": 8, "max": 18, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "step_title_size_desktop", "label": "Step title size desktop (px)", "min": 16, "max": 72, "step": 1, "default": 32, "unit": "px" },
+    { "type": "range", "id": "step_title_size_mobile", "label": "Step title size mobile (px)", "min": 14, "max": 48, "step": 1, "default": 24, "unit": "px" },
+    { "type": "range", "id": "step_desc_size_desktop", "label": "Step description size desktop (px)", "min": 10, "max": 32, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "step_desc_size_mobile", "label": "Step description size mobile (px)", "min": 10, "max": 24, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "link_size_desktop", "label": "Step link size desktop (px)", "min": 8, "max": 24, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "link_size_mobile", "label": "Step link size mobile (px)", "min": 8, "max": 20, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "footer_text_size_desktop", "label": "Footer text size desktop (px)", "min": 12, "max": 24, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "footer_text_size_mobile", "label": "Footer text size mobile (px)", "min": 10, "max": 20, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "footer_cta_size_desktop", "label": "Footer CTA size desktop (px)", "min": 10, "max": 22, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "footer_cta_size_mobile", "label": "Footer CTA size mobile (px)", "min": 10, "max": 18, "step": 1, "default": 12, "unit": "px" },
+
+    { "type": "header", "content": "Colors — Header" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#faf5ee" },
+    { "type": "color", "id": "eye_color", "label": "Eyebrow color", "default": "#bc843f" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#6b3c23" },
+    { "type": "color", "id": "heading_italic_color", "label": "Heading italic color", "default": "#bc843f" },
+    { "type": "color", "id": "sub_color", "label": "Subtitle color", "default": "#6b3c23" },
+
+    { "type": "header", "content": "Colors — Step content" },
+    { "type": "color", "id": "label_color", "label": "Label color", "default": "#bc843f" },
+    { "type": "color", "id": "step_num_color", "label": "Step numeral color", "default": "#bc843f" },
+    { "type": "color", "id": "step_title_color", "label": "Step title color", "default": "#6b3c23" },
+    { "type": "color", "id": "step_desc_color", "label": "Step description color", "default": "#6b3c23" },
+    { "type": "color", "id": "step_link_color", "label": "Step link color", "default": "#6b3c23" },
+    { "type": "color", "id": "step_line_color", "label": "Step accent line color", "default": "#bc843f" },
+
+    { "type": "header", "content": "Colors — Connector dot" },
+    { "type": "color", "id": "dot_bg_color", "label": "Dot background", "default": "#faf5ee" },
+    { "type": "color", "id": "dot_border_color", "label": "Dot border", "default": "#bc843f" },
+    { "type": "color", "id": "dot_hover_color", "label": "Dot hover border", "default": "#6b3c23" },
+    { "type": "color", "id": "dot_num_color", "label": "Dot numeral color", "default": "#6b3c23" },
+
+    { "type": "header", "content": "Colors — Image + spine" },
+    { "type": "color", "id": "img_bg_color", "label": "Image placeholder background", "default": "#faf5ee" },
+    { "type": "color", "id": "spine_color", "label": "Spine line color", "default": "#6b3c2314" },
+
+    { "type": "header", "content": "Colors — Bottom CTA" },
+    { "type": "color", "id": "footer_text_color", "label": "Bottom text color", "default": "#6b3c23" },
+    { "type": "color", "id": "footer_line_color", "label": "Bottom line color", "default": "#bc843f" },
+    { "type": "color", "id": "footer_cta_color", "label": "Bottom CTA color", "default": "#6b3c23" },
+    { "type": "color", "id": "footer_cta_hover", "label": "Bottom CTA hover color", "default": "#bc843f" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "url", "id": "image_url", "label": "Image URL (fallback)", "info": "Used when no image is selected above." },
+        { "type": "text", "id": "alt", "label": "Image alt text" },
+        {
+          "type": "select",
+          "id": "focal",
+          "label": "Image focal point",
+          "info": "Pick which part of the image stays visible when it's cropped to fit.",
+          "options": [
+            { "value": "center", "label": "Center" },
+            { "value": "top", "label": "Top" },
+            { "value": "bottom", "label": "Bottom" },
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+            { "value": "top left", "label": "Top left" },
+            { "value": "top right", "label": "Top right" },
+            { "value": "bottom left", "label": "Bottom left" },
+            { "value": "bottom right", "label": "Bottom right" }
+          ],
+          "default": "center"
+        },
+        { "type": "text", "id": "label", "label": "Label", "default": "Wedding" },
+        { "type": "text", "id": "title", "label": "Title", "default": "A Wedding Gift" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "A dinner set they'll use every day for decades. Not a trinket that collects dust — an heirloom that nourishes a new family." },
+        { "type": "text", "id": "cta_text", "label": "CTA text", "default": "6-Piece Dinner Set" },
+        { "type": "url",  "id": "cta_link", "label": "CTA link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Meaning & Legacy",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "image_url": "https://ptal.in/cdn/shop/files/kansa_dinner_thaali_5_piece_0_c62b73bf-06d6-4857-aab2-2e68a265c563.jpg?v=1770879514&width=1800",
+            "alt": "",
+            "focal": "bottom",
+            "label": "Wedding",
+            "title": "A Wedding Gift",
+            "description": "A dinner set they'll use every day for decades. Not a trinket that collects dust — an heirloom that nourishes a new family.",
+            "cta_text": "6-Piece Dinner Set",
+            "cta_link": "shopify://collections/kansa-bronze-dinner-set-orignal"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "image_url": "https://ptal.in/cdn/shop/files/DSC_7643.jpg?v=1760098518&width=1800",
+            "alt": "",
+            "focal": "center",
+            "label": "Housewarming",
+            "title": "A New Home",
+            "description": "Begin a new home with Ayurveda's most trusted metal. A meaningful gift that whispers wellness and warmth from the very first meal.",
+            "cta_text": "Thali Set Combo",
+            "cta_link": "shopify://collections/sets-and-combo"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "image_url": "https://ptal.in/cdn/shop/files/2_30a140de-4e90-47bc-8a6e-c4767a37ffd5.jpg?v=1760098252&width=1800",
+            "alt": "",
+            "focal": "center",
+            "label": "Festival",
+            "title": "Festive Gifting",
+            "description": "Diwali, Navratri, Pongal — traditions deserve traditional gifts. Custom gift packaging available on all sets.",
+            "cta_text": "Small Bowl or Glass",
+            "cta_link": "shopify://collections/gifting"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "image_url": "https://ptal.in/cdn/shop/files/Ptal-31_Aug0096.jpg?v=1760098651&width=1800",
+            "alt": "",
+            "focal": "center",
+            "label": "Corporate",
+            "title": "Corporate & Bulk",
+            "description": "Premium gifting for hotels, restaurants and corporate events. Custom monogramming and dedicated support for bulk orders.",
+            "cta_text": "Enquire Now",
+            "cta_link": "shopify://pages/bulk-order"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

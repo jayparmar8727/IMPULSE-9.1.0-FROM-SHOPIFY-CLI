@@ -157,12 +157,13 @@
         if block_link == blank and block_col != blank
           assign block_link = block_col.url
         endif
+        comment
+          Perf: this section sits below the hero on the homepage, so its cards must NOT
+          compete with the hero LCP image. All cards lazy-load with default priority
+          (only the hero-slider first slide is eager + fetchpriority high).
+        endcomment
         assign img_loading = 'lazy'
         assign img_fp = 'auto'
-        if forloop.index <= cols_desktop
-          assign img_loading = 'eager'
-          assign img_fp = 'high'
-        endif
       -%}
       <a href="{{ block_link | default: '#' }}" class="cc" {{ block.shopify_attributes }}>
         <div class="cc-img-wrap">

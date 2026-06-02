@@ -1,0 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "slideshow_xGViHJ": {
+      "type": "slideshow",
+      "blocks": {
+        "image_9f4HFj": {
+          "type": "image",
+          "settings": {
+            "top_subheading": "MADE FOR EATING",
+            "title": "BRONZE UTENSILS",
+            "title_size": 80,
+            "subheading": "",
+            "link": "",
+            "link_text": "SHOP NOW",
+            "link_2": "",
+            "link_text_2": "",
+            "color_accent": "rgba(0,0,0,0)",
+            "text_align": "vertical-center horizontal-center",
+            "image": "shopify://shop_images/KANSA_TABLEWARE_52Pc.jpg",
+            "image_mobile": "shopify://shop_images/KANSA_TABLEWARE_52Pc_Mobile.jpg",
+            "parallax_direction": "top",
+            "overlay_opacity": 20
+          }
+        }
+      },
+      "block_order": [
+        "image_9f4HFj"
+      ],
+      "name": "t:sections.slideshow.presets.hero_optional_slideshow.name",
+      "settings": {
+        "section_height": "650px",
+        "mobile_height": "auto",
+        "parallax": true,
+        "style": "bars",
+        "autoplay": true,
+        "autoplay_speed": 5
+      }
+    }
+  },
+  "order": [
+    "slideshow_xGViHJ"
+  ]
+}

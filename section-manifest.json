@@ -23,7 +23,7 @@
     "craft-process": { "owner": "custom", "note": "Four-step craft process (self-contained)." },
     "buy-back-promise": { "owner": "custom", "note": "Buy-back promise + metal price proof (self-contained)." },
     "kw-newsletter": { "owner": "custom", "note": "Kansawala newsletter signup (self-contained)." },
-    "footer-kansawala": { "owner": "custom", "note": "Custom footer section (self-contained). Migrated as a file; NOT yet wired into a footer group." }
+    "footer-kansawala": { "owner": "custom", "note": "Custom footer section (self-contained; accordion JS in kw-sections.js). Wired as the active footer via sections/footer-group.json." }
   },
   "snippets": {
     "kw-fonts": { "owner": "custom", "note": "Loads Cormorant Garamond (Google Fonts); reuses theme Jost. Rendered in layout/theme.liquid <head>." },

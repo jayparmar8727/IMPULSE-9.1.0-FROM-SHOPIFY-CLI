@@ -11,8 +11,85 @@
   "type": "footer",
   "name": "t:sections.footer-group.name",
   "sections": {
+    "footer-kansawala": {
+      "type": "footer-kansawala",
+      "blocks": {
+        "strip_1": { "type": "strip_item", "settings": { "text": "Free Worldwide Shipping" } },
+        "strip_2": { "type": "strip_item", "settings": { "text": "5% Off All Orders" } },
+        "strip_3": { "type": "strip_item", "settings": { "text": "Handcrafted Since 1945" } },
+        "strip_4": { "type": "strip_item", "settings": { "text": "Sihor, Gujarat, India" } },
+        "strip_5": { "type": "strip_item", "settings": { "text": "Pure Kansa . Brass . Copper" } },
+        "strip_6": { "type": "strip_item", "settings": { "text": "No Teflon . No Chemicals" } },
+        "disc_1": { "type": "discount", "settings": { "percent": "5%", "label": "Off All Orders", "condition": "No minimum purchase" } },
+        "disc_2": { "type": "discount", "settings": { "percent": "8%", "label": "Off Your Order", "condition": "On orders above Rs. 8,500" } },
+        "disc_3": { "type": "discount", "settings": { "percent": "12%", "label": "Off Your Order", "condition": "On orders above Rs. 16,000" } },
+        "disc_4": { "type": "discount", "settings": { "percent": "15%", "label": "Off Your Order", "condition": "On orders above Rs. 32,000" } },
+        "menu_1": { "type": "menu", "settings": { "heading": "Shop by Metal", "menu": "main-menu" } },
+        "menu_2": { "type": "menu", "settings": { "heading": "UNCOVER MORE", "menu": "footer-1" } },
+        "menu_3": { "type": "menu", "settings": { "heading": "NEED HELP?", "menu": "footer-2" } }
+      },
+      "block_order": [
+        "strip_1",
+        "strip_2",
+        "strip_3",
+        "strip_4",
+        "strip_5",
+        "strip_6",
+        "disc_1",
+        "disc_2",
+        "disc_3",
+        "disc_4",
+        "menu_1",
+        "menu_2",
+        "menu_3"
+      ],
+      "name": "Footer Kansawala",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "logo_height": 60,
+        "logo_height_mobile": 70,
+        "brand_name": "Kansawala",
+        "brand_tagline": "Legacy of Craftsmanship",
+        "description": "Four generations of the Mukundray Fulchand family, shaping metal into memory since 1945. Every purchase supports an ancient Indian craft from Sihor, Gujarat.",
+        "email": "info@kansawalas.com",
+        "contact_link_text": "Contact Us",
+        "contact_link": "shopify://pages/contact",
+        "address": "Sihor, Gujarat, India - 364240",
+        "copyright": "Kansawala Mukundray Fulchand . Sihor, Gujarat",
+        "show_payment": false,
+        "show_strip": true,
+        "strip_speed": 24,
+        "container_width": "boxed",
+        "max_width": 1440,
+        "padding_x": 80,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_x_mobile": 16,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "bg_color": "#6b3c23",
+        "heading_color": "#faf5ee",
+        "desc_color": "#fee8d9",
+        "contact_color": "#fee8d9",
+        "link_color": "#fee8d9",
+        "link_hover_color": "#d8ae82",
+        "social_border": "#d8ae8240",
+        "social_color": "#fee8d9",
+        "border_color": "#d8ae8224",
+        "copy_color": "#d8ae82",
+        "strip_bg": "#6b3c23",
+        "strip_color": "#d8ae82",
+        "strip_border": "#d8ae8226",
+        "disc_border": "#d8ae8240",
+        "disc_pct_color": "#d8ae82",
+        "disc_val_color": "#faf5ee",
+        "disc_cond_color": "#fee8d9"
+      }
+    },
     "footer-promotions": {
       "type": "footer-promotions",
+      "disabled": true,
       "blocks": {
         "promotion-1": {
           "type": "promotion",
@@ -53,13 +130,13 @@
         "promotion-2",
         "promotion-3"
       ],
-      "disabled": true,
       "settings": {
         "hide_homepage": false
       }
     },
     "footer": {
       "type": "footer",
+      "disabled": true,
       "blocks": {
         "menu-1": {
           "type": "menu",
@@ -106,12 +183,13 @@
         "show_currency_flags": false,
         "show_locale_selector": false,
         "show_payment_icons": false,
-        "show_copyright": true,
+        "show_copyright": false,
         "copyright_text": ""
       }
     }
   },
   "order": [
+    "footer-kansawala",
     "footer-promotions",
     "footer"
   ]

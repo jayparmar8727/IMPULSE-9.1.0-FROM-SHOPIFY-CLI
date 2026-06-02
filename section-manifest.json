@@ -6,7 +6,19 @@
     "captured": "2026-06-02",
     "complete_stock": true
   },
-  "sections": {},
+  "sections": {
+    "collection-grid-2": {
+      "owner": "custom",
+      "note": "Duplicate of stock sections/featured-collections.liquid renamed \"Collection Grid 2\". Added three fields ported from the custom collections-grid section: Eyebrow + Heading italic line (section settings) and Metal label (per-block setting). Renders cards via the custom snippet collection-grid-item-2 instead of the shared stock snippet. A scoped {% style %} block restyles it to match the original collections-grid design (gold dashed eyebrow/metal label, brown heading with gold italic line, square cards) with colors hardcoded; stock files untouched.",
+      "snippets": ["collection-grid-item-2"]
+    }
+  },
+  "snippets": {
+    "collection-grid-item-2": {
+      "owner": "custom",
+      "note": "Copy of stock snippets/collection-grid-item.liquid with a Metal label (block.settings.metal) rendered above the title. Used only by collection-grid-2; stock snippet left untouched."
+    }
+  },
   "pending_migration": [
     "hero-slider",
     "marquee-strip",

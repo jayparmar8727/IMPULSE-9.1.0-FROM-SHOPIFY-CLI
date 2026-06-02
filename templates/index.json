@@ -44,9 +44,66 @@
         "autoplay": true,
         "autoplay_speed": 5
       }
+    },
+    "collection_grid_2_Y3MmTk": {
+      "type": "collection-grid-2",
+      "blocks": {
+        "collection_E3JLfr": {
+          "type": "collection",
+          "settings": {
+            "collection": "gifting",
+            "title": "KANSA",
+            "metal": "Eating",
+            "focal_point": "center center"
+          }
+        },
+        "collection_CfDWma": {
+          "type": "collection",
+          "settings": {
+            "collection": "gifting",
+            "title": "BRASS",
+            "metal": "Cooking",
+            "focal_point": "center center"
+          }
+        },
+        "collection_3mJjeJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "gifting",
+            "title": "COPPER",
+            "metal": "Drinkware",
+            "focal_point": "center center"
+          }
+        },
+        "collection_VrPWzF": {
+          "type": "collection",
+          "settings": {
+            "collection": "gifting",
+            "title": "BESTSELLER",
+            "metal": "SD",
+            "focal_point": "center center"
+          }
+        }
+      },
+      "block_order": [
+        "collection_E3JLfr",
+        "collection_CfDWma",
+        "collection_3mJjeJ",
+        "collection_VrPWzF"
+      ],
+      "name": "Collection Grid 2",
+      "settings": {
+        "eyebrow": "Shop by Metal",
+        "title": "Ayurveda's",
+        "heading_italic": "Recommended Metals",
+        "heading_size": "h2",
+        "divider": false,
+        "per_row": 4
+      }
     }
   },
   "order": [
-    "slideshow_xGViHJ"
+    "slideshow_xGViHJ",
+    "collection_grid_2_Y3MmTk"
   ]
 }

@@ -9,7 +9,7 @@
   "sections": {
     "hero-slider": { "owner": "custom", "note": "Homepage hero carousel (self-contained; inline style + JS engine theme.HeroSlider)." },
     "marquee-strip": { "owner": "custom", "note": "Scrolling marquee strip of trust phrases (self-contained)." },
-    "collections-grid": { "owner": "custom", "note": "Shop-by-metal collection cards grid (self-contained). Supersedes the removed stock-based collection-grid-2 experiment." },
+    "collections-grid": { "owner": "custom", "note": "Shop-by-metal collection cards grid (self-contained)." },
     "global-presence": { "owner": "custom", "note": "Stats + panels 'global presence' section (self-contained)." },
     "trust-numbers": { "owner": "custom", "note": "Trust/stat numbers section (self-contained). Migrated as a file; not on the homepage." },
     "heritage-timeline": { "owner": "custom", "note": "Heritage era timeline (self-contained)." },

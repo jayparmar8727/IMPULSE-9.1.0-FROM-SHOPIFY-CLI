@@ -31,10 +31,11 @@
   },
   "assets": {
     "kw-tokens.css": { "owner": "custom", "note": "Kansawala design tokens (colors, spacing). Loaded in theme.liquid <head>." },
-    "kw-typography.css": { "owner": "custom", "note": "Kansawala .t-* typography classes used by all custom sections. Loaded in theme.liquid <head>." }
+    "kw-typography.css": { "owner": "custom", "note": "Kansawala .t-* typography classes used by all custom sections. Loaded in theme.liquid <head>." },
+    "kw-sections.js": { "owner": "custom", "note": "Custom section JS engines (hero-slider, fade-up, trust-numbers, three-sacred-metals, bestsellers tabs, b2b-trust, footer accordion), extracted verbatim from the old build's theme.js. Loaded after theme.js in theme.liquid. hero-slider self-boots here (the old build registered it via theme.sections.register inside theme.js); stock theme.js left untouched." }
   },
   "foundation": {
-    "layout/theme.liquid": "Surgically edited (+4 head lines after css-variables) to load kw-tokens.css, kw-typography.css, kw-fonts, and kw-schema-organization (index only). Additive; stock structure intact.",
+    "layout/theme.liquid": "Surgically edited (+4 head lines after css-variables; +1 script after theme.js for kw-sections.js) to load kw-tokens.css, kw-typography.css, kw-fonts, kw-schema-organization (index only), and the kw-sections.js engines. Additive; stock structure intact.",
     "templates/index.json": "Replaced with the Kansawala homepage layout (15 custom sections in order). Prior stock/experiment homepage preserved in git history."
   },
   "pending_migration": []

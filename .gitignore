@@ -1,0 +1,13 @@
+# Local Claude Code tooling (machine-local, not part of the theme)
+.claude/
+.agents/
+skills-lock.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+
+# Local environment / theme-dev config (machine-specific — never commit)
+.env
+.env.*.local
+scripts/theme.config.ps1

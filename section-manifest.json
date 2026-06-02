@@ -1,0 +1,30 @@
+{
+  "_comment": "Working base = complete true-stock Impulse 9.1.0 (Shopify CLI pull, rev 40d0dcd). owner: custom = ported Kansawala section, stock = untouched Impulse. No custom sections are present yet — the homepage migration is pending (see pending_migration below and docs/). Check this manifest, not filenames, to tell stock vs custom.",
+  "baseline": {
+    "theme": "Impulse 9.1.0 (Archetype)",
+    "git_rev": "40d0dcd",
+    "captured": "2026-06-02",
+    "complete_stock": true
+  },
+  "sections": {},
+  "pending_migration": [
+    "hero-slider",
+    "marquee-strip",
+    "collections-grid",
+    "global-presence",
+    "trust-numbers",
+    "heritage-timeline",
+    "bestsellers",
+    "brand-story",
+    "three-sacred-metals",
+    "ayurveda",
+    "b2b-trust",
+    "meaning-legacy",
+    "customer-reviews",
+    "craft-process",
+    "buy-back-promise",
+    "kw-newsletter",
+    "footer-kansawala"
+  ],
+  "foundation": {}
+}

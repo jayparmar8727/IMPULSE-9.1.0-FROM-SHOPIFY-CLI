@@ -1,0 +1,22 @@
+# KW custom layer — silence expected, unavoidable warnings on our own files.
+# Additive dev-tooling config only: no Liquid/CSS/JS changes, stock files untouched,
+# not pushed to the store. All other checks/files keep their defaults.
+#
+# Why these are ignored (scoped to our files):
+#   RemoteAsset   — Jost + Cormorant Garamond load from Google's CDN (kw-fonts), and the
+#                   optional "external image URL" fallback fields point off the Shopify CDN by design.
+#   AssetPreload  — the print/onload async webfont pattern in kw-fonts trips this; it's a
+#                   false-positive for a *remote* stylesheet (the preload arg only works for theme assets).
+
+RemoteAsset:
+  ignore:
+    - "snippets/kw-fonts.liquid"
+    - "sections/hero-slider.liquid"
+    - "sections/collections-grid.liquid"
+    - "sections/brand-story.liquid"
+    - "sections/meaning-legacy.liquid"
+    - "sections/b2b-trust.liquid"
+
+AssetPreload:
+  ignore:
+    - "snippets/kw-fonts.liquid"

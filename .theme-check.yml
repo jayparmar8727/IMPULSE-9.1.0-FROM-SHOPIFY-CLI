@@ -2,6 +2,103 @@
 # Additive dev-tooling config only: no Liquid/CSS/JS changes, stock files untouched,
 # not pushed to the store. All other checks/files keep their defaults.
 #
+# ── Top-level ignore: skip the STOCK files that carry pre-existing Impulse offenses ──
+# `shopify theme check` reports 351 offenses, ALL of them in 82 STOCK files exactly as
+# Shopify's CLI shipped Impulse 9.1.0 — ZERO in our kw/custom code. We never lint stock
+# (fixing these would mean editing stock files, forbidden by our golden rules), and most
+# are Shopify's own false positives (ico-*.svg.liquid <?xml?>, gift_card HTML parse,
+# pt-*.schema.json). Skipping these exact files makes the report read ~0, so any NEW
+# offense in OUR custom code stands out immediately. Custom files are deliberately NOT
+# listed here, so they stay fully checked.
+# REVERSIBLE: delete this `ignore:` block to see stock offenses again.
+# REGENERATE after an Impulse upgrade: `shopify theme check --output json`, then re-list the
+# offending stock paths (custom = kw-* + the 25 manifest sections; never add those here).
+# NOTE: layout/theme.liquid is stock but carries our tiny foundation <head> edits; its 3
+# offenses are stock-origin, so it's ignored here too (those edits won't be linted — accepted).
+ignore:
+  - "assets/ico-select-drawer.svg.liquid"
+  - "assets/ico-select-footer.svg.liquid"
+  - "assets/ico-select-menu.svg.liquid"
+  - "assets/ico-select-white.svg.liquid"
+  - "assets/ico-select.svg.liquid"
+  - "layout/gift_card.liquid"
+  - "layout/password.liquid"
+  - "layout/theme.liquid"
+  - "locales/pt-BR.schema.json"
+  - "locales/pt-PT.schema.json"
+  - "sections/advanced-content.liquid"
+  - "sections/article-template.liquid"
+  - "sections/blog-template.liquid"
+  - "sections/featured-collection.liquid"
+  - "sections/featured-collections.liquid"
+  - "sections/header.liquid"
+  - "sections/hotspots.liquid"
+  - "sections/image-compare.liquid"
+  - "sections/list-collections-template.liquid"
+  - "sections/main-collection.liquid"
+  - "sections/main-product.liquid"
+  - "sections/recently-viewed.liquid"
+  - "sections/testimonials.liquid"
+  - "sections/text-and-image.liquid"
+  - "sections/text-columns.liquid"
+  - "snippets/advanced-accordion.liquid"
+  - "snippets/collection-grid-filters-form.liquid"
+  - "snippets/css-variables.liquid"
+  - "snippets/element.button.liquid"
+  - "snippets/element.checkbox.liquid"
+  - "snippets/element.image.liquid"
+  - "snippets/element.image.sizes.liquid"
+  - "snippets/element.input.liquid"
+  - "snippets/element.model.liquid"
+  - "snippets/element.select.liquid"
+  - "snippets/element.swatch.liquid"
+  - "snippets/element.text.liquid"
+  - "snippets/element.video.liquid"
+  - "snippets/footer-custom-text.liquid"
+  - "snippets/form.product.messages.liquid"
+  - "snippets/gallery.liquid"
+  - "snippets/header-desktop-nav.liquid"
+  - "snippets/image-element.liquid"
+  - "snippets/kit.button.liquid"
+  - "snippets/kit.image.liquid"
+  - "snippets/layout.grid.liquid"
+  - "snippets/layout.section.liquid"
+  - "snippets/layout.stack.liquid"
+  - "snippets/media-text.liquid"
+  - "snippets/media.liquid"
+  - "snippets/multi-selectors.liquid"
+  - "snippets/newsletter-section.liquid"
+  - "snippets/product-complementary.liquid"
+  - "snippets/product-grid-item.liquid"
+  - "snippets/product-images.liquid"
+  - "snippets/product-template-variables.liquid"
+  - "snippets/product-template.liquid"
+  - "snippets/product.price.liquid"
+  - "snippets/products_per_row.liquid"
+  - "snippets/promo-grid.liquid"
+  - "snippets/search-grid-item.liquid"
+  - "snippets/search-results.liquid"
+  - "snippets/section.flex-pdp._inventory-text.liquid"
+  - "snippets/section.flex-pdp.buy-buttons.liquid"
+  - "snippets/section.flex-pdp.gift-recipient.liquid"
+  - "snippets/section.flex-pdp.installments.liquid"
+  - "snippets/section.flex-pdp.inventory.liquid"
+  - "snippets/section.flex-pdp.liquid"
+  - "snippets/section.flex-pdp.media-gallery.liquid"
+  - "snippets/section.flex-pdp.media-grid.liquid"
+  - "snippets/section.flex-pdp.price.liquid"
+  - "snippets/section.flex-pdp.quantity-picker.liquid"
+  - "snippets/section.flex-pdp.title.liquid"
+  - "snippets/section.flex-pdp.variant-picker.liquid"
+  - "snippets/sizes-explicit.liquid"
+  - "snippets/social-meta-tags.liquid"
+  - "snippets/social-sharing.liquid"
+  - "snippets/sub-collections.liquid"
+  - "snippets/utility.breakpoint-style.liquid"
+  - "templates/customers/addresses.liquid"
+  - "templates/customers/reset_password.liquid"
+  - "templates/gift_card.liquid"
+#
 # Why these are ignored (scoped to our files):
 #   RemoteAsset   — Jost + Cormorant Garamond load from Google's CDN (kw-fonts), and the
 #                   optional "external image URL" fallback fields point off the Shopify CDN by design.

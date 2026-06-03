@@ -166,18 +166,23 @@
       padding: 24px 0 48px 40px;
     }
   }
+  /* Match home: desktop horizontal+vertical padding from tablet up (≥750), so the
+     boxed gutter aligns with every other section at iPad. Layout stays at ≥1024. */
+  @media (min-width: 750px) {
+    .ltl-{{ section.id }} .ltl-inner { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
+  }
 {%- endstyle -%}
 
 <section class="ltl-{{ section.id }}" data-kw-fade-up aria-labelledby="ltl-h-{{ section.id }}" {{ section.shopify_attributes }}>
   <div class="ltl-inner">
     {%- if section.settings.eyebrow != blank -%}
-      <div class="ltl-eye t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow }}</div>
+      <div class="ltl-eye t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow | escape }}</div>
     {%- endif -%}
     {%- if section.settings.title != blank or section.settings.title_em != blank -%}
       <h2 class="ltl-ttl t-display" id="ltl-h-{{ section.id }}">
-        {{ section.settings.title }}
+        {{ section.settings.title | escape }}
         {%- if section.settings.title_em != blank -%}
-          <em>{{ section.settings.title_em }}</em>
+          <em>{{ section.settings.title_em | escape }}</em>
         {%- endif -%}
       </h2>
     {%- endif -%}
@@ -187,18 +192,18 @@
         <div class="ltl-item fu" {{ block.shopify_attributes }}>
           <div class="ltl-year-col">
             {%- if block.settings.year != blank -%}
-              <span class="ltl-yr t-stat-serif-upright">{{ block.settings.year }}</span>
+              <span class="ltl-yr t-stat-serif-upright">{{ block.settings.year | escape }}</span>
             {%- endif -%}
             {%- if block.settings.year_label != blank -%}
-              <span class="ltl-yr-lbl t-label">{{ block.settings.year_label }}</span>
+              <span class="ltl-yr-lbl t-label">{{ block.settings.year_label | escape }}</span>
             {%- endif -%}
           </div>
           <div class="ltl-content">
             {%- if block.settings.title != blank -%}
-              <h3 class="ltl-title t-label">{{ block.settings.title }}</h3>
+              <h3 class="ltl-title t-label">{{ block.settings.title | escape }}</h3>
             {%- endif -%}
             {%- if block.settings.description != blank -%}
-              <p class="ltl-body t-body-sm">{{ block.settings.description }}</p>
+              <p class="ltl-body t-body-sm">{{ block.settings.description | escape }}</p>
             {%- endif -%}
           </div>
         </div>

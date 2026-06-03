@@ -146,19 +146,24 @@
   {%- if section.settings.hide_mobile -%}
   @media (max-width: 749px) { .valsec-{{ section.id }} { display: none !important; } }
   {%- endif -%}
+  /* Match home: desktop horizontal+vertical padding from tablet up (≥750), so the
+     boxed gutter aligns with every other section at iPad. Grid columns stay at ≥1024. */
+  @media (min-width: 750px) {
+    .valsec-{{ section.id }} .valsec-inner { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
+  }
 {%- endstyle -%}
 
 <section class="valsec-{{ section.id }}" data-kw-fade-up aria-labelledby="valsec-heading-{{ section.id }}" {{ section.shopify_attributes }}>
   <div class="valsec-inner">
   <div class="values-head">
     {%- if section.settings.eyebrow != blank -%}
-      <div class="eye t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow }}</div>
+      <div class="eye t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow | escape }}</div>
     {%- endif -%}
     {%- if section.settings.heading != blank -%}
       <h2 class="ttl t-display" id="valsec-heading-{{ section.id }}">
-        {{ section.settings.heading }}
+        {{ section.settings.heading | escape }}
         {%- if section.settings.heading_italic != blank -%}
-          <br><em>{{ section.settings.heading_italic }}</em>
+          <br><em>{{ section.settings.heading_italic | escape }}</em>
         {%- endif -%}
       </h2>
     {%- endif -%}
@@ -172,13 +177,13 @@
             {{ block.settings.icon_image | image_url: width: 96 | image_tag: alt: block.settings.title, loading: 'lazy', width: 48, height: 48 }}
           </span>
         {%- elsif block.settings.icon_svg != blank -%}
-          <span class="val-icon">{{ block.settings.icon_svg }}</span>
+          <span class="val-icon" aria-hidden="true">{{ block.settings.icon_svg }}</span>
         {%- endif -%}
         {%- if block.settings.title != blank -%}
-          <h3 class="val-n t-label">{{ block.settings.title }}</h3>
+          <h3 class="val-n t-label">{{ block.settings.title | escape }}</h3>
         {%- endif -%}
         {%- if block.settings.description != blank -%}
-          <p class="val-d t-body-sm">{{ block.settings.description }}</p>
+          <p class="val-d t-body-sm">{{ block.settings.description | escape }}</p>
         {%- endif -%}
       </div>
     {%- endfor -%}
@@ -258,8 +263,8 @@
     },
     { "type": "range", "id": "title_size_desktop", "label": "Value title desktop (px)", "min": 10, "max": 28, "step": 1, "default": 13, "unit": "px" },
     { "type": "range", "id": "title_size_mobile", "label": "Value title mobile (px)", "min": 9, "max": 24, "step": 1, "default": 12, "unit": "px" },
-    { "type": "range", "id": "desc_size_desktop", "label": "Value description desktop (px)", "min": 11, "max": 24, "step": 1, "default": 15, "unit": "px" },
-    { "type": "range", "id": "desc_size_mobile", "label": "Value description mobile (px)", "min": 10, "max": 22, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "desc_size_desktop", "label": "Value description desktop (px)", "min": 11, "max": 24, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "desc_size_mobile", "label": "Value description mobile (px)", "min": 10, "max": 22, "step": 1, "default": 15, "unit": "px" },
     {
       "type": "header",
       "content": "Layout"
@@ -487,7 +492,7 @@
       "type": "color",
       "id": "desc_color",
       "label": "Description color",
-      "default": "#2a1508"
+      "default": "#6b3c23"
     }
   ],
   "blocks": [

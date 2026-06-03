@@ -78,7 +78,11 @@
     border-color: {{ section.settings.btn_outline_hover_border }};
     color: {{ section.settings.btn_outline_hover_color }};
   }
-  @media (max-width: 1024px) {
+  .cta-{{ section.id }} .cta-btn:focus-visible {
+    outline: 2px solid {{ heading_color }};
+    outline-offset: 3px;
+  }
+  @media (max-width: 749px) {
     .cta-{{ section.id }} .cta-inner {
       padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
     }
@@ -96,17 +100,17 @@
   {%- endif -%}
 {%- endstyle -%}
 
-<section class="cta-{{ section.id }}" aria-label="{{ section.settings.aria_label | default: 'Call to action' }}" {{ section.shopify_attributes }}>
+<section class="cta-{{ section.id }}" aria-label="{{ section.settings.aria_label | default: 'Call to action' | escape }}" {{ section.shopify_attributes }}>
   <div class="cta-inner">
     {%- if heading != blank or heading_italic != blank -%}
       <h2 class="cta-title t-display">
-        {{ heading }}{%- if heading != blank and heading_italic != blank -%}<br>{%- endif -%}
-        {%- if heading_italic != blank -%}<em>{{ heading_italic }}</em>{%- endif -%}
+        {{ heading | escape }}{%- if heading != blank and heading_italic != blank -%}<br>{%- endif -%}
+        {%- if heading_italic != blank -%}<em>{{ heading_italic | escape }}</em>{%- endif -%}
       </h2>
     {%- endif -%}
 
     {%- if subheading != blank -%}
-      <p class="cta-sub t-body">{{ subheading }}</p>
+      <p class="cta-sub t-body">{{ subheading | escape }}</p>
     {%- endif -%}
 
     {%- if section.blocks.size > 0 -%}
@@ -121,7 +125,7 @@
               href="{{ block.settings.button_link | default: '#' }}"
               class="cta-btn t-link {{ style_class }}"
               {{ block.shopify_attributes }}
-            >{{ block.settings.button_text }}</a>
+            >{{ block.settings.button_text | escape }}</a>
           {%- endif -%}
         {%- endfor -%}
       </div>
@@ -307,7 +311,7 @@
       "type": "color",
       "id": "sub_color",
       "label": "Subheading color",
-      "default": "#2a1508"
+      "default": "#6b3c23"
     },
     {
       "type": "header",

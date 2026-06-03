@@ -45,6 +45,7 @@
     font-size: {{ s.cta_size_m }}px;
   }
   .sw-{{ uid }} .ws-cta:hover{ color: {{ s.cta_hover }}; }
+  .sw-{{ uid }} .ws-cta:focus-visible{ outline: 2px solid {{ s.cta_color }}; outline-offset: 3px; }
 
   .sw-{{ uid }} .ws-imgs{
     display: grid;
@@ -88,19 +89,24 @@
     .sw-{{ uid }} .ws-addr-txt{ font-size: {{ s.addr_text_d }}px; }
     .sw-{{ uid }} .ws-cta{ font-size: {{ s.cta_size_d }}px; }
   }
+  /* Match home: desktop padding from tablet up (≥750) so the boxed gutter aligns
+     with every other section at iPad. Two-column layout stays at ≥1024. */
+  @media (min-width: 750px) {
+    .sw-{{ uid }} { padding: {{ s.pad_top }}px {{ s.pad_x }}px {{ s.pad_bot }}px; }
+  }
 {%- endstyle -%}
 
 <section class="sw-{{ uid }}" data-kw-fade-up data-kw-fade-up-selector=".ws-fu" aria-labelledby="sw-h-{{ uid }}" {{ section.shopify_attributes }}>
   <div class="ws-grid">
     <div class="ws-fu">
       {%- if s.eyebrow != blank -%}
-        <div class="ws-eye t-eyebrow t-eyebrow--dash">{{ s.eyebrow }}</div>
+        <div class="ws-eye t-eyebrow t-eyebrow--dash">{{ s.eyebrow | escape }}</div>
       {%- endif -%}
       {%- if s.heading != blank -%}
         <h2 class="ws-ttl t-display" id="sw-h-{{ uid }}">
-          {{ s.heading }}
+          {{ s.heading | escape }}
           {%- if s.heading_em != blank -%}
-            <br><em>{{ s.heading_em }}</em>
+            <br><em>{{ s.heading_em | escape }}</em>
           {%- endif -%}
         </h2>
       {%- endif -%}
@@ -114,7 +120,7 @@
       {%- if s.address_label != blank or s.address_text != blank -%}
         <div class="ws-addr">
           {%- if s.address_label != blank -%}
-            <div class="ws-addr-lbl t-label">{{ s.address_label }}</div>
+            <div class="ws-addr-lbl t-label">{{ s.address_label | escape }}</div>
           {%- endif -%}
           {%- if s.address_text != blank -%}
             <div class="ws-addr-txt t-body-sm">{{ s.address_text | escape | newline_to_br }}</div>
@@ -124,7 +130,7 @@
 
       {%- if s.cta_text != blank and s.cta_link != blank -%}
         <a class="ws-cta t-link" href="{{ s.cta_link }}"{% if s.cta_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
-          {{ s.cta_text }}
+          {{ s.cta_text | escape }}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </a>
       {%- endif -%}
@@ -207,8 +213,8 @@
     { "type": "header", "content": "Typography" },
     { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop (px)", "min": 24, "max": 72, "step": 2, "default": 48, "unit": "px" },
     { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile (px)", "min": 20, "max": 44, "step": 2, "default": 30, "unit": "px" },
-    { "type": "range", "id": "body_d", "label": "Body desktop (px)", "min": 12, "max": 24, "step": 1, "default": 14, "unit": "px" },
-    { "type": "range", "id": "body_m", "label": "Body mobile (px)", "min": 10, "max": 22, "step": 1, "default": 13, "unit": "px" },
+    { "type": "range", "id": "body_d", "label": "Body desktop (px)", "min": 12, "max": 24, "step": 1, "default": 16, "unit": "px" },
+    { "type": "range", "id": "body_m", "label": "Body mobile (px)", "min": 10, "max": 22, "step": 1, "default": 15, "unit": "px" },
     { "type": "range", "id": "addr_label_d", "label": "Address label desktop (px)", "min": 8, "max": 22, "step": 1, "default": 12, "unit": "px" },
     { "type": "range", "id": "addr_label_m", "label": "Address label mobile (px)", "min": 8, "max": 20, "step": 1, "default": 11, "unit": "px" },
     { "type": "range", "id": "addr_text_d", "label": "Address text desktop (px)", "min": 11, "max": 24, "step": 1, "default": 14, "unit": "px" },
@@ -236,14 +242,14 @@
     { "type": "color", "id": "eye_color", "label": "Eyebrow color", "default": "#bc843f" },
     { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#6b3c23" },
     { "type": "color", "id": "heading_em_color", "label": "Heading italic color", "default": "#bc843f" },
-    { "type": "color", "id": "body_color", "label": "Body text color", "default": "#a88b73" },
+    { "type": "color", "id": "body_color", "label": "Body text color", "default": "#6b3c23" },
     { "type": "color", "id": "card_bg", "label": "Address card background", "default": "#6b3c23" },
     { "type": "color", "id": "card_border", "label": "Address card border", "default": "#8c5a3a" },
     { "type": "color", "id": "addr_label_color", "label": "Address label color", "default": "#faf5ee" },
     { "type": "color", "id": "addr_text_color", "label": "Address text color", "default": "#faf5ee" },
-    { "type": "color", "id": "cta_color", "label": "CTA color", "default": "#d8ae82" },
-    { "type": "color", "id": "cta_border", "label": "CTA underline color", "default": "#faf5ee" },
-    { "type": "color", "id": "cta_hover", "label": "CTA hover color", "default": "#6b3c23" }
+    { "type": "color", "id": "cta_color", "label": "CTA color", "default": "#6b3c23" },
+    { "type": "color", "id": "cta_border", "label": "CTA underline color", "default": "#6b3c23" },
+    { "type": "color", "id": "cta_hover", "label": "CTA hover color", "default": "#bc843f" }
   ],
   "presets": [
     { "name": "Sihor Workshop" }

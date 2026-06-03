@@ -39,13 +39,15 @@
     overflow-x: hidden;
   }
   .vmsec-{{ section.id }} .vm-head {
-    padding: {{ header_padding_y_mobile }}px {{ header_padding_x_mobile }}px;
+    padding: {{ header_padding_y_mobile }}px 0;
     background: {{ header_bg }};
   }
   .vmsec-{{ section.id }} .vm-head-inner {
     max-width: {{ max_width }}px;
     margin-left: auto;
     margin-right: auto;
+    padding-left: {{ header_padding_x_mobile }}px;
+    padding-right: {{ header_padding_x_mobile }}px;
   }
   .vmsec-{{ section.id }} .vm-grid {
     {%- if container_width == 'boxed' -%}
@@ -109,7 +111,11 @@
       margin: {{ margin_top }}px 0 {{ margin_bottom }}px;
     }
     .vmsec-{{ section.id }} .vm-head {
-      padding: {{ header_padding_y }}px {{ header_padding_x }}px;
+      padding: {{ header_padding_y }}px 0;
+    }
+    .vmsec-{{ section.id }} .vm-head-inner {
+      padding-left: {{ header_padding_x }}px;
+      padding-right: {{ header_padding_x }}px;
     }
     .vmsec-{{ section.id }} .vm-grid {
       margin-top: {{ grid_margin_top }}px;
@@ -118,11 +124,13 @@
       padding: {{ card_padding_y }}px {{ card_padding_x }}px;
     }
     {%- if container_width != 'boxed' -%}
+    /* Full-bleed backgrounds, but content aligns to the 1500 box + 40 gutter
+       (so the card text lines up with the header and every other section). */
     .vmsec-{{ section.id }} .vm-card:nth-child(odd) {
-      padding-left: max({{ header_padding_x }}px, calc((100vw - {{ max_width }}px) / 2));
+      padding-left: max({{ header_padding_x }}px, calc((100vw - {{ max_width }}px) / 2 + {{ header_padding_x }}px));
     }
     .vmsec-{{ section.id }} .vm-card:nth-child(even) {
-      padding-right: max({{ header_padding_x }}px, calc((100vw - {{ max_width }}px) / 2));
+      padding-right: max({{ header_padding_x }}px, calc((100vw - {{ max_width }}px) / 2 + {{ header_padding_x }}px));
     }
     {%- endif -%}
   }
@@ -154,6 +162,13 @@
       color: {{ block.settings.big_letter_color }};
     }
   {%- endfor -%}
+  /* iPad parity: header vertical padding (75) from tablet up; the horizontal
+     gutter lives on .vm-head-inner so the full-width cream bg blends while the
+     header text aligns to the 1500 box + 40 gutter (same as the cards/sections). */
+  @media (min-width: 750px) {
+    .vmsec-{{ section.id }} .vm-head { padding: {{ header_padding_y }}px 0; }
+    .vmsec-{{ section.id }} .vm-head-inner { padding-left: {{ header_padding_x }}px; padding-right: {{ header_padding_x }}px; }
+  }
 {%- endstyle -%}
 
 <section class="vmsec-{{ section.id }}" data-kw-fade-up data-kw-fade-up-threshold="0.12" aria-labelledby="vmsec-heading-{{ section.id }}" {{ section.shopify_attributes }}>
@@ -161,13 +176,13 @@
     <div class="vm-head">
       <div class="vm-head-inner">
         {%- if section.settings.eyebrow != blank -%}
-          <div class="eye t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow }}</div>
+          <div class="eye t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow | escape }}</div>
         {%- endif -%}
         {%- if section.settings.heading != blank or section.settings.heading_italic != blank -%}
           <h2 class="ttl t-display" id="vmsec-heading-{{ section.id }}">
-            {{ section.settings.heading }}
+            {{ section.settings.heading | escape }}
             {%- if section.settings.heading_italic != blank -%}
-              <br><em>{{ section.settings.heading_italic }}</em>
+              <br><em>{{ section.settings.heading_italic | escape }}</em>
             {%- endif -%}
           </h2>
         {%- endif -%}
@@ -179,16 +194,16 @@
     {%- for block in section.blocks -%}
       <div class="vm-card vm-card-{{ block.id }} fu" {{ block.shopify_attributes }}>
         {%- if block.settings.label != blank -%}
-          <div class="vm-label t-eyebrow t-eyebrow--dash">{{ block.settings.label }}</div>
+          <div class="vm-label t-eyebrow t-eyebrow--dash">{{ block.settings.label | escape }}</div>
         {%- endif -%}
         {%- if block.settings.title != blank -%}
-          <h3 class="vm-title t-heading">{{ block.settings.title }}</h3>
+          <h3 class="vm-title t-heading">{{ block.settings.title | escape }}</h3>
         {%- endif -%}
         {%- if block.settings.body != blank -%}
-          <p class="vm-body t-body">{{ block.settings.body }}</p>
+          <p class="vm-body t-body">{{ block.settings.body | escape }}</p>
         {%- endif -%}
         {%- if block.settings.big_letter != blank -%}
-          <div class="vm-num" aria-hidden="true">{{ block.settings.big_letter }}</div>
+          <div class="vm-num" aria-hidden="true">{{ block.settings.big_letter | escape }}</div>
         {%- endif -%}
       </div>
     {%- endfor -%}
@@ -359,8 +374,8 @@
       "label": "Vertical padding (px)",
       "min": 0,
       "max": 200,
-      "step": 4,
-      "default": 56,
+      "step": 5,
+      "default": 75,
       "unit": "px"
     },
     {
@@ -370,7 +385,7 @@
       "min": 16,
       "max": 160,
       "step": 4,
-      "default": 80,
+      "default": 40,
       "unit": "px"
     },
     {
@@ -418,7 +433,7 @@
       "min": 16,
       "max": 120,
       "step": 2,
-      "default": 44,
+      "default": 40,
       "unit": "px"
     },
     {

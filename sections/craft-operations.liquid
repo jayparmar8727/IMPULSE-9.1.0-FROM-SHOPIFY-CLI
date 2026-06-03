@@ -105,7 +105,9 @@
     flex-direction: column;
     height: 100%;
   }
-  .cops-{{ section.id }} .cstep:not(:first-child) { padding-left: 18px; }
+  /* 2-col mobile/tablet: gutter on the RIGHT column only (even items), so the
+     left column (steps 1 & 3) stays flush — not an alternating indent. */
+  .cops-{{ section.id }} .cstep:nth-child(even) { padding-left: 18px; }
   .cops-{{ section.id }} .cstep:nth-child(odd) { border-right: 1px solid {{ border_color }}; }
   .cops-{{ section.id }} .cstep-n {
     color: {{ number_color }};
@@ -207,6 +209,11 @@
     .cops-{{ section.id }} .cstep:not(:first-child) { padding-left: 28px; }
     .cops-{{ section.id }} .cstep:last-child { border-right: none; padding-right: 0; }
   }
+  /* Match home: desktop horizontal+vertical padding from tablet up (≥750), so the
+     boxed gutter aligns with every other section at iPad. Grid stays 2-col until ≥1024. */
+  @media (min-width: 750px) {
+    .cops-{{ section.id }} .cops-inner { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
+  }
 {%- endstyle -%}
 
 <section class="cops-{{ section.id }}" data-kw-fade-up aria-labelledby="cops-heading-{{ section.id }}" {{ section.shopify_attributes }}>
@@ -214,16 +221,16 @@
   <div class="cops-hdr">
     <div class="cops-hdr-main">
       {%- if section.settings.eyebrow != blank -%}
-        <div class="t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow }}</div>
+        <div class="t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow | escape }}</div>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
         <h2 class="t-display" id="cops-heading-{{ section.id }}">
-          {{ section.settings.heading }}{% if section.settings.heading_italic != blank %}<br><em>{{ section.settings.heading_italic }}</em>{% endif %}
+          {{ section.settings.heading | escape }}{% if section.settings.heading_italic != blank %}<br><em>{{ section.settings.heading_italic | escape }}</em>{% endif %}
         </h2>
       {%- endif -%}
     </div>
     {%- if section.settings.subtext != blank -%}
-      <p class="cops-sub t-body">{{ section.settings.subtext }}</p>
+      <p class="cops-sub t-body">{{ section.settings.subtext | escape }}</p>
     {%- endif -%}
   </div>
 
@@ -232,33 +239,33 @@
       {%- for block in section.blocks -%}
         <div class="cstep fu" {{ block.shopify_attributes }}>
           {%- if block.settings.number != blank -%}
-            <div class="cstep-n t-stat-serif-upright">{{ block.settings.number }}</div>
+            <div class="cstep-n t-stat-serif-upright">{{ block.settings.number | escape }}</div>
           {%- endif -%}
           {%- if block.settings.title != blank -%}
-            <h3 class="cstep-t t-heading-sm">{{ block.settings.title }}</h3>
+            <h3 class="cstep-t t-heading-sm">{{ block.settings.title | escape }}</h3>
           {%- endif -%}
           {%- if block.settings.description != blank -%}
-            <p class="cstep-d t-body-sm">{{ block.settings.description }}</p>
+            <p class="cstep-d t-body-sm">{{ block.settings.description | escape }}</p>
           {%- endif -%}
           {%- if block.settings.ops_value != blank or block.settings.ops_label != blank or block.settings.ops_value_2 != blank or block.settings.ops_label_2 != blank -%}
             <div class="cstep-stats">
               {%- if block.settings.ops_value != blank or block.settings.ops_label != blank -%}
                 <div class="cstep-stat">
                   {%- if block.settings.ops_value != blank -%}
-                    <span class="cstep-ops t-heading-sm">{{ block.settings.ops_value }}</span>
+                    <span class="cstep-ops t-heading-sm">{{ block.settings.ops_value | escape }}</span>
                   {%- endif -%}
                   {%- if block.settings.ops_label != blank -%}
-                    <span class="cstep-ops-lbl t-label">{{ block.settings.ops_label }}</span>
+                    <span class="cstep-ops-lbl t-label">{{ block.settings.ops_label | escape }}</span>
                   {%- endif -%}
                 </div>
               {%- endif -%}
               {%- if block.settings.ops_value_2 != blank or block.settings.ops_label_2 != blank -%}
                 <div class="cstep-stat">
                   {%- if block.settings.ops_value_2 != blank -%}
-                    <span class="cstep-ops t-heading-sm">{{ block.settings.ops_value_2 }}</span>
+                    <span class="cstep-ops t-heading-sm">{{ block.settings.ops_value_2 | escape }}</span>
                   {%- endif -%}
                   {%- if block.settings.ops_label_2 != blank -%}
-                    <span class="cstep-ops-lbl t-label">{{ block.settings.ops_label_2 }}</span>
+                    <span class="cstep-ops-lbl t-label">{{ block.settings.ops_label_2 | escape }}</span>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -313,7 +320,7 @@
     { "type": "select", "id": "text_align_mobile", "label": "Text alignment (mobile)", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
 
     { "type": "header", "content": "Spacing - Desktop" },
-    { "type": "range", "id": "padding_x", "label": "Horizontal padding (px)", "min": 16, "max": 120, "step": 4, "default": 16, "unit": "px" },
+    { "type": "range", "id": "padding_x", "label": "Horizontal padding (px)", "min": 16, "max": 120, "step": 4, "default": 40, "unit": "px" },
     { "type": "range", "id": "padding_top", "label": "Padding top (px)", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
     { "type": "range", "id": "padding_bottom", "label": "Padding bottom (px)", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
     { "type": "range", "id": "margin_top", "label": "Margin top (px)", "min": 0, "max": 120, "step": 4, "default": 0, "unit": "px" },

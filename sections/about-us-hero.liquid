@@ -11,6 +11,7 @@
 
   assign height_desktop   = section.settings.height_desktop
   assign min_height       = section.settings.min_height
+  assign min_height_mobile = section.settings.min_height_mobile
 
   assign padding_x        = section.settings.padding_x
   assign padding_top      = section.settings.padding_top
@@ -166,8 +167,9 @@
     }
   }
 
-  /* Tablet / small desktop */
-  @media (max-width: 1024px) {
+  /* Mobile only — desktop padding takes over at >=750 (iPad), matching every
+     other section's gutter convention. */
+  @media (max-width: 749px) {
     .aboutus-hero-{{ section.id }} .ah-inner {
       padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
     }
@@ -195,6 +197,14 @@
     }
   }
 
+  /* Mobile — size to content + top/bottom padding, not a tall fixed banner */
+  @media (max-width: 749px) {
+    .aboutus-hero-{{ section.id }} {
+      height: auto;
+      min-height: {{ min_height_mobile }}px;
+    }
+  }
+
   {%- if section.settings.hide_desktop -%}
   @media (min-width: 768px) { .aboutus-hero-{{ section.id }} { display: none !important; } }
   {%- endif -%}
@@ -203,34 +213,34 @@
   {%- endif -%}
 {%- endstyle -%}
 
-<section class="aboutus-hero-{{ section.id }}" aria-label="{{ aria_label | default: 'About' }}" {{ section.shopify_attributes }}>
+<section class="aboutus-hero-{{ section.id }}" aria-label="{{ aria_label | default: 'About' | escape }}" {{ section.shopify_attributes }}>
   <div class="ah-bg"></div>
   <div class="ah-overlay"></div>
   <div class="ah-inner">
     <div class="ah-content">
       {%- if eyebrow != blank -%}
-        <p class="ah-eye t-eyebrow">{{ eyebrow }}</p>
+        <p class="ah-eye t-eyebrow">{{ eyebrow | escape }}</p>
       {%- endif -%}
       {%- if heading_line_1 != blank or heading_line_2 != blank or heading_italic != blank -%}
         <h1 class="ah-h t-display">
-          {%- if heading_line_1 != blank -%}{{ heading_line_1 }}{%- endif -%}
+          {%- if heading_line_1 != blank -%}{{ heading_line_1 | escape }}{%- endif -%}
           {%- if heading_line_1 != blank and heading_line_2 != blank -%}<br>{%- endif -%}
-          {%- if heading_line_2 != blank -%}{{ heading_line_2 }}{%- endif -%}
+          {%- if heading_line_2 != blank -%}{{ heading_line_2 | escape }}{%- endif -%}
           {%- if heading_italic != blank -%}
             {%- if heading_line_1 != blank or heading_line_2 != blank -%}<br>{%- endif -%}
-            <em>{{ heading_italic }}</em>
+            <em>{{ heading_italic | escape }}</em>
           {%- endif -%}
         </h1>
       {%- endif -%}
       {%- if subheading != blank -%}
-        <p class="ah-sub t-body">{{ subheading }}</p>
+        <p class="ah-sub t-body">{{ subheading | escape }}</p>
       {%- endif -%}
     </div>
   </div>
   {%- if scroll_label != blank -%}
     <div class="ah-scroll t-label">
       <div class="ah-scroll-ln"></div>
-      <span>{{ scroll_label }}</span>
+      <span>{{ scroll_label | escape }}</span>
     </div>
   {%- endif -%}
 </section>
@@ -341,6 +351,16 @@
       "max": 900,
       "step": 10,
       "default": 550,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Mobile minimum height (px)",
+      "min": 220,
+      "max": 700,
+      "step": 10,
+      "default": 360,
       "unit": "px"
     },
     {

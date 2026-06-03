@@ -54,7 +54,7 @@
       font-size: {{ attr_size_desktop }}px;
     }
   }
-  @media (max-width: 1024px) {
+  @media (max-width: 749px) {
     .mission-{{ section.id }} .mission-inner {
       padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
     }
@@ -67,16 +67,16 @@
   {%- endif -%}
 {%- endstyle -%}
 
-<div class="mission-{{ section.id }}" aria-label="{{ section.settings.aria_label | default: 'Mission statement' }}" {{ section.shopify_attributes }}>
+<section class="mission-{{ section.id }}" aria-label="{{ section.settings.aria_label | default: 'Mission statement' | escape }}" {{ section.shopify_attributes }}>
   <div class="mission-inner">
     {%- if quote_text != blank -%}
-      <blockquote class="mission-quote t-quote">{{ quote_text }}</blockquote>
+      <blockquote class="mission-quote t-quote">{{ quote_text | escape }}</blockquote>
     {%- endif -%}
     {%- if attribution != blank -%}
-      <p class="mission-attr t-eyebrow">{{ attribution }}</p>
+      <p class="mission-attr t-eyebrow">{{ attribution | escape }}</p>
     {%- endif -%}
   </div>
-</div>
+</section>
 
 {% schema %}
 {

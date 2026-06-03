@@ -744,7 +744,7 @@
         "btn_primary_hover_bg": "#bc843f",
         "btn_outline_border": "#4d2c1a",
         "btn_outline_color": "#6b3c23",
-        "btn_outline_hover_bg": "#6b3c23",
+        "btn_outline_hover_bg": "#bc843f",
         "btn_outline_hover_border": "#bc843f",
         "btn_outline_hover_color": "#fee8d9"
       }

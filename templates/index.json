@@ -126,7 +126,7 @@
         "overlay_gradient": "linear-gradient(110deg,rgba(42,21,8,.88) 0%,rgba(42,21,8,.5) 52%,transparent 100%)",
         "eye_color": "#d8ae82",
         "tag_color": "#d8ae82",
-        "heading_color": "#ffffff",
+        "heading_color": "#faf5ee",
         "heading_italic_color": "#d8ae82",
         "paragraph_color": "#ffffffad",
         "btn_primary_bg": "#6b3c23",

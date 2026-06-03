@@ -73,7 +73,7 @@
         "eyebrow_color": "#fee8d9",
         "heading_color": "#faf5ee",
         "heading_italic_color": "#fee8d9",
-        "sub_color": "#ffffff",
+        "sub_color": "#fee8d9",
         "scroll_color": "#d8ae82"
       }
     },
@@ -590,7 +590,7 @@
             "body": "To preserve and celebrate the rich tradition of handcrafted Kansa utensils — providing families with high-quality kitchenware that inspires wholesome cooking and cherished moments around the dining table, generation after generation.",
             "big_letter": "M",
             "card_bg": "#6b3c23",
-            "label_color": "#fee8d9",
+            "label_color": "#d8ae82",
             "title_color": "#fee8d9",
             "body_color": "#fee8d9",
             "big_letter_color": "#fee8d90f"
@@ -687,7 +687,7 @@
         "body_color": "#6b3c23",
         "card_bg": "#6b3c23",
         "card_border": "#8c5a3a",
-        "addr_label_color": "#faf5ee",
+        "addr_label_color": "#d8ae82",
         "addr_text_color": "#faf5ee",
         "cta_color": "#6b3c23",
         "cta_border": "#6b3c23",

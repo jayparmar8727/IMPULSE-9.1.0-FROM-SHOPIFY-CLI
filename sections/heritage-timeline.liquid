@@ -111,6 +111,11 @@
     }
     {%- endif -%}
   }
+  /* iPad consistency: desktop gutter+margins from tablet up (≥750), matching the
+     other boxed home sections. Four-column grid still changes at ≥1024. */
+  @media (min-width: 750px) {
+    .htl-{{ section.id }} { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; margin: {{ margin_top }}px 0 {{ margin_bottom }}px; }
+  }
 {%- endstyle -%}
 
 <section class="heritage-timeline htl-{{ section.id }}" data-kw-fade-up aria-label="{{ section.settings.aria_label | default: 'Kansawala heritage timeline' | escape }}" {{ section.shopify_attributes }}>

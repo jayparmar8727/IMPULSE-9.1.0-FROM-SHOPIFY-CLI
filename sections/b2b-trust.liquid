@@ -388,6 +388,14 @@
   {%- if section.settings.hide_mobile -%}
     @media (max-width: 749px) { .b2b-{{ section.id }} { display: none; } }
   {%- endif -%}
+  /* iPad: keep the mobile testimonial slider but use the desktop side gutter (≥750),
+     matching every other section. Slider still runs until 989. */
+  @media (min-width: 750px) {
+    .b2b-{{ section.id }} .b2b-inner { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
+  }
+  @media (min-width: 750px) and (max-width: 989px) {
+    .b2b-{{ section.id }} .b2b-grid { padding-left: {{ padding_x }}px; padding-right: {{ padding_x }}px; margin-left: -{{ padding_x }}px; margin-right: -{{ padding_x }}px; }
+  }
 {%- endstyle -%}
 
 <section class="b2b-trust b2b-{{ section.id }}"

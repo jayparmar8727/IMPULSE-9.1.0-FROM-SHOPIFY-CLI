@@ -133,6 +133,11 @@
   {%- if section.settings.hide_mobile -%}
   @media (max-width: 749px) { .colls-{{ section.id }} { display: none !important; } }
   {%- endif -%}
+  /* iPad consistency: desktop gutter from tablet up (≥750), matching the other
+     boxed home sections. Card grid columns still change at ≥1024. */
+  @media (min-width: 750px) {
+    .colls-{{ section.id }} .colls-inner { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
+  }
 {%- endstyle -%}
 
 <section class="colls-{{ section.id }}"{% if heading != blank %} aria-labelledby="coll-heading-{{ section.id }}"{% endif %} {{ section.shopify_attributes }}>

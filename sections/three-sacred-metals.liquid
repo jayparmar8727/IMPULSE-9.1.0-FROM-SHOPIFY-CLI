@@ -299,6 +299,14 @@
       margin-bottom:40px;
     }
   }
+  /* iPad: keep the mobile slider layout but use the desktop side gutter (≥750),
+     matching every other section. Slider still runs until 990. */
+  @media (min-width: 750px) {
+    .tsm-{{ section.id }} .tsm-inner { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
+  }
+  @media (min-width: 750px) and (max-width: 989px) {
+    .tsm-{{ section.id }} .tsm-grid { padding-left: {{ padding_x }}px; padding-right: {{ padding_x }}px; margin-left: -{{ padding_x }}px; margin-right: -{{ padding_x }}px; }
+  }
 {%- endstyle -%}
 
 <section class="three-sacred-metals tsm-{{ section.id }}"

@@ -7,6 +7,8 @@
 #                   optional "external image URL" fallback fields point off the Shopify CDN by design.
 #   AssetPreload  — the print/onload async webfont pattern in kw-fonts trips this; it's a
 #                   false-positive for a *remote* stylesheet (the preload arg only works for theme assets).
+#                   about-us-hero preloads its CSS *background* image via a manual <link rel="preload">;
+#                   image_tag's preload arg can't be used for a background, so this is a false-positive too.
 
 RemoteAsset:
   ignore:
@@ -16,7 +18,20 @@ RemoteAsset:
     - "sections/brand-story.liquid"
     - "sections/meaning-legacy.liquid"
     - "sections/b2b-trust.liquid"
+    - "sections/about-us-hero.liquid"
 
 AssetPreload:
   ignore:
     - "snippets/kw-fonts.liquid"
+    - "sections/about-us-hero.liquid"
+
+# MatchingTranslations — 3,563 of the theme's ~3,916 offenses (97%) come from this single check
+# firing on the STOCK `locales/*.json` files exactly as Shopify CLI shipped Impulse 9.1.0. Fixing
+# them would mean editing stock locale files (forbidden by our golden rules), so they are pure,
+# un-actionable noise that drowns out real signal about OUR code. Disable it here so
+# `shopify theme check` is usable as a custom-code linter.
+# REVERSIBLE: delete this block to restore the check (e.g. if we ever add our own locale keys and
+# want to verify they exist across all 14 locales). Our custom sections are currently schema-driven
+# (no locale keys), so nothing of ours depends on it today.
+MatchingTranslations:
+  enabled: false

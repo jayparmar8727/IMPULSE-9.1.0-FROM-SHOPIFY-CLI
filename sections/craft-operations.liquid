@@ -1,0 +1,414 @@
+{%- liquid
+  assign bg_color = section.settings.bg_color
+  assign eye_color = section.settings.eye_color
+  assign heading_color = section.settings.heading_color
+  assign heading_italic_color = section.settings.heading_italic_color
+  assign sub_color = section.settings.sub_color
+  assign number_color = section.settings.number_color
+  assign step_title_color = section.settings.step_title_color
+  assign step_desc_color = section.settings.step_desc_color
+  assign ops_value_color = section.settings.ops_value_color
+  assign ops_label_color = section.settings.ops_label_color
+  assign border_color = section.settings.border_color
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_x = section.settings.padding_x
+  assign heading_size_desktop = section.settings.heading_size_desktop
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign sub_size_desktop = section.settings.sub_size_desktop
+  assign sub_size_mobile = section.settings.sub_size_mobile
+  assign num_size_desktop = section.settings.num_size_desktop
+  assign num_size_mobile = section.settings.num_size_mobile
+  assign step_title_size_desktop = section.settings.step_title_size_desktop
+  assign step_title_size_mobile = section.settings.step_title_size_mobile
+  assign step_desc_size_desktop = section.settings.step_desc_size_desktop
+  assign step_desc_size_mobile = section.settings.step_desc_size_mobile
+  assign ops_value_size_desktop = section.settings.ops_value_size_desktop
+  assign ops_value_size_mobile = section.settings.ops_value_size_mobile
+  assign ops_label_size_desktop = section.settings.ops_label_size_desktop
+  assign ops_label_size_mobile = section.settings.ops_label_size_mobile
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign padding_top_mobile = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile = section.settings.padding_x_mobile
+  assign margin_top_mobile = section.settings.margin_top_mobile
+  assign margin_bottom_mobile = section.settings.margin_bottom_mobile
+  assign container_width = section.settings.container_width
+  assign max_width = section.settings.max_width
+  assign text_align = section.settings.text_align
+  assign text_align_mobile = section.settings.text_align_mobile
+  assign sub_max_width = section.settings.sub_max_width
+-%}
+
+{%- style -%}
+  .cops-{{ section.id }} {
+    background: {{ bg_color }};
+    margin: {{ margin_top_mobile }}px 0 {{ margin_bottom_mobile }}px;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .cops-{{ section.id }} .cops-inner {
+    padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+    box-sizing: border-box;
+  }
+  .cops-{{ section.id }} .t-eyebrow {
+    color: {{ eye_color }};
+    margin-bottom: 14px;
+  }
+  .cops-{{ section.id }} .t-eyebrow--dash::before {
+    background: {{ eye_color }};
+  }
+  .cops-{{ section.id }} .t-display {
+    color: {{ heading_color }};
+    font-size: {{ heading_size_desktop }}px;
+  }
+  .cops-{{ section.id }} .t-display em {
+    color: {{ heading_italic_color }};
+  }
+  .cops-{{ section.id }} .cops-sub {
+    color: {{ sub_color }};
+    margin: 14px 0 0;
+    font-size: {{ sub_size_desktop }}px;
+  }
+  .cops-{{ section.id }} .cops-hdr {
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+  }
+  .cops-{{ section.id }} .cops-hdr-main { min-width: 0; }
+  .cops-{{ section.id }} .cops-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border-top: 1px solid {{ border_color }};
+    margin-top: 40px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+  }
+  .cops-{{ section.id }} .cstep {
+    padding: 32px 18px 32px 0;
+    border-right: none;
+    border-bottom: 1px solid {{ border_color }};
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .cops-{{ section.id }} .cstep:not(:first-child) { padding-left: 18px; }
+  .cops-{{ section.id }} .cstep:nth-child(odd) { border-right: 1px solid {{ border_color }}; }
+  .cops-{{ section.id }} .cstep-n {
+    color: {{ number_color }};
+    margin-bottom: 16px;
+    font-size: {{ num_size_desktop }}px;
+  }
+  .cops-{{ section.id }} .cstep-t {
+    color: {{ step_title_color }};
+    margin: 0 0 12px;
+    font-size: {{ step_title_size_desktop }}px;
+  }
+  .cops-{{ section.id }} .cstep-d {
+    color: {{ step_desc_color }};
+    margin: 0;
+    font-size: {{ step_desc_size_desktop }}px;
+  }
+  .cops-{{ section.id }} .cstep-stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 28px;
+    margin-top: auto;
+    padding-top: 28px;
+  }
+  .cops-{{ section.id }} .cstep-stat {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .cops-{{ section.id }} .cstep-ops {
+    color: {{ ops_value_color }};
+    display: block;
+    font-size: {{ ops_value_size_desktop }}px;
+  }
+  .cops-{{ section.id }} .cstep-ops-lbl {
+    color: {{ ops_label_color }};
+    display: block;
+    margin-top: 6px;
+    font-size: {{ ops_label_size_desktop }}px;
+  }
+  .js-kw-fadeup .cops-{{ section.id }} .fu {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.85s cubic-bezier(.16,1,.3,1), transform 0.85s cubic-bezier(.16,1,.3,1);
+  }
+  .js-kw-fadeup .cops-{{ section.id }} .fu.in { opacity: 1; transform: translateY(0); }
+  .js-kw-fadeup .cops-{{ section.id }} .fu:nth-child(2) { transition-delay: 0.09s; }
+  .js-kw-fadeup .cops-{{ section.id }} .fu:nth-child(3) { transition-delay: 0.18s; }
+  .js-kw-fadeup .cops-{{ section.id }} .fu:nth-child(4) { transition-delay: 0.27s; }
+  .js-kw-fadeup .cops-{{ section.id }} .fu:nth-child(5) { transition-delay: 0.36s; }
+  @media(max-width: 749px) {
+    .cops-{{ section.id }} .cops-hdr,
+    .cops-{{ section.id }} .cops-grid { text-align: {{ text_align_mobile }}; }
+    .cops-{{ section.id }} .cops-sub { max-width: 100%; }
+  }
+  @media (max-width: 749px) {
+    .cops-{{ section.id }} .t-display { font-size: {{ heading_size_mobile }}px; }
+    .cops-{{ section.id }} .cops-sub { font-size: {{ sub_size_mobile }}px; }
+    .cops-{{ section.id }} .cstep-n { font-size: {{ num_size_mobile }}px; }
+    .cops-{{ section.id }} .cstep-t { font-size: {{ step_title_size_mobile }}px; }
+    .cops-{{ section.id }} .cstep-d { font-size: {{ step_desc_size_mobile }}px; }
+    .cops-{{ section.id }} .cstep-ops { font-size: {{ ops_value_size_mobile }}px; }
+    .cops-{{ section.id }} .cstep-ops-lbl { font-size: {{ ops_label_size_mobile }}px; }
+  }
+  {%- if section.settings.hide_desktop -%}
+  @media(min-width: 768px) { .cops-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media(max-width: 749px) { .cops-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  @media(min-width: 1024px) {
+    .cops-{{ section.id }} {
+      margin: {{ margin_top }}px 0 {{ margin_bottom }}px;
+      text-align: {{ text_align }};
+    }
+    .cops-{{ section.id }} .cops-inner {
+      padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    }
+    .cops-{{ section.id }} .cops-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .cops-{{ section.id }} .cops-hdr-main { flex: 1 1 auto; }
+    .cops-{{ section.id }} .cops-sub { margin: 0; max-width: {{ sub_max_width }}px; }
+    .cops-{{ section.id }} .cops-grid {
+      grid-template-columns: repeat(4, 1fr);
+      margin-top: 56px;
+    }
+    .cops-{{ section.id }} .cstep {
+      padding: 36px 28px 36px 0;
+      border-right: 1px solid {{ border_color }};
+      border-bottom: none;
+    }
+    .cops-{{ section.id }} .cstep:nth-child(odd) { border-right: 1px solid {{ border_color }}; }
+    .cops-{{ section.id }} .cstep:not(:first-child) { padding-left: 28px; }
+    .cops-{{ section.id }} .cstep:last-child { border-right: none; padding-right: 0; }
+  }
+{%- endstyle -%}
+
+<section class="cops-{{ section.id }}" data-kw-fade-up aria-labelledby="cops-heading-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="cops-inner">
+  <div class="cops-hdr">
+    <div class="cops-hdr-main">
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="t-display" id="cops-heading-{{ section.id }}">
+          {{ section.settings.heading }}{% if section.settings.heading_italic != blank %}<br><em>{{ section.settings.heading_italic }}</em>{% endif %}
+        </h2>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.subtext != blank -%}
+      <p class="cops-sub t-body">{{ section.settings.subtext }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- if section.blocks.size > 0 -%}
+    <div class="cops-grid">
+      {%- for block in section.blocks -%}
+        <div class="cstep fu" {{ block.shopify_attributes }}>
+          {%- if block.settings.number != blank -%}
+            <div class="cstep-n t-stat-serif-upright">{{ block.settings.number }}</div>
+          {%- endif -%}
+          {%- if block.settings.title != blank -%}
+            <h3 class="cstep-t t-heading-sm">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.description != blank -%}
+            <p class="cstep-d t-body-sm">{{ block.settings.description }}</p>
+          {%- endif -%}
+          {%- if block.settings.ops_value != blank or block.settings.ops_label != blank or block.settings.ops_value_2 != blank or block.settings.ops_label_2 != blank -%}
+            <div class="cstep-stats">
+              {%- if block.settings.ops_value != blank or block.settings.ops_label != blank -%}
+                <div class="cstep-stat">
+                  {%- if block.settings.ops_value != blank -%}
+                    <span class="cstep-ops t-heading-sm">{{ block.settings.ops_value }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.ops_label != blank -%}
+                    <span class="cstep-ops-lbl t-label">{{ block.settings.ops_label }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+              {%- if block.settings.ops_value_2 != blank or block.settings.ops_label_2 != blank -%}
+                <div class="cstep-stat">
+                  {%- if block.settings.ops_value_2 != blank -%}
+                    <span class="cstep-ops t-heading-sm">{{ block.settings.ops_value_2 }}</span>
+                  {%- endif -%}
+                  {%- if block.settings.ops_label_2 != blank -%}
+                    <span class="cstep-ops-lbl t-label">{{ block.settings.ops_label_2 }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%} Fade-up reveal driven by the generic [data-kw-fade-up] engine in assets/kw-sections.js. {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Craft Operations",
+  "tag": "section",
+  "class": "kw-craft-operations",
+  "settings": [
+    { "type": "header", "content": "Visibility" },
+    { "type": "checkbox", "id": "hide_desktop", "label": "Hide on desktop", "default": false },
+    { "type": "checkbox", "id": "hide_mobile", "label": "Hide on mobile", "default": false },
+
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "How We Make It" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "24 Operations." },
+    { "type": "text", "id": "heading_italic", "label": "Heading italic line", "default": "One Perfect Piece." },
+    { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "Unlike machine-made utensils, every Kansawala piece passes through 24-25 handcrafted operations before it earns our name. No shortcuts. No machines. Just fire, hammer, and skill passed through four generations." },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading desktop (px)", "min": 24, "max": 72, "step": 2, "default": 48, "unit": "px" },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading mobile (px)", "min": 20, "max": 48, "step": 2, "default": 30, "unit": "px" },
+    { "type": "range", "id": "sub_size_desktop", "label": "Subtext desktop (px)", "min": 12, "max": 28, "step": 1, "default": 17, "unit": "px" },
+    { "type": "range", "id": "sub_size_mobile", "label": "Subtext mobile (px)", "min": 10, "max": 24, "step": 1, "default": 15, "unit": "px" },
+    { "type": "range", "id": "num_size_desktop", "label": "Step number desktop (px)", "min": 18, "max": 80, "step": 1, "default": 44, "unit": "px" },
+    { "type": "range", "id": "num_size_mobile", "label": "Step number mobile (px)", "min": 16, "max": 60, "step": 1, "default": 32, "unit": "px" },
+    { "type": "range", "id": "step_title_size_desktop", "label": "Step title desktop (px)", "min": 14, "max": 40, "step": 1, "default": 22, "unit": "px" },
+    { "type": "range", "id": "step_title_size_mobile", "label": "Step title mobile (px)", "min": 12, "max": 32, "step": 1, "default": 18, "unit": "px" },
+    { "type": "range", "id": "step_desc_size_desktop", "label": "Step description desktop (px)", "min": 11, "max": 24, "step": 1, "default": 15, "unit": "px" },
+    { "type": "range", "id": "step_desc_size_mobile", "label": "Step description mobile (px)", "min": 10, "max": 22, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "ops_value_size_desktop", "label": "Stat value desktop (px)", "min": 14, "max": 40, "step": 1, "default": 22, "unit": "px" },
+    { "type": "range", "id": "ops_value_size_mobile", "label": "Stat value mobile (px)", "min": 12, "max": 32, "step": 1, "default": 18, "unit": "px" },
+    { "type": "range", "id": "ops_label_size_desktop", "label": "Stat label desktop (px)", "min": 8, "max": 22, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "ops_label_size_mobile", "label": "Stat label mobile (px)", "min": 8, "max": 20, "step": 1, "default": 11, "unit": "px" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "container_width", "label": "Container width", "options": [ { "value": "full", "label": "Full width" }, { "value": "boxed", "label": "Boxed (centered)" } ], "default": "boxed" },
+    { "type": "range", "id": "max_width", "label": "Max content width (px)", "min": 800, "max": 1800, "step": 20, "default": 1500, "unit": "px" },
+    { "type": "range", "id": "sub_max_width", "label": "Subtext max width desktop (px)", "min": 280, "max": 900, "step": 10, "default": 460, "unit": "px" },
+    { "type": "select", "id": "text_align", "label": "Text alignment (desktop)", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
+    { "type": "select", "id": "text_align_mobile", "label": "Text alignment (mobile)", "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" } ], "default": "left" },
+
+    { "type": "header", "content": "Spacing - Desktop" },
+    { "type": "range", "id": "padding_x", "label": "Horizontal padding (px)", "min": 16, "max": 120, "step": 4, "default": 16, "unit": "px" },
+    { "type": "range", "id": "padding_top", "label": "Padding top (px)", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom (px)", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+    { "type": "range", "id": "margin_top", "label": "Margin top (px)", "min": 0, "max": 120, "step": 4, "default": 0, "unit": "px" },
+    { "type": "range", "id": "margin_bottom", "label": "Margin bottom (px)", "min": 0, "max": 120, "step": 4, "default": 0, "unit": "px" },
+
+    { "type": "header", "content": "Spacing - Mobile" },
+    { "type": "range", "id": "padding_top_mobile", "label": "Padding top mobile (px)", "min": 0, "max": 160, "step": 2, "default": 48, "unit": "px" },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Padding bottom mobile (px)", "min": 0, "max": 160, "step": 2, "default": 48, "unit": "px" },
+    { "type": "range", "id": "padding_x_mobile", "label": "Horizontal padding mobile (px)", "min": 0, "max": 40, "step": 1, "default": 20, "unit": "px" },
+    { "type": "range", "id": "margin_top_mobile", "label": "Margin top mobile (px)", "min": 0, "max": 80, "step": 2, "default": 0, "unit": "px" },
+    { "type": "range", "id": "margin_bottom_mobile", "label": "Margin bottom mobile (px)", "min": 0, "max": 80, "step": 2, "default": 0, "unit": "px" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#6b3c23" },
+    { "type": "color", "id": "eye_color", "label": "Eyebrow color", "default": "#d8ae82" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#faf5ee" },
+    { "type": "color", "id": "heading_italic_color", "label": "Heading italic color", "default": "#d8ae82" },
+    { "type": "color", "id": "sub_color", "label": "Subtext color", "default": "#fee8d9" },
+    { "type": "color", "id": "border_color", "label": "Divider color", "default": "#fee8d91a" },
+    { "type": "color", "id": "number_color", "label": "Step number color", "default": "#bc843f33" },
+    { "type": "color", "id": "step_title_color", "label": "Step title color", "default": "#faf5ee" },
+    { "type": "color", "id": "step_desc_color", "label": "Step description color", "default": "#fee8d9" },
+    { "type": "color", "id": "ops_value_color", "label": "Stat value color", "default": "#d8ae82" },
+    { "type": "color", "id": "ops_label_color", "label": "Stat label color", "default": "#fee8d959" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Step number", "default": "01" },
+        { "type": "text", "id": "title", "label": "Step title", "default": "Metal Selection" },
+        { "type": "textarea", "id": "description", "label": "Step description", "default": "We source only the highest-grade copper and tin - smelted to the precise ratio of 78% Copper and 22% Tin that Ayurveda identifies as true Kansa. No substitutes. No shortcuts." },
+        { "type": "text", "id": "ops_value", "label": "Stat value", "default": "78%" },
+        { "type": "text", "id": "ops_label", "label": "Stat label", "default": "Pure Copper" },
+        { "type": "text", "id": "ops_value_2", "label": "Stat value 2" },
+        { "type": "text", "id": "ops_label_2", "label": "Stat label 2" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Craft Operations",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "Metal Selection",
+            "description": "We source only the highest-grade copper and tin - smelted to the precise ratio of 78% Copper and 22% Tin that Ayurveda identifies as true Kansa. No substitutes. No shortcuts.",
+            "ops_value": "78%",
+            "ops_label": "Pure Copper",
+            "ops_value_2": "22%",
+            "ops_label_2": "Tin"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "02",
+            "title": "Fire & Casting",
+            "description": "The alloy is melted at over 1000C and poured into moulds. Our artisan reads the metal's colour and behaviour - knowledge that cannot be written down, only inherited through years of working beside a master.",
+            "ops_value": "1000°",
+            "ops_label": "Melting Temperature",
+            "ops_value_2": "",
+            "ops_label_2": ""
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "title": "Hand Beating",
+            "description": "Each piece is hammered through 24-25 operations - hundreds of precise hammer strikes - to achieve its final form, density and finish. The rhythm of the hammer is a language. The slight irregularities you see are fingerprints of human hands at work.",
+            "ops_value": "24-25",
+            "ops_label": "Hammering Operations",
+            "ops_value_2": "",
+            "ops_label_2": ""
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "04",
+            "title": "Quality & Finish",
+            "description": "A final polish, a bell-test for metal purity, and a careful inspection. Edges are smoothed, finish is verified. Only then does a piece earn the Kansawala name - and the right to enter your home.",
+            "ops_value": "100%",
+            "ops_label": "Hand Inspected",
+            "ops_value_2": "",
+            "ops_label_2": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

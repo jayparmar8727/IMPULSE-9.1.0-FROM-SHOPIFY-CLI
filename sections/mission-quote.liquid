@@ -1,0 +1,254 @@
+{%- liquid
+  assign quote_text         = section.settings.quote_text
+  assign attribution        = section.settings.attribution
+  assign bg_color           = section.settings.bg_color
+  assign quote_color        = section.settings.quote_color
+  assign attr_color         = section.settings.attr_color
+  assign quote_size_desktop = section.settings.quote_size_desktop
+  assign quote_size_mobile  = section.settings.quote_size_mobile
+  assign attr_size_desktop  = section.settings.attr_size_desktop
+  assign attr_size_mobile   = section.settings.attr_size_mobile
+  assign max_width          = section.settings.max_width
+  assign padding_top        = section.settings.padding_top
+  assign padding_bottom     = section.settings.padding_bottom
+  assign padding_x          = section.settings.padding_x
+  assign padding_top_mobile = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile   = section.settings.padding_x_mobile
+-%}
+
+{%- style -%}
+  .mission-{{ section.id }} {
+    background: {{ bg_color }};
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .mission-{{ section.id }} .mission-inner {
+    padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+  .mission-{{ section.id }} .mission-quote {
+    color: {{ quote_color }};
+    margin: 0 0 24px;
+    font-size: {{ quote_size_mobile }}px;
+  }
+  .mission-{{ section.id }} .mission-attr {
+    color: {{ attr_color }};
+    margin: 0 auto;
+    text-align: center;
+    font-size: {{ attr_size_mobile }}px;
+  }
+  @media (min-width: 768px) {
+    .mission-{{ section.id }} .mission-attr {
+      white-space: nowrap;
+    }
+  }
+  @media (min-width: 1025px) {
+    .mission-{{ section.id }} .mission-quote {
+      font-size: {{ quote_size_desktop }}px;
+    }
+    .mission-{{ section.id }} .mission-attr {
+      font-size: {{ attr_size_desktop }}px;
+    }
+  }
+  @media (max-width: 1024px) {
+    .mission-{{ section.id }} .mission-inner {
+      padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    }
+  }
+  {%- if section.settings.hide_desktop -%}
+  @media (min-width: 768px) { .mission-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media (max-width: 749px) { .mission-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<div class="mission-{{ section.id }}" aria-label="{{ section.settings.aria_label | default: 'Mission statement' }}" {{ section.shopify_attributes }}>
+  <div class="mission-inner">
+    {%- if quote_text != blank -%}
+      <blockquote class="mission-quote t-quote">{{ quote_text }}</blockquote>
+    {%- endif -%}
+    {%- if attribution != blank -%}
+      <p class="mission-attr t-eyebrow">{{ attribution }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Mission Quote",
+  "tag": "section",
+  "class": "kw-mission-quote",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "ARIA label",
+      "default": "Mission statement"
+    },
+    {
+      "type": "textarea",
+      "id": "quote_text",
+      "label": "Quote",
+      "default": "\"At Kansawala, our mission is to preserve and celebrate the rich tradition of handcrafted Kansa utensils — providing families with high-quality kitchenware that inspires wholesome cooking and cherished moments around the dining table.\""
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Attribution",
+      "default": "— Kansawala Mukundray Fulchand, Sihor, Gujarat"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Quote max width (px)",
+      "min": 400,
+      "max": 1400,
+      "step": 20,
+      "default": 900,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (px)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "default": 75,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (px)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "default": 75,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Mobile horizontal padding (px)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "default": 17,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "quote_size_desktop",
+      "label": "Quote size desktop (px)",
+      "min": 22,
+      "max": 60,
+      "step": 1,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "quote_size_mobile",
+      "label": "Quote size mobile (px)",
+      "min": 16,
+      "max": 40,
+      "step": 1,
+      "default": 26,
+      "unit": "px"
+    },
+    { "type": "range", "id": "attr_size_desktop", "label": "Attribution size desktop (px)", "min": 9, "max": 24, "step": 1, "default": 13, "unit": "px" },
+    { "type": "range", "id": "attr_size_mobile", "label": "Attribution size mobile (px)", "min": 8, "max": 20, "step": 1, "default": 12, "unit": "px" },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote color",
+      "default": "#fee8d9"
+    },
+    {
+      "type": "color",
+      "id": "attr_color",
+      "label": "Attribution color",
+      "default": "#d8ae82"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mission Quote"
+    }
+  ]
+}
+{% endschema %}

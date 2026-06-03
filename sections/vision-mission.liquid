@@ -1,0 +1,597 @@
+{%- liquid
+  assign header_bg = section.settings.header_bg
+  assign eyebrow_color = section.settings.eyebrow_color
+  assign heading_color = section.settings.heading_color
+  assign heading_italic_color = section.settings.heading_italic_color
+  assign heading_size_desktop = section.settings.heading_size_desktop
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign header_padding_y = section.settings.header_padding_y
+  assign header_padding_x = section.settings.header_padding_x
+  assign header_padding_y_mobile = section.settings.header_padding_y_mobile
+  assign header_padding_x_mobile = section.settings.header_padding_x_mobile
+  assign card_padding_y = section.settings.card_padding_y
+  assign card_padding_x = section.settings.card_padding_x
+  assign card_padding_y_mobile = section.settings.card_padding_y_mobile
+  assign card_padding_x_mobile = section.settings.card_padding_x_mobile
+  assign card_gap = section.settings.card_gap
+  assign grid_margin_top = section.settings.grid_margin_top
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_top_mobile = section.settings.margin_top_mobile
+  assign margin_bottom_mobile = section.settings.margin_bottom_mobile
+  assign big_letter_size = section.settings.big_letter_size
+  assign label_size_desktop = section.settings.label_size_desktop
+  assign label_size_mobile = section.settings.label_size_mobile
+  assign title_size_desktop = section.settings.title_size_desktop
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign body_size_desktop = section.settings.body_size_desktop
+  assign body_size_mobile = section.settings.body_size_mobile
+  assign container_width = section.settings.container_width
+  assign max_width = section.settings.max_width
+-%}
+
+{%- style -%}
+  .vmsec-{{ section.id }} {
+    padding: 0;
+    margin: {{ margin_top_mobile }}px 0 {{ margin_bottom_mobile }}px;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .vmsec-{{ section.id }} .vm-head {
+    padding: {{ header_padding_y_mobile }}px {{ header_padding_x_mobile }}px;
+    background: {{ header_bg }};
+  }
+  .vmsec-{{ section.id }} .vm-head-inner {
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .vmsec-{{ section.id }} .vm-grid {
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+  }
+  .vmsec-{{ section.id }} .eye { color: {{ eyebrow_color }}; margin-bottom: 14px; }
+  .vmsec-{{ section.id }} .eye.t-eyebrow--dash::before { background: {{ eyebrow_color }}; }
+  .vmsec-{{ section.id }} .ttl { color: {{ heading_color }}; font-size: {{ heading_size_desktop }}px; }
+  .vmsec-{{ section.id }} .ttl em { color: {{ heading_italic_color }}; }
+  .vmsec-{{ section.id }} .vm-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ card_gap }}px;
+    margin-top: 0;
+  }
+  .vmsec-{{ section.id }} .vm-card {
+    padding: {{ card_padding_y_mobile }}px {{ card_padding_x_mobile }}px;
+    position: relative;
+    overflow: hidden;
+  }
+  .vmsec-{{ section.id }} .vm-label { margin-bottom: 18px; font-size: {{ label_size_desktop }}px; }
+  .vmsec-{{ section.id }} .vm-label.t-eyebrow--dash::before { width: 20px; }
+  .vmsec-{{ section.id }} .vm-title { margin-bottom: 20px; font-size: {{ title_size_desktop }}px; }
+  .vmsec-{{ section.id }} .vm-body { font-size: {{ body_size_desktop }}px; }
+  .vmsec-{{ section.id }} .vm-num {
+    position: absolute;
+    bottom: 24px;
+    right: 28px;
+    font-family: var(--s);
+    font-size: {{ big_letter_size }}px;
+    font-weight: var(--fw-light);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .js-kw-fadeup .vmsec-{{ section.id }} .fu {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.85s cubic-bezier(.16,1,.3,1), transform 0.85s cubic-bezier(.16,1,.3,1);
+  }
+  .js-kw-fadeup .vmsec-{{ section.id }} .fu.in { opacity: 1; transform: translateY(0); }
+  .js-kw-fadeup .vmsec-{{ section.id }} .fu:nth-child(2) { transition-delay: 0.1s; }
+  .js-kw-fadeup .vmsec-{{ section.id }} .fu:nth-child(3) { transition-delay: 0.2s; }
+  .js-kw-fadeup .vmsec-{{ section.id }} .fu:nth-child(4) { transition-delay: 0.3s; }
+
+  @media (max-width: 749px) {
+    .vmsec-{{ section.id }} .ttl { font-size: {{ heading_size_mobile }}px; }
+    .vmsec-{{ section.id }} .vm-label { font-size: {{ label_size_mobile }}px; }
+    .vmsec-{{ section.id }} .vm-title { font-size: {{ title_size_mobile }}px; }
+    .vmsec-{{ section.id }} .vm-body { font-size: {{ body_size_mobile }}px; }
+  }
+  @media (min-width: 768px) {
+    .vmsec-{{ section.id }} .vm-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .vmsec-{{ section.id }} {
+      margin: {{ margin_top }}px 0 {{ margin_bottom }}px;
+    }
+    .vmsec-{{ section.id }} .vm-head {
+      padding: {{ header_padding_y }}px {{ header_padding_x }}px;
+    }
+    .vmsec-{{ section.id }} .vm-grid {
+      margin-top: {{ grid_margin_top }}px;
+    }
+    .vmsec-{{ section.id }} .vm-card {
+      padding: {{ card_padding_y }}px {{ card_padding_x }}px;
+    }
+    {%- if container_width != 'boxed' -%}
+    .vmsec-{{ section.id }} .vm-card:nth-child(odd) {
+      padding-left: max({{ header_padding_x }}px, calc((100vw - {{ max_width }}px) / 2));
+    }
+    .vmsec-{{ section.id }} .vm-card:nth-child(even) {
+      padding-right: max({{ header_padding_x }}px, calc((100vw - {{ max_width }}px) / 2));
+    }
+    {%- endif -%}
+  }
+  {%- if section.settings.hide_desktop -%}
+  @media (min-width: 768px) { .vmsec-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media (max-width: 749px) { .vmsec-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+
+  {%- for block in section.blocks -%}
+    .vmsec-{{ section.id }} .vm-card-{{ block.id }} {
+      background: {{ block.settings.card_bg }};
+    }
+    .vmsec-{{ section.id }} .vm-card-{{ block.id }} .vm-label {
+      color: {{ block.settings.label_color }};
+    }
+    .vmsec-{{ section.id }} .vm-card-{{ block.id }} .vm-label::before {
+      background: {{ block.settings.label_color }};
+      opacity: 0.6;
+    }
+    .vmsec-{{ section.id }} .vm-card-{{ block.id }} .vm-title {
+      color: {{ block.settings.title_color }};
+    }
+    .vmsec-{{ section.id }} .vm-card-{{ block.id }} .vm-body {
+      color: {{ block.settings.body_color }};
+    }
+    .vmsec-{{ section.id }} .vm-card-{{ block.id }} .vm-num {
+      color: {{ block.settings.big_letter_color }};
+    }
+  {%- endfor -%}
+{%- endstyle -%}
+
+<section class="vmsec-{{ section.id }}" data-kw-fade-up data-kw-fade-up-threshold="0.12" aria-labelledby="vmsec-heading-{{ section.id }}" {{ section.shopify_attributes }}>
+  {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.heading_italic != blank -%}
+    <div class="vm-head">
+      <div class="vm-head-inner">
+        {%- if section.settings.eyebrow != blank -%}
+          <div class="eye t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow }}</div>
+        {%- endif -%}
+        {%- if section.settings.heading != blank or section.settings.heading_italic != blank -%}
+          <h2 class="ttl t-display" id="vmsec-heading-{{ section.id }}">
+            {{ section.settings.heading }}
+            {%- if section.settings.heading_italic != blank -%}
+              <br><em>{{ section.settings.heading_italic }}</em>
+            {%- endif -%}
+          </h2>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="vm-grid">
+    {%- for block in section.blocks -%}
+      <div class="vm-card vm-card-{{ block.id }} fu" {{ block.shopify_attributes }}>
+        {%- if block.settings.label != blank -%}
+          <div class="vm-label t-eyebrow t-eyebrow--dash">{{ block.settings.label }}</div>
+        {%- endif -%}
+        {%- if block.settings.title != blank -%}
+          <h3 class="vm-title t-heading">{{ block.settings.title }}</h3>
+        {%- endif -%}
+        {%- if block.settings.body != blank -%}
+          <p class="vm-body t-body">{{ block.settings.body }}</p>
+        {%- endif -%}
+        {%- if block.settings.big_letter != blank -%}
+          <div class="vm-num" aria-hidden="true">{{ block.settings.big_letter }}</div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{%- comment -%} Fade-up reveal driven by the generic [data-kw-fade-up] engine in assets/kw-sections.js. {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Vision & Mission",
+  "tag": "section",
+  "class": "kw-vision-mission",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Purpose"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Vision &"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading italic line",
+      "default": "Mission"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading desktop (px)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading mobile (px)",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "default": 30,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "big_letter_size",
+      "label": "Decorative letter size (px)",
+      "min": 40,
+      "max": 200,
+      "step": 4,
+      "default": 96,
+      "unit": "px"
+    },
+    { "type": "range", "id": "label_size_desktop", "label": "Card label desktop (px)", "min": 8, "max": 22, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "label_size_mobile", "label": "Card label mobile (px)", "min": 8, "max": 20, "step": 1, "default": 11, "unit": "px" },
+    { "type": "range", "id": "title_size_desktop", "label": "Card title desktop (px)", "min": 14, "max": 48, "step": 1, "default": 28, "unit": "px" },
+    { "type": "range", "id": "title_size_mobile", "label": "Card title mobile (px)", "min": 12, "max": 40, "step": 1, "default": 22, "unit": "px" },
+    { "type": "range", "id": "body_size_desktop", "label": "Card body desktop (px)", "min": 12, "max": 28, "step": 1, "default": 17, "unit": "px" },
+    { "type": "range", "id": "body_size_mobile", "label": "Card body mobile (px)", "min": 10, "max": 24, "step": 1, "default": 15, "unit": "px" },
+    {
+      "type": "header",
+      "content": "Colors — Header"
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Header background",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "heading_italic_color",
+      "label": "Heading italic color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "boxed", "label": "Boxed" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 960, "max": 1920, "step": 20, "default": 1500, "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Card gap (px)",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "default": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "grid_margin_top",
+      "label": "Space above grid — desktop (px)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Header (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_y",
+      "label": "Vertical padding (px)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "default": 56,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 16,
+      "max": 160,
+      "step": 4,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Header (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_y_mobile",
+      "label": "Vertical padding (px)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "header_padding_x_mobile",
+      "label": "Horizontal padding (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Cards (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "card_padding_y",
+      "label": "Vertical padding (px)",
+      "min": 16,
+      "max": 160,
+      "step": 2,
+      "default": 52,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 16,
+      "max": 120,
+      "step": 2,
+      "default": 44,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Cards (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "card_padding_y_mobile",
+      "label": "Vertical padding (px)",
+      "min": 12,
+      "max": 120,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x_mobile",
+      "label": "Horizontal padding (px)",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Section margin"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top — desktop (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom — desktop (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Margin top — mobile (px)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Margin bottom — mobile (px)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Our Mission"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Preserve & Celebrate"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body",
+          "default": "To preserve and celebrate the rich tradition of handcrafted Kansa utensils — providing families with high-quality kitchenware that inspires wholesome cooking and cherished moments around the dining table, generation after generation."
+        },
+        {
+          "type": "text",
+          "id": "big_letter",
+          "label": "Decorative letter",
+          "info": "A single letter shown faintly in the bottom-right corner. Leave blank to hide.",
+          "default": "M"
+        },
+        {
+          "type": "header",
+          "content": "Colors"
+        },
+        {
+          "type": "color",
+          "id": "card_bg",
+          "label": "Card background",
+          "default": "#6b3c23"
+        },
+        {
+          "type": "color",
+          "id": "label_color",
+          "label": "Label color",
+          "default": "#fee8d9"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Title color",
+          "default": "#fee8d9"
+        },
+        {
+          "type": "color",
+          "id": "body_color",
+          "label": "Body color",
+          "default": "#fee8d9"
+        },
+        {
+          "type": "color",
+          "id": "big_letter_color",
+          "label": "Decorative letter color",
+          "default": "#fee8d90f"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Vision & Mission",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": {
+            "label": "Our Mission",
+            "title": "Preserve & Celebrate",
+            "body": "To preserve and celebrate the rich tradition of handcrafted Kansa utensils — providing families with high-quality kitchenware that inspires wholesome cooking and cherished moments around the dining table, generation after generation.",
+            "big_letter": "M",
+            "card_bg": "#6b3c23",
+            "label_color": "#fee8d9",
+            "title_color": "#fee8d9",
+            "body_color": "#fee8d9",
+            "big_letter_color": "#fee8d90f"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "label": "Our Vision",
+            "title": "India's Foremost Kansa Brand",
+            "body": "To be the foremost brand of authentic Indian Kansa utensils — renowned globally for craftsmanship, quality, and the promotion of healthy, joyful living through the timeless art of cooking and communal dining.",
+            "big_letter": "V",
+            "card_bg": "#bc843f",
+            "label_color": "#fee8d9",
+            "title_color": "#fee8d9",
+            "body_color": "#fee8d9",
+            "big_letter_color": "#fee8d914"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

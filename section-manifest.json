@@ -11,7 +11,7 @@
     "marquee-strip": { "owner": "custom", "note": "Scrolling marquee strip of trust phrases (self-contained)." },
     "collections-grid": { "owner": "custom", "note": "Shop-by-metal collection cards grid (self-contained)." },
     "global-presence": { "owner": "custom", "note": "Stats + panels 'global presence' section (self-contained)." },
-    "trust-numbers": { "owner": "custom", "note": "Trust/stat numbers section (self-contained). Migrated as a file; not on the homepage." },
+    "trust-numbers": { "owner": "custom", "note": "Trust/stat numbers section (self-contained; count-up via kw-sections.js). Wired into templates/page.about.json." },
     "heritage-timeline": { "owner": "custom", "note": "Heritage era timeline (self-contained)." },
     "bestsellers": { "owner": "custom", "note": "Tabbed bestsellers product grid (self-contained; inline tab engine)." },
     "brand-story": { "owner": "custom", "note": "Brand story with image + pills (self-contained)." },
@@ -23,7 +23,15 @@
     "craft-process": { "owner": "custom", "note": "Four-step craft process (self-contained)." },
     "buy-back-promise": { "owner": "custom", "note": "Buy-back promise + metal price proof (self-contained)." },
     "kw-newsletter": { "owner": "custom", "note": "Kansawala newsletter signup (self-contained)." },
-    "footer-kansawala": { "owner": "custom", "note": "Custom footer section (self-contained; accordion JS in kw-sections.js). Wired as the active footer via sections/footer-group.json." }
+    "footer-kansawala": { "owner": "custom", "note": "Custom footer section (self-contained; accordion JS in kw-sections.js). Wired as the active footer via sections/footer-group.json." },
+    "about-us-hero": { "owner": "custom", "note": "About page hero (self-contained; CSS keyframe entrance + bg image preload). Wired via templates/page.about.json." },
+    "mission-quote": { "owner": "custom", "note": "About page mission-quote band (self-contained). Wired via templates/page.about.json." },
+    "legacy-timeline": { "owner": "custom", "note": "About page 75-year era timeline (self-contained; fade-up via [data-kw-fade-up] engine in kw-sections.js). Wired via templates/page.about.json." },
+    "craft-operations": { "owner": "custom", "note": "About page 24-operations craft steps (self-contained; fade-up). Wired via templates/page.about.json." },
+    "our-values": { "owner": "custom", "note": "About page core-values grid w/ SVG icons (self-contained; fade-up). Wired via templates/page.about.json." },
+    "vision-mission": { "owner": "custom", "note": "About page vision & mission cards (self-contained; fade-up). Wired via templates/page.about.json." },
+    "sihor-workshop": { "owner": "custom", "note": "About page Sihor workshop block w/ address + images (self-contained; fade-up via .ws-fu). Wired via templates/page.about.json." },
+    "about-cta": { "owner": "custom", "note": "About page closing CTA w/ button blocks (self-contained). Wired via templates/page.about.json." }
   },
   "snippets": {
     "kw-fonts": { "owner": "custom", "note": "Loads Cormorant Garamond (Google Fonts); reuses theme Jost. Rendered in layout/theme.liquid <head>." },

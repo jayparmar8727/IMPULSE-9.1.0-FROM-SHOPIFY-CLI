@@ -1,0 +1,599 @@
+{%- liquid
+  assign bg_color = section.settings.bg_color
+  assign eye_color = section.settings.eye_color
+  assign heading_color = section.settings.heading_color
+  assign heading_italic_color = section.settings.heading_italic_color
+  assign card_bg = section.settings.card_bg
+  assign card_border = section.settings.card_border
+  assign accent_color = section.settings.accent_color
+  assign icon_color = section.settings.icon_color
+  assign title_color = section.settings.title_color
+  assign desc_color = section.settings.desc_color
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_x = section.settings.padding_x
+  assign heading_size_desktop = section.settings.heading_size_desktop
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign title_size_desktop = section.settings.title_size_desktop
+  assign title_size_mobile = section.settings.title_size_mobile
+  assign desc_size_desktop = section.settings.desc_size_desktop
+  assign desc_size_mobile = section.settings.desc_size_mobile
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign padding_top_mobile = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile = section.settings.padding_x_mobile
+  assign margin_top_mobile = section.settings.margin_top_mobile
+  assign margin_bottom_mobile = section.settings.margin_bottom_mobile
+  assign container_width = section.settings.container_width
+  assign max_width = section.settings.max_width
+  assign text_align = section.settings.text_align
+  assign text_align_mobile = section.settings.text_align_mobile
+  assign columns_desktop = section.settings.columns_desktop
+-%}
+
+{%- style -%}
+  .valsec-{{ section.id }} {
+    background: {{ bg_color }};
+    margin: {{ margin_top_mobile }}px 0 {{ margin_bottom_mobile }}px;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+    text-align: {{ text_align_mobile }};
+  }
+  .valsec-{{ section.id }} .valsec-inner {
+    padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+    box-sizing: border-box;
+  }
+  .valsec-{{ section.id }} .eye { color: {{ eye_color }}; margin-bottom: 14px; }
+  .valsec-{{ section.id }} .eye.t-eyebrow--dash::before { background: {{ eye_color }}; }
+  .valsec-{{ section.id }} .ttl { color: {{ heading_color }}; font-size: {{ heading_size_desktop }}px; }
+  .valsec-{{ section.id }} .ttl em { color: {{ heading_italic_color }}; }
+  .valsec-{{ section.id }} .values-head {
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+  }
+  .valsec-{{ section.id }} .values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    margin-top: 40px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+  }
+  .valsec-{{ section.id }} .val {
+    padding: 32px 24px;
+    background: {{ card_bg }};
+    border: 1px solid {{ card_border }};
+    position: relative;
+    overflow: hidden;
+  }
+  .valsec-{{ section.id }} .val::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: {{ accent_color }};
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .valsec-{{ section.id }} .val:hover::before { transform: scaleX(1); }
+  .valsec-{{ section.id }} .val-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 20px;
+    color: {{ icon_color }};
+    display: block;
+  }
+  .valsec-{{ section.id }} .val-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .valsec-{{ section.id }} .val-n { color: {{ title_color }}; margin-bottom: 12px; font-size: {{ title_size_desktop }}px; }
+  .valsec-{{ section.id }} .val-d { color: {{ desc_color }}; font-size: {{ desc_size_desktop }}px; }
+  .js-kw-fadeup .valsec-{{ section.id }} .fu {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.85s cubic-bezier(.16,1,.3,1), transform 0.85s cubic-bezier(.16,1,.3,1);
+  }
+  .js-kw-fadeup .valsec-{{ section.id }} .fu.in { opacity: 1; transform: translateY(0); }
+  .js-kw-fadeup .valsec-{{ section.id }} .fu:nth-child(2) { transition-delay: 0.09s; }
+  .js-kw-fadeup .valsec-{{ section.id }} .fu:nth-child(3) { transition-delay: 0.18s; }
+  .js-kw-fadeup .valsec-{{ section.id }} .fu:nth-child(4) { transition-delay: 0.27s; }
+  .js-kw-fadeup .valsec-{{ section.id }} .fu:nth-child(5) { transition-delay: 0.36s; }
+  .js-kw-fadeup .valsec-{{ section.id }} .fu:nth-child(6) { transition-delay: 0.45s; }
+
+  @media (max-width: 749px) {
+    .valsec-{{ section.id }} .ttl { font-size: {{ heading_size_mobile }}px; }
+    .valsec-{{ section.id }} .val-n { font-size: {{ title_size_mobile }}px; }
+    .valsec-{{ section.id }} .val-d { font-size: {{ desc_size_mobile }}px; }
+  }
+  @media (min-width: 768px) {
+    .valsec-{{ section.id }} { text-align: {{ text_align }}; }
+    .valsec-{{ section.id }} .values-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .valsec-{{ section.id }} {
+      margin: {{ margin_top }}px 0 {{ margin_bottom }}px;
+    }
+    .valsec-{{ section.id }} .valsec-inner {
+      padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    }
+    .valsec-{{ section.id }} .values-grid {
+      grid-template-columns: repeat({{ columns_desktop }}, 1fr);
+      margin-top: 52px;
+    }
+    .valsec-{{ section.id }} .val { padding: 40px 32px; }
+  }
+  {%- if section.settings.hide_desktop -%}
+  @media (min-width: 768px) { .valsec-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media (max-width: 749px) { .valsec-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section class="valsec-{{ section.id }}" data-kw-fade-up aria-labelledby="valsec-heading-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="valsec-inner">
+  <div class="values-head">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="eye t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow }}</div>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ttl t-display" id="valsec-heading-{{ section.id }}">
+        {{ section.settings.heading }}
+        {%- if section.settings.heading_italic != blank -%}
+          <br><em>{{ section.settings.heading_italic }}</em>
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+  </div>
+
+  <div class="values-grid">
+    {%- for block in section.blocks -%}
+      <div class="val fu" {{ block.shopify_attributes }}>
+        {%- if block.settings.icon_type == 'image' and block.settings.icon_image != blank -%}
+          <span class="val-icon">
+            {{ block.settings.icon_image | image_url: width: 96 | image_tag: alt: block.settings.title, loading: 'lazy', width: 48, height: 48 }}
+          </span>
+        {%- elsif block.settings.icon_svg != blank -%}
+          <span class="val-icon">{{ block.settings.icon_svg }}</span>
+        {%- endif -%}
+        {%- if block.settings.title != blank -%}
+          <h3 class="val-n t-label">{{ block.settings.title }}</h3>
+        {%- endif -%}
+        {%- if block.settings.description != blank -%}
+          <p class="val-d t-body-sm">{{ block.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+  </div>
+</section>
+
+{%- comment -%} Fade-up reveal driven by the generic [data-kw-fade-up] engine in assets/kw-sections.js. {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Our Values",
+  "tag": "section",
+  "class": "kw-our-values",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "What We Stand For"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Core"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading italic line",
+      "default": "Values"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading desktop (px)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading mobile (px)",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "default": 30,
+      "unit": "px"
+    },
+    { "type": "range", "id": "title_size_desktop", "label": "Value title desktop (px)", "min": 10, "max": 28, "step": 1, "default": 13, "unit": "px" },
+    { "type": "range", "id": "title_size_mobile", "label": "Value title mobile (px)", "min": 9, "max": 24, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "desc_size_desktop", "label": "Value description desktop (px)", "min": 11, "max": 24, "step": 1, "default": 15, "unit": "px" },
+    { "type": "range", "id": "desc_size_mobile", "label": "Value description mobile (px)", "min": 10, "max": 22, "step": 1, "default": 14, "unit": "px" },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns (desktop)",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "full", "label": "Full width" },
+        { "value": "boxed", "label": "Boxed (centered)" }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max content width (px)",
+      "min": 800,
+      "max": 1800,
+      "step": 20,
+      "default": 1500,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment (desktop)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_align_mobile",
+      "label": "Text alignment (mobile)",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (px)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "default": 75,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (px)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "default": 75,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding top (px)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding bottom (px)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Horizontal padding (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Margin top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Margin bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "eye_color",
+      "label": "Eyebrow color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "heading_italic_color",
+      "label": "Heading italic color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card border",
+      "default": "#6b3c2312"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Hover accent",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description color",
+      "default": "#2a1508"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon source",
+          "options": [
+            { "value": "svg", "label": "Inline SVG" },
+            { "value": "image", "label": "Image" }
+          ],
+          "default": "svg"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Inline SVG markup",
+          "info": "Paste raw <svg>…</svg> markup. Uses currentColor so the Icon color setting applies.",
+          "default": "<svg viewBox='0 0 48 48' fill='none' stroke='currentColor' stroke-width='1.2'><path d='M24 4C13 4 4 13 4 24s9 20 20 20 20-9 20-20S35 4 24 4z'/><path d='M24 14v10l7 7'/></svg>"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Icon image",
+          "info": "Used when Icon source is set to Image."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Authenticity"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "We never compromise on material purity. Every piece is exactly what it says it is."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [
+    {
+      "name": "Our Values",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M24 4C13 4 4 13 4 24s9 20 20 20 20-9 20-20S35 4 24 4z\"></path><path d=\"M24 14v10l7 7\"></path></svg>",
+            "title": "Authenticity",
+            "description": "We never compromise on material purity. Every piece is exactly what it says it is — 78% Copper, 22% Tin. No coatings, no kalai, no shortcuts. Our NABL certification proves it."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M24 6l5 10 11 1.6-8 7.8 1.9 11L24 31l-9.9 5.4 1.9-11-8-7.8L19 17.6z\"></path></svg>",
+            "title": "Craftsmanship",
+            "description": "Every piece that leaves our workshop in Sihor has passed through human hands — not machines. The slight variations you see are not flaws. They are the proof of craft."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M12 20L24 8l12 12v20H28v-10h-8v10H12z\"></path></svg>",
+            "title": "Heritage",
+            "description": "We are guardians of an art form that has been practiced in Sihor for centuries. When you buy from us, you are not just buying a utensil — you are helping preserve a living cultural tradition."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M24 4l6 12 13 2-9.5 9.2 2.2 13L24 34.5 12.3 40.2l2.2-13L5 18l13-2z\"></path></svg>",
+            "title": "Wellness",
+            "description": "Ayurveda has endorsed Kansa for thousands of years. Our mission is to make the daily act of eating a ritual of nourishment — not just for hunger, but for holistic health and balance."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M24 44c-11 0-20-9-20-20S13 4 24 4s20 9 20 20-9 20-20 20z\"></path><path d=\"M16 24h8v-8\"></path></svg>",
+            "title": "Longevity",
+            "description": "We make things to last not years but decades. Our Buy-Back Policy — where we repurchase your set after 10–12 years — is proof of the confidence we have in every piece we make."
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><circle cx=\"24\" cy=\"24\" r=\"20\"></circle><path d=\"M24 14v10M24 34h.01\"></path></svg>",
+            "title": "Transparency",
+            "description": "We tell you exactly what our products are made of, how they are made, and who makes them. No marketing speak — just honest craft from an honest family in Sihor, Gujarat."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

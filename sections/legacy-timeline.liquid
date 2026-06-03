@@ -1,0 +1,593 @@
+{%- liquid
+  assign bg_color = section.settings.bg_color
+  assign text_color = section.settings.text_color
+  assign eyebrow_color = section.settings.eyebrow_color
+  assign title_em_color = section.settings.title_em_color
+  assign rail_color = section.settings.rail_color
+  assign dot_color = section.settings.dot_color
+  assign dot_border_color = section.settings.dot_border_color
+  assign year_color = section.settings.year_color
+  assign year_label_color = section.settings.year_label_color
+  assign item_title_color = section.settings.item_title_color
+  assign item_body_color = section.settings.item_body_color
+  assign item_divider_color = section.settings.item_divider_color
+
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_x = section.settings.padding_x
+  assign padding_top_mobile = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile = section.settings.padding_x_mobile
+
+  assign margin_top = section.settings.margin_top
+  assign margin_bottom = section.settings.margin_bottom
+  assign margin_top_mobile = section.settings.margin_top_mobile
+  assign margin_bottom_mobile = section.settings.margin_bottom_mobile
+
+  assign container_width = section.settings.container_width
+  assign max_width = section.settings.max_width
+  assign year_col_width = section.settings.year_col_width
+
+  assign heading_size_desktop = section.settings.heading_size_desktop
+  assign heading_size_mobile = section.settings.heading_size_mobile
+  assign year_size_desktop = section.settings.year_size_desktop
+  assign year_size_mobile = section.settings.year_size_mobile
+  assign year_label_size_desktop = section.settings.year_label_size_desktop
+  assign year_label_size_mobile = section.settings.year_label_size_mobile
+  assign item_title_size_desktop = section.settings.item_title_size_desktop
+  assign item_title_size_mobile = section.settings.item_title_size_mobile
+  assign item_body_size_desktop = section.settings.item_body_size_desktop
+  assign item_body_size_mobile = section.settings.item_body_size_mobile
+-%}
+
+{%- style -%}
+  .ltl-{{ section.id }} {
+    background: {{ bg_color }};
+    color: {{ text_color }};
+    margin: {{ margin_top_mobile }}px 0 {{ margin_bottom_mobile }}px;
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .ltl-{{ section.id }} .ltl-inner {
+    padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+    box-sizing: border-box;
+  }
+  .ltl-{{ section.id }} .ltl-eye { color: {{ eyebrow_color }}; margin-bottom: 14px; }
+  .ltl-{{ section.id }} .ltl-eye.t-eyebrow--dash::before { background: {{ eyebrow_color }}; width: 22px; }
+  .ltl-{{ section.id }} .ltl-ttl { color: {{ text_color }}; font-size: {{ heading_size_mobile }}px; }
+  .ltl-{{ section.id }} .ltl-ttl em { color: {{ title_em_color }}; }
+  .ltl-{{ section.id }} .ltl-list {
+    margin-top: 40px;
+    position: relative;
+  }
+  .ltl-{{ section.id }} .ltl-list::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: {{ rail_color }};
+  }
+  .ltl-{{ section.id }} .ltl-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    position: relative;
+    padding-left: 20px;
+  }
+  .ltl-{{ section.id }} .ltl-item::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 28px;
+    width: 10px;
+    height: 10px;
+    background: {{ dot_color }};
+    border-radius: 50%;
+    border: 2px solid {{ dot_border_color }};
+  }
+  .ltl-{{ section.id }} .ltl-year-col {
+    padding: 20px 0 6px 0;
+    text-align: left;
+  }
+  .ltl-{{ section.id }} .ltl-yr { color: {{ year_color }}; display: block; font-size: {{ year_size_mobile }}px; }
+  .ltl-{{ section.id }} .ltl-yr-lbl { color: {{ year_label_color }}; margin-top: 6px; display: block; font-size: {{ year_label_size_mobile }}px; }
+  .ltl-{{ section.id }} .ltl-content {
+    padding: 0 0 36px 0;
+    border-bottom: 1px solid {{ item_divider_color }};
+  }
+  .ltl-{{ section.id }} .ltl-item:last-child .ltl-content {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .ltl-{{ section.id }} .ltl-title { color: {{ item_title_color }}; margin: 0 0 10px 0; font-size: {{ item_title_size_mobile }}px; }
+  .ltl-{{ section.id }} .ltl-body { color: {{ item_body_color }}; margin: 0; max-width: 580px; font-size: {{ item_body_size_mobile }}px; }
+  .js-kw-fadeup .ltl-{{ section.id }} .fu {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+  }
+  .js-kw-fadeup .ltl-{{ section.id }} .fu.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .js-kw-fadeup .ltl-{{ section.id }} .fu:nth-child(2) { transition-delay: 0.08s; }
+  .js-kw-fadeup .ltl-{{ section.id }} .fu:nth-child(3) { transition-delay: 0.16s; }
+  .js-kw-fadeup .ltl-{{ section.id }} .fu:nth-child(4) { transition-delay: 0.24s; }
+  .js-kw-fadeup .ltl-{{ section.id }} .fu:nth-child(5) { transition-delay: 0.32s; }
+  .js-kw-fadeup .ltl-{{ section.id }} .fu:nth-child(6) { transition-delay: 0.40s; }
+
+  {%- if section.settings.hide_desktop -%}
+  @media(min-width: 768px) { .ltl-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media(max-width: 749px) { .ltl-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+
+  @media(min-width: 1024px) {
+    .ltl-{{ section.id }} {
+      margin: {{ margin_top }}px 0 {{ margin_bottom }}px;
+    }
+    .ltl-{{ section.id }} .ltl-inner {
+      padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    }
+    .ltl-{{ section.id }} .ltl-ttl {
+      font-size: {{ heading_size_desktop }}px;
+    }
+    .ltl-{{ section.id }} .ltl-yr { font-size: {{ year_size_desktop }}px; }
+    .ltl-{{ section.id }} .ltl-yr-lbl { font-size: {{ year_label_size_desktop }}px; }
+    .ltl-{{ section.id }} .ltl-title { font-size: {{ item_title_size_desktop }}px; }
+    .ltl-{{ section.id }} .ltl-body { font-size: {{ item_body_size_desktop }}px; }
+    .ltl-{{ section.id }} .ltl-list {
+      margin-top: 56px;
+    }
+    .ltl-{{ section.id }} .ltl-item {
+      grid-template-columns: {{ year_col_width }}px 1fr;
+      padding-left: 0;
+    }
+    .ltl-{{ section.id }} .ltl-item::before {
+      top: 32px;
+    }
+    .ltl-{{ section.id }} .ltl-year-col {
+      padding: 24px 40px 24px 24px;
+      text-align: right;
+    }
+    .ltl-{{ section.id }} .ltl-yr-lbl {
+      margin-top: 4px;
+    }
+    .ltl-{{ section.id }} .ltl-content {
+      padding: 24px 0 48px 40px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="ltl-{{ section.id }}" data-kw-fade-up aria-labelledby="ltl-h-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="ltl-inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="ltl-eye t-eyebrow t-eyebrow--dash">{{ section.settings.eyebrow }}</div>
+    {%- endif -%}
+    {%- if section.settings.title != blank or section.settings.title_em != blank -%}
+      <h2 class="ltl-ttl t-display" id="ltl-h-{{ section.id }}">
+        {{ section.settings.title }}
+        {%- if section.settings.title_em != blank -%}
+          <em>{{ section.settings.title_em }}</em>
+        {%- endif -%}
+      </h2>
+    {%- endif -%}
+
+    <div class="ltl-list">
+      {%- for block in section.blocks -%}
+        <div class="ltl-item fu" {{ block.shopify_attributes }}>
+          <div class="ltl-year-col">
+            {%- if block.settings.year != blank -%}
+              <span class="ltl-yr t-stat-serif-upright">{{ block.settings.year }}</span>
+            {%- endif -%}
+            {%- if block.settings.year_label != blank -%}
+              <span class="ltl-yr-lbl t-label">{{ block.settings.year_label }}</span>
+            {%- endif -%}
+          </div>
+          <div class="ltl-content">
+            {%- if block.settings.title != blank -%}
+              <h3 class="ltl-title t-label">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="ltl-body t-body-sm">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Fade-up reveal driven by the generic [data-kw-fade-up] engine in assets/kw-sections.js. {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Legacy Timeline",
+  "tag": "section",
+  "class": "kw-legacy-timeline",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Journey"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "75 Years of"
+    },
+    {
+      "type": "text",
+      "id": "title_em",
+      "label": "Heading italic line",
+      "default": "Family Legacy"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "full", "label": "Full width" },
+        { "value": "boxed", "label": "Boxed (centered)" }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max content width (px)",
+      "min": 800,
+      "max": 1800,
+      "step": 20,
+      "default": 1500,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "year_col_width",
+      "label": "Year column width (desktop, px)",
+      "min": 140,
+      "max": 320,
+      "step": 10,
+      "default": 200,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop (px)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile (px)",
+      "min": 20,
+      "max": 48,
+      "step": 2,
+      "default": 30,
+      "unit": "px"
+    },
+    { "type": "range", "id": "year_size_desktop", "label": "Year size desktop (px)", "min": 18, "max": 72, "step": 1, "default": 40, "unit": "px" },
+    { "type": "range", "id": "year_size_mobile", "label": "Year size mobile (px)", "min": 16, "max": 56, "step": 1, "default": 30, "unit": "px" },
+    { "type": "range", "id": "year_label_size_desktop", "label": "Year label size desktop (px)", "min": 8, "max": 22, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "year_label_size_mobile", "label": "Year label size mobile (px)", "min": 8, "max": 20, "step": 1, "default": 11, "unit": "px" },
+    { "type": "range", "id": "item_title_size_desktop", "label": "Item title size desktop (px)", "min": 10, "max": 28, "step": 1, "default": 13, "unit": "px" },
+    { "type": "range", "id": "item_title_size_mobile", "label": "Item title size mobile (px)", "min": 9, "max": 24, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "item_body_size_desktop", "label": "Item body size desktop (px)", "min": 11, "max": 24, "step": 1, "default": 15, "unit": "px" },
+    { "type": "range", "id": "item_body_size_mobile", "label": "Item body size mobile (px)", "min": 10, "max": 22, "step": 1, "default": 14, "unit": "px" },
+    {
+      "type": "header",
+      "content": "Spacing — Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (px)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "default": 75,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (px)",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "default": 75,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 16,
+      "max": 160,
+      "step": 4,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margin top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top (px)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom (px)",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Mobile horizontal padding (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Mobile margin top (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Mobile margin bottom (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Main text / title",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "title_em_color",
+      "label": "Title italic accent",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "rail_color",
+      "label": "Timeline rail",
+      "default": "#6b3c231f"
+    },
+    {
+      "type": "color",
+      "id": "dot_color",
+      "label": "Dot fill",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "dot_border_color",
+      "label": "Dot border",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "year_color",
+      "label": "Year color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "year_label_color",
+      "label": "Year label color",
+      "default": "#6b3c2373"
+    },
+    {
+      "type": "color",
+      "id": "item_title_color",
+      "label": "Item title color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "item_body_color",
+      "label": "Item body color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "item_divider_color",
+      "label": "Item divider",
+      "default": "#6b3c2312"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "era",
+      "name": "Era",
+      "settings": [
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Year",
+          "default": "1945"
+        },
+        {
+          "type": "text",
+          "id": "year_label",
+          "label": "Year label",
+          "default": "Sihor, Gujarat"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "The First Fire — Sh. Mukundray Fulchand"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Our grandfather Sh. Mukundray Fulchand establishes the Kansawala workshop in Kansara Bazar Road, Sihor, Gujarat — a location synonymous with metalwork for centuries."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Legacy Timeline",
+      "blocks": [
+        {
+          "type": "era",
+          "settings": {
+            "year": "1945",
+            "year_label": "Sihor, Gujarat",
+            "title": "The First Fire — Sh. Mukundray Fulchand",
+            "description": "Our grandfather Sh. Mukundray Fulchand establishes the Kansawala workshop in Kansara Bazar Road, Sihor, Gujarat — a location synonymous with metalwork for centuries. Using techniques passed down orally from master to apprentice, he begins handcrafting Kansa utensils using the ancient alloy of 78% Copper and 22% Tin."
+          }
+        },
+        {
+          "type": "era",
+          "settings": {
+            "year": "1960s",
+            "year_label": "Growth",
+            "title": "The Workshop Grows",
+            "description": "The second generation joins the craft. The workshop expands its range beyond Kansa to include Brass and Copper utensils — serving the growing demand from Indian households for traditional, Ayurveda-endorsed metalware. Word spreads through Gujarat and neighbouring states. Every piece leaves the workshop only after passing the family's exacting quality standard."
+          }
+        },
+        {
+          "type": "era",
+          "settings": {
+            "year": "1980s",
+            "year_label": "Heritage",
+            "title": "Preserving a Fading Art",
+            "description": "As industrialisation makes mass-produced steel and aluminium cheaper, many traditional metalworking families in Gujarat abandon the craft. The Mukundray Fulchand family makes a deliberate choice: to preserve the ancient art, even as it becomes economically challenging. The third generation commits to quality over volume — a decision that defines Kansawala's character to this day."
+          }
+        },
+        {
+          "type": "era",
+          "settings": {
+            "year": "2000s",
+            "year_label": "Recognition",
+            "title": "India Rediscovers Kansa",
+            "description": "A growing wellness movement in India reignites interest in Ayurvedic metals. Kansawala's handcrafted sets begin earning recognition beyond Gujarat — serving households across India and eventually receiving NABL certification for quality. The brand introduces its landmark Buy-Back Policy: after 10–12 years, we will repurchase your Kansa set at the original price. No other brand in India offers this."
+          }
+        },
+        {
+          "type": "era",
+          "settings": {
+            "year": "2020s",
+            "year_label": "Global",
+            "title": "Sihor to the World's Tables",
+            "description": "The fourth generation takes Kansawala online and global. Our handcrafted sets now reach 40+ countries — from the Indian diaspora in Canada, the UK and the USA to Ayurveda practitioners in Europe and Australia. Every order is still packed in Sihor. Every piece is still hand-beaten by the same family. The fire that began in 1945 still burns."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

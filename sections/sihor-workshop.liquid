@@ -1,0 +1,252 @@
+{%- liquid
+  assign s = section.settings
+  assign uid = section.id
+-%}
+
+{%- style -%}
+  .sw-{{ uid }}{
+    background: {{ s.bg_color }};
+    padding: {{ s.pad_top_m }}px {{ s.pad_x_m }}px {{ s.pad_bot_m }}px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .sw-{{ uid }} .ws-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+    {%- if s.boxed -%}
+    max-width: {{ s.max_w }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+  }
+  .sw-{{ uid }} .ws-eye{ color: {{ s.eye_color }}; margin: 0 0 14px; }
+  .sw-{{ uid }} .ws-eye.t-eyebrow--dash::before{ background: {{ s.eye_color }}; width: 22px; }
+  .sw-{{ uid }} .ws-ttl{ color: {{ s.heading_color }}; margin: 0 0 20px; font-size: {{ s.heading_size_mobile }}px; }
+  .sw-{{ uid }} .ws-ttl em{ color: {{ s.heading_em_color }}; }
+  .sw-{{ uid }} .ws-body{ color: {{ s.body_color }}; margin: 0 0 18px; font-size: {{ s.body_m }}px; max-width: 65ch; }
+  .sw-{{ uid }} .ws-body + .ws-body{ margin-bottom: 24px; }
+
+  .sw-{{ uid }} .ws-addr{
+    background: {{ s.card_bg }};
+    border: 1px solid {{ s.card_border }};
+    padding: 28px 24px;
+    margin-top: 28px;
+  }
+  .sw-{{ uid }} .ws-addr-lbl{ color: {{ s.addr_label_color }}; margin: 0 0 10px; font-size: {{ s.addr_label_m }}px; }
+  .sw-{{ uid }} .ws-addr-txt{ color: {{ s.addr_text_color }}; font-size: {{ s.addr_text_m }}px; }
+
+  .sw-{{ uid }} .ws-cta{
+    margin-top: 24px;
+    color: {{ s.cta_color }};
+    border-bottom: 1px solid {{ s.cta_border }};
+    padding-bottom: 3px;
+    font-size: {{ s.cta_size_m }}px;
+  }
+  .sw-{{ uid }} .ws-cta:hover{ color: {{ s.cta_hover }}; }
+
+  .sw-{{ uid }} .ws-imgs{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+  .sw-{{ uid }} .ws-img{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+  }
+  .sw-{{ uid }} .ws-img--wide{
+    grid-column: 1 / -1;
+    aspect-ratio: 2 / 1;
+  }
+
+  .js-kw-fadeup .sw-{{ uid }} .ws-fu{
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1);
+  }
+  .js-kw-fadeup .sw-{{ uid }} .ws-fu.in{ opacity: 1; transform: translateY(0); }
+  .js-kw-fadeup .sw-{{ uid }} .ws-fu:nth-child(2){ transition-delay: .09s; }
+
+  @media (min-width: 768px){
+    .sw-{{ uid }} .ws-grid{
+      grid-template-columns: 1fr 1fr;
+      gap: {{ s.gap_d }}px;
+    }
+  }
+  @media (min-width: 1024px){
+    .sw-{{ uid }}{
+      padding: {{ s.pad_top }}px {{ s.pad_x }}px {{ s.pad_bot }}px;
+    }
+    .sw-{{ uid }} .ws-ttl{
+      font-size: {{ s.heading_size_desktop }}px;
+    }
+    .sw-{{ uid }} .ws-body{ font-size: {{ s.body_d }}px; }
+    .sw-{{ uid }} .ws-addr-lbl{ font-size: {{ s.addr_label_d }}px; }
+    .sw-{{ uid }} .ws-addr-txt{ font-size: {{ s.addr_text_d }}px; }
+    .sw-{{ uid }} .ws-cta{ font-size: {{ s.cta_size_d }}px; }
+  }
+{%- endstyle -%}
+
+<section class="sw-{{ uid }}" data-kw-fade-up data-kw-fade-up-selector=".ws-fu" aria-labelledby="sw-h-{{ uid }}" {{ section.shopify_attributes }}>
+  <div class="ws-grid">
+    <div class="ws-fu">
+      {%- if s.eyebrow != blank -%}
+        <div class="ws-eye t-eyebrow t-eyebrow--dash">{{ s.eyebrow }}</div>
+      {%- endif -%}
+      {%- if s.heading != blank -%}
+        <h2 class="ws-ttl t-display" id="sw-h-{{ uid }}">
+          {{ s.heading }}
+          {%- if s.heading_em != blank -%}
+            <br><em>{{ s.heading_em }}</em>
+          {%- endif -%}
+        </h2>
+      {%- endif -%}
+      {%- if s.body_1 != blank -%}
+        <p class="ws-body t-body">{{ s.body_1 | escape | newline_to_br }}</p>
+      {%- endif -%}
+      {%- if s.body_2 != blank -%}
+        <p class="ws-body t-body">{{ s.body_2 | escape | newline_to_br }}</p>
+      {%- endif -%}
+
+      {%- if s.address_label != blank or s.address_text != blank -%}
+        <div class="ws-addr">
+          {%- if s.address_label != blank -%}
+            <div class="ws-addr-lbl t-label">{{ s.address_label }}</div>
+          {%- endif -%}
+          {%- if s.address_text != blank -%}
+            <div class="ws-addr-txt t-body-sm">{{ s.address_text | escape | newline_to_br }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if s.cta_text != blank and s.cta_link != blank -%}
+        <a class="ws-cta t-link" href="{{ s.cta_link }}"{% if s.cta_new_tab %} target="_blank" rel="noopener noreferrer"{% endif %}>
+          {{ s.cta_text }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="ws-fu">
+      <div class="ws-imgs">
+        {%- if s.image_wide != blank -%}
+          {{ s.image_wide | image_url: width: 1600 | image_tag:
+            loading: 'lazy',
+            class: 'ws-img ws-img--wide',
+            alt: s.image_wide_alt,
+            widths: '400, 600, 800, 1000, 1200, 1600',
+            sizes: '(min-width: 768px) 50vw, 100vw'
+          }}
+        {%- else -%}
+          <div class="ws-img ws-img--wide" style="background:{{ s.card_bg }};"></div>
+        {%- endif -%}
+
+        {%- if s.image_left != blank -%}
+          {{ s.image_left | image_url: width: 800 | image_tag:
+            loading: 'lazy',
+            class: 'ws-img',
+            alt: s.image_left_alt,
+            widths: '300, 450, 600, 800',
+            sizes: '(min-width: 768px) 25vw, 50vw'
+          }}
+        {%- else -%}
+          <div class="ws-img" style="background:{{ s.card_bg }};"></div>
+        {%- endif -%}
+
+        {%- if s.image_right != blank -%}
+          {{ s.image_right | image_url: width: 800 | image_tag:
+            loading: 'lazy',
+            class: 'ws-img',
+            alt: s.image_right_alt,
+            widths: '300, 450, 600, 800',
+            sizes: '(min-width: 768px) 25vw, 50vw'
+          }}
+        {%- else -%}
+          <div class="ws-img" style="background:{{ s.card_bg }};"></div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Fade-up (.ws-fu) reveal driven by the generic [data-kw-fade-up] engine in assets/kw-sections.js. {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "Sihor Workshop",
+  "tag": "section",
+  "class": "kw-sihor-workshop",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Where We Work" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Workshop" },
+    { "type": "text", "id": "heading_em", "label": "Heading italic line", "default": "in Sihor" },
+    { "type": "textarea", "id": "body_1", "label": "Body paragraph 1", "default": "The Kansawala workshop has stood on Kansara Bazar Road in Sihor, Bhavnagar since 1945. Sihor is one of Gujarat's oldest centres of kansara (metalworking) craft — a town whose artisans have practiced this trade for hundreds of years." },
+    { "type": "textarea", "id": "body_2", "label": "Body paragraph 2", "default": "Our workshop is not a factory. It is a living space where tradition is practiced daily — where the sound of hammer on metal is as familiar as birdsong, and where every artisan knows that their work will one day sit on someone's dining table, nourishing their family." },
+
+    { "type": "header", "content": "Address" },
+    { "type": "text", "id": "address_label", "label": "Address label", "default": "Our Address" },
+    { "type": "textarea", "id": "address_text", "label": "Address", "info": "Each new line renders as a line break.", "default": "Kansawala Mukundray Fulchand\nKansara Bazar Road, Opp. Bhuta Vadi\nSihor, Bhavnagar, Gujarat — 364240\n\nPhone: +91 787878 9893\nE-mail: info@kansawalas.com\nGST: 24ABEFK7138G1ZD" },
+
+    { "type": "header", "content": "Call to action" },
+    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Watch Our Craft Video" },
+    { "type": "text", "id": "cta_link", "label": "Button link", "default": "https://www.youtube.com/watch?v=rsVjwbX59Ig&t=12s", "info": "Paste the YouTube or craft-video URL here (e.g. https://www.youtube.com/watch?v=rsVjwbX59Ig)." },
+    { "type": "checkbox", "id": "cta_new_tab", "label": "Open in new tab", "default": true },
+
+    { "type": "header", "content": "Images" },
+    { "type": "image_picker", "id": "image_wide", "label": "Wide image (top)" },
+    { "type": "text", "id": "image_wide_alt", "label": "Wide image alt text", "default": "Kansawala workshop Sihor Gujarat — kansa dinner set" },
+    { "type": "image_picker", "id": "image_left", "label": "Image left (bottom)" },
+    { "type": "text", "id": "image_left_alt", "label": "Image left alt text", "default": "Kansawala craftsman hand-beating kansa" },
+    { "type": "image_picker", "id": "image_right", "label": "Image right (bottom)" },
+    { "type": "text", "id": "image_right_alt", "label": "Image right alt text", "default": "Kansawala pure kansa utensils" },
+
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop (px)", "min": 24, "max": 72, "step": 2, "default": 48, "unit": "px" },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile (px)", "min": 20, "max": 44, "step": 2, "default": 30, "unit": "px" },
+    { "type": "range", "id": "body_d", "label": "Body desktop (px)", "min": 12, "max": 24, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "body_m", "label": "Body mobile (px)", "min": 10, "max": 22, "step": 1, "default": 13, "unit": "px" },
+    { "type": "range", "id": "addr_label_d", "label": "Address label desktop (px)", "min": 8, "max": 22, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "addr_label_m", "label": "Address label mobile (px)", "min": 8, "max": 20, "step": 1, "default": 11, "unit": "px" },
+    { "type": "range", "id": "addr_text_d", "label": "Address text desktop (px)", "min": 11, "max": 24, "step": 1, "default": 14, "unit": "px" },
+    { "type": "range", "id": "addr_text_m", "label": "Address text mobile (px)", "min": 10, "max": 22, "step": 1, "default": 13, "unit": "px" },
+    { "type": "range", "id": "cta_size_d", "label": "CTA text desktop (px)", "min": 8, "max": 22, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "cta_size_m", "label": "CTA text mobile (px)", "min": 8, "max": 20, "step": 1, "default": 12, "unit": "px" },
+
+    { "type": "header", "content": "Layout" },
+    { "type": "checkbox", "id": "boxed", "label": "Constrain content width", "default": true },
+    { "type": "range", "id": "max_w", "label": "Max content width (px)", "min": 800, "max": 1800, "step": 20, "default": 1500, "unit": "px" },
+    { "type": "range", "id": "gap_d", "label": "Column gap (desktop, px)", "min": 20, "max": 160, "step": 4, "default": 80, "unit": "px" },
+
+    { "type": "header", "content": "Spacing — Desktop" },
+    { "type": "range", "id": "pad_x", "label": "Horizontal padding (px)", "min": 16, "max": 160, "step": 4, "default": 80, "unit": "px" },
+    { "type": "range", "id": "pad_top", "label": "Padding top (px)", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+    { "type": "range", "id": "pad_bot", "label": "Padding bottom (px)", "min": 0, "max": 200, "step": 5, "default": 75, "unit": "px" },
+
+    { "type": "header", "content": "Spacing — Mobile" },
+    { "type": "range", "id": "pad_x_m", "label": "Horizontal padding (px)", "min": 0, "max": 40, "step": 1, "default": 20, "unit": "px" },
+    { "type": "range", "id": "pad_top_m", "label": "Padding top (px)", "min": 0, "max": 160, "step": 2, "default": 48, "unit": "px" },
+    { "type": "range", "id": "pad_bot_m", "label": "Padding bottom (px)", "min": 0, "max": 160, "step": 2, "default": 48, "unit": "px" },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#faf5ee" },
+    { "type": "color", "id": "eye_color", "label": "Eyebrow color", "default": "#bc843f" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#6b3c23" },
+    { "type": "color", "id": "heading_em_color", "label": "Heading italic color", "default": "#bc843f" },
+    { "type": "color", "id": "body_color", "label": "Body text color", "default": "#a88b73" },
+    { "type": "color", "id": "card_bg", "label": "Address card background", "default": "#6b3c23" },
+    { "type": "color", "id": "card_border", "label": "Address card border", "default": "#8c5a3a" },
+    { "type": "color", "id": "addr_label_color", "label": "Address label color", "default": "#faf5ee" },
+    { "type": "color", "id": "addr_text_color", "label": "Address text color", "default": "#faf5ee" },
+    { "type": "color", "id": "cta_color", "label": "CTA color", "default": "#d8ae82" },
+    { "type": "color", "id": "cta_border", "label": "CTA underline color", "default": "#faf5ee" },
+    { "type": "color", "id": "cta_hover", "label": "CTA hover color", "default": "#6b3c23" }
+  ],
+  "presets": [
+    { "name": "Sihor Workshop" }
+  ]
+}
+{% endschema %}

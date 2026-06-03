@@ -11,10 +11,755 @@
   "sections": {
     "main": {
       "type": "main-page",
-      "settings": {}
+      "disabled": true,
+      "settings": {
+        "show_breadcrumbs": true,
+        "show_title": true,
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 30,
+        "body_size_desktop": 16,
+        "body_size_mobile": 16,
+        "body_opacity": 100,
+        "container_width": "boxed",
+        "max_width": 880,
+        "text_align": "left",
+        "text_align_mobile": "left",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 20,
+        "bg_color": "#faf5ee",
+        "title_color": "#6b3c23",
+        "body_color": "#6b3c23",
+        "link_color": "#bc843f"
+      }
+    },
+    "about_us_hero_1_c7Gc3Q": {
+      "type": "about-us-hero",
+      "name": "About Us Hero",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "aria_label": "About Kansawala",
+        "eyebrow": "Est. 1945 · Sihor, Gujarat · Four Generations",
+        "heading_line_1": "A Family.",
+        "heading_line_2": "A Fire.",
+        "heading_italic": "A Living Heritage.",
+        "subheading": "For over 75 years, the Mukundray Fulchand family has been shaping metal into memory. Every piece of Kansa, Brass and Copper that leaves our workshop in Sihor carries the warmth of four generations of artisanal devotion.",
+        "scroll_label": "Our Story",
+        "bg_image": "shopify://shop_images/trust.jpg",
+        "bg_image_url": "https://kansawalas.com/cdn/shop/files/DSC_1327.jpg?v=1723204617",
+        "height_desktop": 60,
+        "min_height": 550,
+        "container_width": "boxed",
+        "max_width": 1500,
+        "padding_x": 80,
+        "padding_top": 0,
+        "padding_bottom": 48,
+        "padding_x_mobile": 20,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48,
+        "heading_size_desktop": 68,
+        "heading_size_mobile": 36,
+        "overlay_color": "#2a1508",
+        "overlay_opacity_bottom": 85,
+        "overlay_opacity_mid": 50,
+        "overlay_opacity_top": 20,
+        "eyebrow_color": "#fee8d9",
+        "heading_color": "#faf5ee",
+        "heading_italic_color": "#fee8d9",
+        "sub_color": "#ffffff",
+        "scroll_color": "#d8ae82"
+      }
+    },
+    "mission_quote_8pTmgE": {
+      "type": "mission-quote",
+      "name": "Mission Quote",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "aria_label": "Mission statement",
+        "quote_text": "\"At Kansawala, our mission is to preserve and celebrate the rich tradition of handcrafted Kansa utensils — providing families with high-quality kitchenware that inspires wholesome cooking and cherished moments around the dining table.\"",
+        "attribution": "— Kansawala Mukundray Fulchand, Sihor, Gujarat",
+        "max_width": 900,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "quote_size_desktop": 40,
+        "quote_size_mobile": 26,
+        "bg_color": "#6b3c23",
+        "quote_color": "#fee8d9",
+        "attr_color": "#d8ae82"
+      }
+    },
+    "brand_story_2_ynNEBw": {
+      "type": "brand-story",
+      "blocks": {
+        "pill_8jDdBB": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Traditional"
+          }
+        },
+        "pill_aP7MzK": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Authentic"
+          }
+        },
+        "pill_AAjHmJ": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Reliable"
+          }
+        },
+        "pill_xPGyH9": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Nurturing"
+          }
+        },
+        "pill_dVQjie": {
+          "type": "pill",
+          "settings": {
+            "pill_text": "Generational"
+          }
+        }
+      },
+      "block_order": [
+        "pill_8jDdBB",
+        "pill_aP7MzK",
+        "pill_AAjHmJ",
+        "pill_xPGyH9",
+        "pill_dVQjie"
+      ],
+      "name": "Brand Story 2",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "main_image": "shopify://shop_images/Mukundray_Fulchand_c428a607-bae7-4702-bf4b-a08d778f242e.jpg",
+        "main_image_url": "https://kansawalas.com/cdn/shop/files/DSC_1327.jpg?v=1723204617",
+        "accent_image_url": "",
+        "show_badge": true,
+        "badge_year": "1945",
+        "badge_label": "Est. Sihor",
+        "eyebrow": "Our Story",
+        "heading": "A guardian of",
+        "heading_italic": "Indian heritage.",
+        "body1": "For over 75 years, Kansawala has been a cherished family tradition — crafting Kansa, Brass, Copper and German Silver utensils the way Ayurveda prescribed. Our journey began in 1945 in Sihor, Gujarat, with our grandfather, Sh. Mukundray Fulchand.",
+        "quote_text": "\"We don't just make utensils. We pass down a way of living — one that Ayurveda has celebrated for thousands of years.\"",
+        "body2": "Through four generations, we have refined our artistry. Today our family and skilled artisans unite to uphold Kansawala's legacy — meticulously handcrafting each piece with soulful precision.",
+        "cta_text": "",
+        "cta_link": "",
+        "image_position": "left",
+        "gap": 88,
+        "max_width": 1500,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 30,
+        "body_size_desktop": 16,
+        "body_size_mobile": 16,
+        "body_opacity": 100,
+        "quote_size_desktop": 20,
+        "quote_size_mobile": 17,
+        "quote_opacity": 100,
+        "pill_size_desktop": 12,
+        "pill_size_mobile": 12,
+        "pill_opacity": 100,
+        "cta_size_desktop": 13,
+        "cta_size_mobile": 14,
+        "cta_opacity": 100,
+        "badge_year_size_desktop": 24,
+        "badge_year_size_mobile": 20,
+        "badge_year_opacity": 100,
+        "badge_label_size_desktop": 11,
+        "badge_label_size_mobile": 12,
+        "badge_label_opacity": 100,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "body_color": "#6b3c23",
+        "quote_color": "#6b3c23",
+        "pill_color": "#6b3c23",
+        "pill_border_color": "#6b3c2338",
+        "cta_color": "#6b3c23",
+        "cta_hover_color": "#bc843f",
+        "badge_bg": "#6b3c23",
+        "badge_num_color": "#d8ae82",
+        "badge_label_color": "#fee8d98c"
+      }
+    },
+    "trust_numbers_Nd6hBa": {
+      "type": "trust-numbers",
+      "blocks": {
+        "stat_4WfKAp": {
+          "type": "stat",
+          "settings": {
+            "animate_count": true,
+            "target_number": "75",
+            "suffix": "+",
+            "number": "4th",
+            "label": "Years of Legacy",
+            "source": ""
+          }
+        },
+        "stat_7MGBJE": {
+          "type": "stat",
+          "settings": {
+            "animate_count": false,
+            "target_number": "75",
+            "suffix": "+",
+            "number": "4th",
+            "label": "Generation Family",
+            "source": ""
+          }
+        },
+        "stat_jKJH4i": {
+          "type": "stat",
+          "settings": {
+            "animate_count": true,
+            "target_number": "40",
+            "suffix": "+",
+            "number": "4th",
+            "label": "Countries We Deliver To",
+            "source": ""
+          }
+        },
+        "stat_YDjybU": {
+          "type": "stat",
+          "settings": {
+            "animate_count": true,
+            "target_number": "10000",
+            "suffix": "+",
+            "number": "4th",
+            "label": "Families Who Trust Us",
+            "source": ""
+          }
+        }
+      },
+      "block_order": [
+        "stat_4WfKAp",
+        "stat_7MGBJE",
+        "stat_jKJH4i",
+        "stat_YDjybU"
+      ],
+      "name": "Trust Numbers",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "aria_label": "Brand achievements",
+        "number_size": 42,
+        "number_size_mobile": 32,
+        "label_size": 12,
+        "number_opacity": 100,
+        "label_opacity": 100,
+        "container_width": "full",
+        "max_width": 1500,
+        "text_align": "center",
+        "text_align_mobile": "center",
+        "padding_x": 80,
+        "padding_top": 12,
+        "padding_bottom": 12,
+        "item_padding": 36,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 2,
+        "padding_x_mobile": 20,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "body_size_mobile": 12,
+        "bg_color": "#6b3c23",
+        "number_color": "#d8ae82",
+        "label_color": "#fee8d9d9",
+        "border_color": "#fee8d914"
+      }
+    },
+    "legacy_timeline_iptbaM": {
+      "type": "legacy-timeline",
+      "blocks": {
+        "era_YDiKbj": {
+          "type": "era",
+          "settings": {
+            "year": "1945",
+            "year_label": "Sihor, Gujarat",
+            "title": "The First Fire — Sh. Mukundray Fulchand",
+            "description": "Our grandfather Sh. Mukundray Fulchand establishes the Kansawala workshop in Kansara Bazar Road, Sihor, Gujarat — a location synonymous with metalwork for centuries. Using techniques passed down orally from master to apprentice, he begins handcrafting Kansa utensils using the ancient alloy of 78% Copper and 22% Tin."
+          }
+        },
+        "era_e34GTU": {
+          "type": "era",
+          "settings": {
+            "year": "1960s",
+            "year_label": "Growth",
+            "title": "The Workshop Grows",
+            "description": "The second generation joins the craft. The workshop expands its range beyond Kansa to include Brass and Copper utensils — serving the growing demand from Indian households for traditional, Ayurveda-endorsed metalware. Word spreads through Gujarat and neighbouring states. Every piece leaves the workshop only after passing the family's exacting quality standard."
+          }
+        },
+        "era_mAebJi": {
+          "type": "era",
+          "settings": {
+            "year": "1980s",
+            "year_label": "Heritage",
+            "title": "Preserving a Fading Art",
+            "description": "As industrialisation makes mass-produced steel and aluminium cheaper, many traditional metalworking families in Gujarat abandon the craft. The Mukundray Fulchand family makes a deliberate choice: to preserve the ancient art, even as it becomes economically challenging. The third generation commits to quality over volume — a decision that defines Kansawala's character to this day."
+          }
+        },
+        "era_4PnmTz": {
+          "type": "era",
+          "settings": {
+            "year": "2000s",
+            "year_label": "Recognition",
+            "title": "India Rediscovers Kansa",
+            "description": "A growing wellness movement in India reignites interest in Ayurvedic metals. Kansawala's handcrafted sets begin earning recognition beyond Gujarat — serving households across India and eventually receiving NABL certification for quality. The brand introduces its landmark Buy-Back Policy: after 10–12 years, we will repurchase your Kansa set at the original price. No other brand in India offers this."
+          }
+        },
+        "era_axAqGV": {
+          "type": "era",
+          "settings": {
+            "year": "2020s",
+            "year_label": "Global",
+            "title": "Sihor to the World's Tables",
+            "description": "The fourth generation takes Kansawala online and global. Our handcrafted sets now reach 40+ countries — from the Indian diaspora in Canada, the UK and the USA to Ayurveda practitioners in Europe and Australia. Every order is still packed in Sihor. Every piece is still hand-beaten by the same family. The fire that began in 1945 still burns."
+          }
+        }
+      },
+      "block_order": [
+        "era_YDiKbj",
+        "era_e34GTU",
+        "era_mAebJi",
+        "era_4PnmTz",
+        "era_axAqGV"
+      ],
+      "name": "Legacy Timeline",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Our Journey",
+        "title": "75 Years of",
+        "title_em": "Family Legacy",
+        "container_width": "boxed",
+        "max_width": 1500,
+        "year_col_width": 200,
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 30,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "bg_color": "#faf5ee",
+        "text_color": "#6b3c23",
+        "eyebrow_color": "#bc843f",
+        "title_em_color": "#bc843f",
+        "rail_color": "#6b3c231f",
+        "dot_color": "#bc843f",
+        "dot_border_color": "#ffffff",
+        "year_color": "#bc843f",
+        "year_label_color": "#6b3c2373",
+        "item_title_color": "#6b3c23",
+        "item_body_color": "#6b3c23",
+        "item_divider_color": "#6b3c2312"
+      }
+    },
+    "craft_operations_mDDNmm": {
+      "type": "craft-operations",
+      "blocks": {
+        "step_t8iBEF": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "Metal Selection",
+            "description": "We source only the highest-grade copper and tin - smelted to the precise ratio of 78% Copper and 22% Tin that Ayurveda identifies as true Kansa. No substitutes. No shortcuts.",
+            "ops_value": "78%",
+            "ops_label": "Pure Copper",
+            "ops_value_2": "22%",
+            "ops_label_2": "Tin"
+          }
+        },
+        "step_HzDGhL": {
+          "type": "step",
+          "settings": {
+            "number": "02",
+            "title": "Fire & Casting",
+            "description": "The alloy is melted at over 1000C and poured into moulds. Our artisan reads the metal's colour and behaviour - knowledge that cannot be written down, only inherited through years of working beside a master.",
+            "ops_value": "1000°",
+            "ops_label": "Melting Temperature",
+            "ops_value_2": "",
+            "ops_label_2": ""
+          }
+        },
+        "step_bLJ3Ly": {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "title": "Hand Beating",
+            "description": "Each piece is hammered through 24-25 operations - hundreds of precise hammer strikes - to achieve its final form, density and finish. The rhythm of the hammer is a language. The slight irregularities you see are fingerprints of human hands at work.",
+            "ops_value": "24-25",
+            "ops_label": "Hammering Operations",
+            "ops_value_2": "",
+            "ops_label_2": ""
+          }
+        },
+        "step_rXrCKE": {
+          "type": "step",
+          "settings": {
+            "number": "04",
+            "title": "Quality & Finish",
+            "description": "A final polish, a bell-test for metal purity, and a careful inspection. Edges are smoothed, finish is verified. Only then does a piece earn the Kansawala name - and the right to enter your home.",
+            "ops_value": "100%",
+            "ops_label": "Hand Inspected",
+            "ops_value_2": "",
+            "ops_label_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "step_t8iBEF",
+        "step_HzDGhL",
+        "step_bLJ3Ly",
+        "step_rXrCKE"
+      ],
+      "name": "Craft Operations",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "How We Make It",
+        "heading": "24 Operations.",
+        "heading_italic": "One Perfect Piece.",
+        "subtext": "Unlike machine-made utensils, every Kansawala piece passes through 24-25 handcrafted operations before it earns our name. No shortcuts. No machines. Just fire, hammer, and skill passed through four generations.",
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 30,
+        "container_width": "boxed",
+        "max_width": 1500,
+        "sub_max_width": 460,
+        "text_align": "left",
+        "text_align_mobile": "left",
+        "padding_x": 40,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "bg_color": "#6b3c23",
+        "eye_color": "#d8ae82",
+        "heading_color": "#faf5ee",
+        "heading_italic_color": "#d8ae82",
+        "sub_color": "#fee8d9",
+        "border_color": "#fee8d91a",
+        "number_color": "#bc843f33",
+        "step_title_color": "#faf5ee",
+        "step_desc_color": "#fee8d9",
+        "ops_value_color": "#d8ae82",
+        "ops_label_color": "#fee8d959"
+      }
+    },
+    "our_values_WQ8fii": {
+      "type": "our-values",
+      "blocks": {
+        "value_GiMdmW": {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M24 4C13 4 4 13 4 24s9 20 20 20 20-9 20-20S35 4 24 4z\"></path><path d=\"M24 14v10l7 7\"></path></svg>",
+            "title": "Authenticity",
+            "description": "We never compromise on material purity. Every piece is exactly what it says it is — 78% Copper, 22% Tin. No coatings, no kalai, no shortcuts. Our NABL certification proves it."
+          }
+        },
+        "value_UrNMXz": {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M24 6l5 10 11 1.6-8 7.8 1.9 11L24 31l-9.9 5.4 1.9-11-8-7.8L19 17.6z\"></path></svg>",
+            "title": "Craftsmanship",
+            "description": "Every piece that leaves our workshop in Sihor has passed through human hands — not machines. The slight variations you see are not flaws. They are the proof of craft."
+          }
+        },
+        "value_Ekjzid": {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M12 20L24 8l12 12v20H28v-10h-8v10H12z\"></path></svg>",
+            "title": "Heritage",
+            "description": "We are guardians of an art form that has been practiced in Sihor for centuries. When you buy from us, you are not just buying a utensil — you are helping preserve a living cultural tradition."
+          }
+        },
+        "value_LhJrxk": {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M24 4l6 12 13 2-9.5 9.2 2.2 13L24 34.5 12.3 40.2l2.2-13L5 18l13-2z\"></path></svg>",
+            "title": "Wellness",
+            "description": "Ayurveda has endorsed Kansa for thousands of years. Our mission is to make the daily act of eating a ritual of nourishment — not just for hunger, but for holistic health and balance."
+          }
+        },
+        "value_V8Qdcr": {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><path d=\"M24 44c-11 0-20-9-20-20S13 4 24 4s20 9 20 20-9 20-20 20z\"></path><path d=\"M16 24h8v-8\"></path></svg>",
+            "title": "Longevity",
+            "description": "We make things to last not years but decades. Our Buy-Back Policy — where we repurchase your set after 10–12 years — is proof of the confidence we have in every piece we make."
+          }
+        },
+        "value_cGmLMy": {
+          "type": "value",
+          "settings": {
+            "icon_type": "svg",
+            "icon_svg": "<svg viewbox=\"0 0 48 48\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\"><circle cx=\"24\" cy=\"24\" r=\"20\"></circle><path d=\"M24 14v10M24 34h.01\"></path></svg>",
+            "title": "Transparency",
+            "description": "We tell you exactly what our products are made of, how they are made, and who makes them. No marketing speak — just honest craft from an honest family in Sihor, Gujarat."
+          }
+        }
+      },
+      "block_order": [
+        "value_GiMdmW",
+        "value_UrNMXz",
+        "value_Ekjzid",
+        "value_LhJrxk",
+        "value_V8Qdcr",
+        "value_cGmLMy"
+      ],
+      "name": "Our Values",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "What We Stand For",
+        "heading": "Our Core",
+        "heading_italic": "Values",
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 30,
+        "columns_desktop": "3",
+        "container_width": "boxed",
+        "max_width": 1500,
+        "text_align": "left",
+        "text_align_mobile": "left",
+        "padding_x": 40,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "card_bg": "#faf5ee",
+        "card_border": "#6b3c2312",
+        "accent_color": "#6b3c23",
+        "icon_color": "#6b3c23",
+        "title_color": "#6b3c23",
+        "desc_color": "#2a1508"
+      }
+    },
+    "vision_mission_D7yRjg": {
+      "type": "vision-mission",
+      "blocks": {
+        "card_zaefyE": {
+          "type": "card",
+          "settings": {
+            "label": "Our Mission",
+            "title": "Preserve & Celebrate",
+            "body": "To preserve and celebrate the rich tradition of handcrafted Kansa utensils — providing families with high-quality kitchenware that inspires wholesome cooking and cherished moments around the dining table, generation after generation.",
+            "big_letter": "M",
+            "card_bg": "#6b3c23",
+            "label_color": "#fee8d9",
+            "title_color": "#fee8d9",
+            "body_color": "#fee8d9",
+            "big_letter_color": "#fee8d90f"
+          }
+        },
+        "card_TFqWdF": {
+          "type": "card",
+          "settings": {
+            "label": "Our Vision",
+            "title": "India's Foremost Kansa Brand",
+            "body": "To be the foremost brand of authentic Indian Kansa utensils — renowned globally for craftsmanship, quality, and the promotion of healthy, joyful living through the timeless art of cooking and communal dining.",
+            "big_letter": "V",
+            "card_bg": "#bc843f",
+            "label_color": "#fee8d9",
+            "title_color": "#fee8d9",
+            "body_color": "#fee8d9",
+            "big_letter_color": "#fee8d914"
+          }
+        }
+      },
+      "block_order": [
+        "card_zaefyE",
+        "card_TFqWdF"
+      ],
+      "name": "Vision & Mission",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Our Purpose",
+        "heading": "Vision &",
+        "heading_italic": "Mission",
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 30,
+        "big_letter_size": 96,
+        "header_bg": "#faf5ee",
+        "eyebrow_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "container_width": "full",
+        "max_width": 1500,
+        "card_gap": 2,
+        "grid_margin_top": 0,
+        "header_padding_y": 56,
+        "header_padding_x": 80,
+        "header_padding_y_mobile": 40,
+        "header_padding_x_mobile": 20,
+        "card_padding_y": 52,
+        "card_padding_x": 44,
+        "card_padding_y_mobile": 40,
+        "card_padding_x_mobile": 24,
+        "margin_top": 0,
+        "margin_bottom": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0
+      }
+    },
+    "sihor_workshop_dfQhWY": {
+      "type": "sihor-workshop",
+      "name": "Sihor Workshop",
+      "settings": {
+        "eyebrow": "Where We Work",
+        "heading": "Our Workshop",
+        "heading_em": "in Sihor",
+        "body_1": "The Kansawala workshop has stood on Kansara Bazar Road in Sihor, Bhavnagar since 1945. Sihor is one of Gujarat's oldest centres of kansara (metalworking) craft — a town whose artisans have practiced this trade for hundreds of years.",
+        "body_2": "Our workshop is not a factory. It is a living space where tradition is practiced daily — where the sound of hammer on metal is as familiar as birdsong, and where every artisan knows that their work will one day sit on someone's dining table, nourishing their family.",
+        "address_label": "Our Address",
+        "address_text": "Kansawala Mukundray Fulchand\nKansara Bazar Road, Opp. Bhuta Vadi\nSihor, Bhavnagar, Gujarat — 364240\n\nPhone: +91 787878 9893\nE-mail: info@kansawalas.com\nGST: 24ABEFK7138G1ZD",
+        "cta_text": "Watch Our Craft Video",
+        "cta_link": "https://www.youtube.com/watch?v=rsVjwbX59Ig&t=12s",
+        "cta_new_tab": true,
+        "image_wide": "shopify://shop_images/IMG_3140.heic",
+        "image_wide_alt": "Kansawala workshop Sihor Gujarat — kansa dinner set",
+        "image_left": "shopify://shop_images/Chandrkant_Bhai.jpg",
+        "image_left_alt": "Kansawala craftsman hand-beating kansa",
+        "image_right": "shopify://shop_images/Maheshkumar_2.jpg",
+        "image_right_alt": "Kansawala pure kansa utensils",
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 30,
+        "body_d": 14,
+        "body_m": 13,
+        "boxed": true,
+        "max_w": 1500,
+        "gap_d": 80,
+        "pad_x": 40,
+        "pad_top": 75,
+        "pad_bot": 75,
+        "pad_x_m": 17,
+        "pad_top_m": 40,
+        "pad_bot_m": 40,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_em_color": "#bc843f",
+        "body_color": "#a88b73",
+        "card_bg": "#6b3c23",
+        "card_border": "#8c5a3a",
+        "addr_label_color": "#faf5ee",
+        "addr_text_color": "#faf5ee",
+        "cta_color": "#d8ae82",
+        "cta_border": "#faf5ee",
+        "cta_hover": "#6b3c23"
+      }
+    },
+    "about_cta_8d8Wqc": {
+      "type": "about-cta",
+      "blocks": {
+        "button_dNjWna": {
+          "type": "button",
+          "settings": {
+            "button_text": "Shop Kansa Collection",
+            "button_link": "shopify://collections/kansa",
+            "style": "primary"
+          }
+        },
+        "button_MXgEWY": {
+          "type": "button",
+          "settings": {
+            "button_text": "Get in Touch",
+            "button_link": "shopify://pages/contact",
+            "style": "outline"
+          }
+        }
+      },
+      "block_order": [
+        "button_dNjWna",
+        "button_MXgEWY"
+      ],
+      "name": "About CTA",
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "aria_label": "Shop Kansawala",
+        "heading": "Bring Kansawala",
+        "heading_italic": "Into Your Home",
+        "subheading": "Every piece you buy is a piece of 75 years of craft — handmade in Sihor, shipped with care, built to last a lifetime and beyond.",
+        "max_width": 1500,
+        "padding_top": 75,
+        "padding_bottom": 75,
+        "padding_x": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_x_mobile": 17,
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 30,
+        "bg_color": "#faf5ee",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "sub_color": "#2a1508",
+        "btn_primary_bg": "#6b3c23",
+        "btn_primary_color": "#fee8d9",
+        "btn_primary_hover_bg": "#bc843f",
+        "btn_outline_border": "#4d2c1a",
+        "btn_outline_color": "#6b3c23",
+        "btn_outline_hover_bg": "#6b3c23",
+        "btn_outline_hover_border": "#bc843f",
+        "btn_outline_hover_color": "#fee8d9"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "about_us_hero_1_c7Gc3Q",
+    "mission_quote_8pTmgE",
+    "brand_story_2_ynNEBw",
+    "trust_numbers_Nd6hBa",
+    "legacy_timeline_iptbaM",
+    "craft_operations_mDDNmm",
+    "our_values_WQ8fii",
+    "vision_mission_D7yRjg",
+    "sihor_workshop_dfQhWY",
+    "about_cta_8d8Wqc"
   ]
 }

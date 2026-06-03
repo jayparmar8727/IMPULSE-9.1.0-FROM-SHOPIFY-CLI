@@ -1,0 +1,536 @@
+{%- liquid
+  assign aria_label       = section.settings.aria_label
+  assign eyebrow          = section.settings.eyebrow
+  assign heading_line_1   = section.settings.heading_line_1
+  assign heading_line_2   = section.settings.heading_line_2
+  assign heading_italic   = section.settings.heading_italic
+  assign subheading       = section.settings.subheading
+  assign scroll_label     = section.settings.scroll_label
+  assign bg_image         = section.settings.bg_image
+  assign bg_image_url     = section.settings.bg_image_url
+
+  assign height_desktop   = section.settings.height_desktop
+  assign min_height       = section.settings.min_height
+
+  assign padding_x        = section.settings.padding_x
+  assign padding_top      = section.settings.padding_top
+  assign padding_bottom   = section.settings.padding_bottom
+  assign padding_x_mobile = section.settings.padding_x_mobile
+  assign padding_top_mobile    = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign container_width  = section.settings.container_width
+  assign max_width        = section.settings.max_width
+
+  assign overlay_color    = section.settings.overlay_color
+  assign overlay_opacity_top    = section.settings.overlay_opacity_top
+  assign overlay_opacity_mid    = section.settings.overlay_opacity_mid
+  assign overlay_opacity_bottom = section.settings.overlay_opacity_bottom
+
+  assign eyebrow_color    = section.settings.eyebrow_color
+  assign heading_color    = section.settings.heading_color
+  assign heading_italic_color = section.settings.heading_italic_color
+  assign sub_color        = section.settings.sub_color
+  assign scroll_color     = section.settings.scroll_color
+
+  assign heading_size_desktop = section.settings.heading_size_desktop
+  assign heading_size_mobile  = section.settings.heading_size_mobile
+  assign sub_size_desktop    = section.settings.sub_size_desktop
+  assign sub_size_mobile     = section.settings.sub_size_mobile
+  assign scroll_size_desktop = section.settings.scroll_size_desktop
+  assign scroll_size_mobile  = section.settings.scroll_size_mobile
+-%}
+
+{%- if bg_image != blank -%}
+  {%- assign hero_bg_src = bg_image | image_url: width: 2400 -%}
+{%- else -%}
+  {%- assign hero_bg_src = bg_image_url -%}
+{%- endif -%}
+
+{%- if hero_bg_src != blank -%}
+  <link rel="preload" as="image" href="{{ hero_bg_src }}" fetchpriority="high">
+{%- endif -%}
+
+{%- style -%}
+  .aboutus-hero-{{ section.id }} {
+    position: relative;
+    height: {{ height_desktop }}vh;
+    min-height: {{ min_height }}px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .aboutus-hero-{{ section.id }} .ah-bg {
+    position: absolute;
+    inset: 0;
+    {% if hero_bg_src != blank %}background: url('{{ hero_bg_src }}') center/cover no-repeat;{% endif %}
+    animation: aboutusHeroZoom-{{ section.id }} 14s ease-out forwards;
+  }
+  @keyframes aboutusHeroZoom-{{ section.id }} {
+    from { transform: scale(1.04); }
+    to   { transform: scale(1); }
+  }
+  .aboutus-hero-{{ section.id }} .ah-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+      rgba({{ overlay_color.red }},{{ overlay_color.green }},{{ overlay_color.blue }},{{ overlay_opacity_bottom | divided_by: 100.0 }}) 0%,
+      rgba({{ overlay_color.red }},{{ overlay_color.green }},{{ overlay_color.blue }},{{ overlay_opacity_mid | divided_by: 100.0 }}) 45%,
+      rgba({{ overlay_color.red }},{{ overlay_color.green }},{{ overlay_color.blue }},{{ overlay_opacity_top | divided_by: 100.0 }}) 100%);
+  }
+  .aboutus-hero-{{ section.id }} .ah-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    box-sizing: border-box;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+  }
+  .aboutus-hero-{{ section.id }} .ah-content {
+    width: 100%;
+  }
+  .aboutus-hero-{{ section.id }} .ah-eye {
+    color: {{ eyebrow_color }};
+    margin: 0 0 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    white-space: nowrap;
+    max-width: 100%;
+    animation: aboutusFadeUp-{{ section.id }} 1s cubic-bezier(.16,1,.3,1) .3s both;
+  }
+  .aboutus-hero-{{ section.id }} .ah-eye::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: {{ eyebrow_color }};
+    flex-shrink: 0;
+  }
+  .aboutus-hero-{{ section.id }} .ah-h {
+    color: {{ heading_color }};
+    line-height: var(--lh-tight, 1.1);
+    margin: 0;
+    font-size: {{ heading_size_mobile }}px;
+    animation: aboutusFadeUp-{{ section.id }} 1s cubic-bezier(.16,1,.3,1) .5s both;
+  }
+  .aboutus-hero-{{ section.id }} .ah-h em {
+    color: {{ heading_italic_color }};
+    display: block;
+    line-height: 1;
+  }
+  .aboutus-hero-{{ section.id }} .ah-sub {
+    color: {{ sub_color }};
+    max-width: 560px;
+    margin: 20px 0 0;
+    font-size: {{ sub_size_mobile }}px;
+    animation: aboutusFadeUp-{{ section.id }} 1s cubic-bezier(.16,1,.3,1) .7s both;
+  }
+  .aboutus-hero-{{ section.id }} .ah-scroll {
+    position: absolute;
+    right: 52px;
+    bottom: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: {{ scroll_color }};
+    font-size: {{ scroll_size_mobile }}px;
+    animation: aboutusFadeUp-{{ section.id }} 1s cubic-bezier(.16,1,.3,1) 1s both;
+  }
+  .aboutus-hero-{{ section.id }} .ah-scroll-ln {
+    width: 1px;
+    height: 44px;
+    background: linear-gradient(to bottom, {{ scroll_color }}, transparent);
+    opacity: .8;
+  }
+  @keyframes aboutusFadeUp-{{ section.id }} {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Desktop — heading size override */
+  @media (min-width: 1024px) {
+    .aboutus-hero-{{ section.id }} .ah-h {
+      font-size: {{ heading_size_desktop }}px;
+    }
+    .aboutus-hero-{{ section.id }} .ah-sub {
+      font-size: {{ sub_size_desktop }}px;
+    }
+    .aboutus-hero-{{ section.id }} .ah-scroll {
+      font-size: {{ scroll_size_desktop }}px;
+    }
+  }
+
+  /* Tablet / small desktop */
+  @media (max-width: 1024px) {
+    .aboutus-hero-{{ section.id }} .ah-inner {
+      padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    }
+    .aboutus-hero-{{ section.id }} .ah-scroll {
+      right: {{ padding_x_mobile }}px;
+      bottom: 28px;
+    }
+  }
+
+  /* Mobile — allow eyebrow to wrap, tighten letter-spacing */
+  @media (max-width: 640px) {
+    .aboutus-hero-{{ section.id }} .ah-eye {
+      white-space: normal;
+      letter-spacing: .22em;
+      line-height: 1.5;
+    }
+    .aboutus-hero-{{ section.id }} .ah-eye::before {
+      width: 20px;
+    }
+    .aboutus-hero-{{ section.id }} .ah-sub {
+      margin-top: 16px;
+    }
+    .aboutus-hero-{{ section.id }} .ah-scroll {
+      display: none;
+    }
+  }
+
+  {%- if section.settings.hide_desktop -%}
+  @media (min-width: 768px) { .aboutus-hero-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media (max-width: 749px) { .aboutus-hero-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section class="aboutus-hero-{{ section.id }}" aria-label="{{ aria_label | default: 'About' }}" {{ section.shopify_attributes }}>
+  <div class="ah-bg"></div>
+  <div class="ah-overlay"></div>
+  <div class="ah-inner">
+    <div class="ah-content">
+      {%- if eyebrow != blank -%}
+        <p class="ah-eye t-eyebrow">{{ eyebrow }}</p>
+      {%- endif -%}
+      {%- if heading_line_1 != blank or heading_line_2 != blank or heading_italic != blank -%}
+        <h1 class="ah-h t-display">
+          {%- if heading_line_1 != blank -%}{{ heading_line_1 }}{%- endif -%}
+          {%- if heading_line_1 != blank and heading_line_2 != blank -%}<br>{%- endif -%}
+          {%- if heading_line_2 != blank -%}{{ heading_line_2 }}{%- endif -%}
+          {%- if heading_italic != blank -%}
+            {%- if heading_line_1 != blank or heading_line_2 != blank -%}<br>{%- endif -%}
+            <em>{{ heading_italic }}</em>
+          {%- endif -%}
+        </h1>
+      {%- endif -%}
+      {%- if subheading != blank -%}
+        <p class="ah-sub t-body">{{ subheading }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- if scroll_label != blank -%}
+    <div class="ah-scroll t-label">
+      <div class="ah-scroll-ln"></div>
+      <span>{{ scroll_label }}</span>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "About Us Hero",
+  "tag": "section",
+  "class": "kw-about-us-hero-1",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "aria_label",
+      "label": "ARIA label",
+      "default": "About Kansawala"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Est. 1945 · Sihor, Gujarat · Four Generations"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "A Family."
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "A Fire."
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading italic line",
+      "default": "A Living Heritage."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "For over 75 years, the Mukundray Fulchand family has been shaping metal into memory. Every piece of Kansa, Brass and Copper that leaves our workshop in Sihor carries the warmth of four generations of artisanal devotion."
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Scroll indicator label",
+      "default": "Our Story"
+    },
+    {
+      "type": "header",
+      "content": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "bg_image_url",
+      "label": "Fallback image URL",
+      "info": "Used when no image is uploaded above.",
+      "default": "https://kansawalas.com/cdn/shop/files/DSC_1327.jpg?v=1723204617"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "height_desktop",
+      "label": "Desktop height (vh)",
+      "min": 50,
+      "max": 100,
+      "step": 1,
+      "default": 60,
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height (px)",
+      "min": 320,
+      "max": 900,
+      "step": 10,
+      "default": 550,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "boxed", "label": "Boxed (centered)" },
+        { "value": "full",  "label": "Full width" }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width (boxed)",
+      "min": 960,
+      "max": 1920,
+      "step": 20,
+      "default": 1500,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 80,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding (px)",
+      "info": "Clears a transparent / overlay header so the eyebrow stays visible.",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding (px)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Mobile horizontal padding (px)",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile top padding (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile bottom padding (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop (px)",
+      "min": 32,
+      "max": 120,
+      "step": 2,
+      "default": 72,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile (px)",
+      "min": 24,
+      "max": 72,
+      "step": 2,
+      "default": 40,
+      "unit": "px"
+    },
+    { "type": "range", "id": "sub_size_desktop", "label": "Subheading size desktop (px)", "min": 12, "max": 30, "step": 1, "default": 17, "unit": "px" },
+    { "type": "range", "id": "sub_size_mobile", "label": "Subheading size mobile (px)", "min": 10, "max": 24, "step": 1, "default": 15, "unit": "px" },
+    { "type": "range", "id": "scroll_size_desktop", "label": "Scroll label size desktop (px)", "min": 8, "max": 20, "step": 1, "default": 12, "unit": "px" },
+    { "type": "range", "id": "scroll_size_mobile", "label": "Scroll label size mobile (px)", "min": 8, "max": 18, "step": 1, "default": 11, "unit": "px" },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#2a1508"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity_bottom",
+      "label": "Overlay opacity — bottom (darkest)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 85,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity_mid",
+      "label": "Overlay opacity — middle",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity_top",
+      "label": "Overlay opacity — top (lightest)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow color",
+      "default": "#fee8d9"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "heading_italic_color",
+      "label": "Heading italic color",
+      "default": "#fee8d9"
+    },
+    {
+      "type": "color",
+      "id": "sub_color",
+      "label": "Subheading color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "scroll_color",
+      "label": "Scroll indicator color",
+      "default": "#d8ae82"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Us Hero"
+    }
+  ]
+}
+{% endschema %}

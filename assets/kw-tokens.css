@@ -33,7 +33,7 @@
      defaults (used only if the stock var is ever absent). Heading-range tokens (lg→hero)
      stay fluid; section headings override them with their own clamp() from the per-section
      size settings anyway, so the raw token rarely renders. */
-  --fs-xs:   var(--typeBodyExtraSmallSize, 12px);  /* stock x-small  → eyebrows/labels */
+  --fs-xs:   var(--typeAccentSmallSize, 13px);     /* stock accent-small (13px) → eyebrows/labels (exact stock match) */
   --fs-sm:   var(--typeBodySmallSize,      14px);  /* stock body-small */
   --fs-base: var(--typeBodySize,           16px);  /* stock body / description */
   --fs-md:   var(--typeHeroSubtitleSize,   18px);  /* stock hero-subtitle → large body */

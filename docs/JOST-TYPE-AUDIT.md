@@ -1,6 +1,6 @@
-# Jost Type Audit — Stock vs Custom (size consistency)
+# Jost Type Audit — Stock vs Custom (size consistency) — ✅ CLOSED
 
-**Date:** 2026-06-04 · **Re-audit v2** (after the consistency pass) · Goal: site-wide **Jost** size
+**Date:** 2026-06-04 · **Re-audit v2, CLOSED** (all items resolved) · Goal: site-wide **Jost** size
 consistency between **stock** Impulse pages (product, collection, normal pages) and the **custom `kw`
 sections** (home, about, footer).
 
@@ -8,9 +8,12 @@ sections** (home, about, footer).
 > (`type_header_font_family = type_base_font_family = jost_n4`), and custom `--d` is Jost too.
 > Cormorant is **custom-only** (serif accent) and out of scope — so this audit is **size only**.
 
-> **v2 status: the size mismatch is now FIXED.** The body/label tokens are pinned to the stock Jost
-> scale and all card names are unified to 14px. Verified against the working tree at commit `75d6ffa`.
-> Details per section below; what changed since v1 is summarised in §E.
+> **CLOSED status: every item is resolved.** Body/label tokens are pinned to the stock Jost scale;
+> all card names are unified to 14px **and derived from the stock Body-size setting** so they
+> auto-track the customizer; eyebrows/labels now match stock accent-small (13px); headings remain
+> per-section by decision (already match stock H2/page-title). The only intentionally-fluid surface
+> is the bare heading tokens (`--fs-lg`→`--fs-hero`), which every section overrides with its own size,
+> so they never render raw — left fluid by design. Nothing open. What changed is summarised in §E.
 
 ---
 
@@ -46,7 +49,7 @@ section's own px size setting before they render.
 
 | Token | Definition | Renders | `.t-*` users |
 |-------|-----------|---------|--------------|
-| `--fs-xs` | `var(--typeBodyExtraSmallSize, 12px)` | **12px fixed** | `.t-eyebrow`, `.t-label`, `.t-link` |
+| `--fs-xs` | `var(--typeAccentSmallSize, 13px)` | **13px fixed** | `.t-eyebrow`, `.t-label`, `.t-link` |
 | `--fs-sm` | `var(--typeBodySmallSize, 14px)` | **14px fixed** | `.t-body-sm` |
 | `--fs-base` | `var(--typeBodySize, 16px)` | **16px fixed** | **`.t-body`** |
 | `--fs-md` | `var(--typeHeroSubtitleSize, 18px)` | **18px fixed** | `.t-body-lg` |
@@ -56,8 +59,10 @@ section's own px size setting before they render.
 | `--fs-3xl` | `clamp(…)` | 40 → 56px fluid | `.t-display`, `.t-stat` |
 | `--fs-hero` | `clamp(…)` | 48 → 96px fluid | `.t-display-lg` |
 
-**Card names** are hardcoded in `kw-typography.css` (no token): `.t-card-name` = **14px**,
-`.t-cc-card-name` = **14px**, `.t-card-cta` = 16/14px. Section headings/body still take **per-section px
+**Card names** are now **derived from the stock Body-size setting** (not hardcoded):
+`.t-card-name` / `.t-cc-card-name` / `.bsl-card__name` = `calc(var(--typeBaseSize) - 2px)` = **14px today**,
+and auto-track the customizer exactly like the stock product-card title. (`.t-card-cta` = 16/14px,
+the Add-to-Cart button — a separate role.) Section headings/body still take **per-section px
 settings** from the theme editor (e.g. `heading_size_desktop` 43/48, `body_size_desktop` 16), rendering
 as `clamp(mobileSetting → desktopSetting)`.
 
@@ -70,12 +75,12 @@ as `clamp(mobileSetting → desktopSetting)`.
 | **Body / description text** | 16px fixed | `.t-body` = `--fs-base` = **16px fixed** | ✅ **RESOLVED** (`0ebebab`) — was 16→18 fluid; the "home description bigger than normal page" effect is gone |
 | Body-large | 18px (hero subtitle) | `.t-body-lg` = `--fs-md` = **18px** | ✅ matches |
 | Body-small | 14px | `.t-body-sm` = `--fs-sm` = **14px** | ✅ matches |
-| Labels / eyebrows | 13px accent | `.t-*` = `--fs-xs` = **12px** | ◐ 1px smaller — pinned to stock x-small (12), intentional kicker; bump token to `--typeAccentSmallSize` (13) if exact match wanted |
-| **Product card name** | 14px | `.t-card-name` = **14px** | ✅ **RESOLVED** (`4d587a6`) |
-| **Collection-grid card name** | (product card 14px) | `.t-cc-card-name` = **14px** | ✅ **RESOLVED** (`cc16372`, `75d6ffa`) — was 18/16 |
+| Labels / eyebrows | 13px accent | `.t-*` = `--fs-xs` = **13px** | ✅ **RESOLVED** — `--fs-xs` repointed to `--typeAccentSmallSize` (13px), exact stock match |
+| **Product card name** | 14px | `calc(var(--typeBaseSize) - 2px)` = **14px** | ✅ **RESOLVED** (`4d587a6`, `7f8fc6e`) — now derived + auto-tracks customizer |
+| **Collection-grid card name** | (product card 14px) | `calc(var(--typeBaseSize) - 2px)` = **14px** | ✅ **RESOLVED** (`cc16372`, `75d6ffa`, `7f8fc6e`) — was 18/16 |
 | Section heading (home) | H2 = 43px | default 43px | ✅ matches desktop (mobile 30 vs 32 — close) |
 | Section heading (about) | page title 48px | default 48px | ✅ matches |
-| Heading tokens `lg`→`hero` (bare) | — | still fluid clamp | ⚠️ **residual** — only renders if a section uses a bare `.t-heading`/`.t-display` with **no** px size setting; those few cases still grow on wide screens |
+| Heading tokens `lg`→`hero` (bare) | — | fluid clamp | ✅ **OK by design** — every section overrides these with its own size setting, so they never render raw; left fluid intentionally |
 
 **Net:** the visible inconsistency (custom body/description reading larger than stock pages) is **fixed** —
 custom body now renders **16px fixed**, identical to stock, and is driven by the same single "Body size"
@@ -104,16 +109,29 @@ All edits are **custom-only** (no stock files touched — Golden Rule #3):
 - **`4d587a6`** — bestsellers product-card title unified to 14px (was 15px on mobile).
 - **`cc16372`** — collections-grid card name 18px → 14px to match product cards.
 - **`75d6ffa`** — last card-name unified to 14px (`.t-card-name` / `.t-cc-card-name` both 14px).
+- **`7f8fc6e`** — card names made **dynamic**: `font-size: calc(var(--typeBaseSize) - 2px)` on
+  `.t-card-name` / `.t-cc-card-name` / `.bsl-card__name` — stays 14px today AND auto-tracks the
+  stock "Body size" customizer (16→14, 17→15…), permanently matched to stock product cards.
+- **(this commit)** — `--fs-xs` repointed to `--typeAccentSmallSize` (13px), so eyebrows/labels
+  match stock accent-small exactly. **Closes the last open item.**
 
-**Remaining options (optional, not yet done):**
-1. **Exact label match:** repoint `--fs-xs` from `--typeBodyExtraSmallSize` (12px) to
-   `--typeAccentSmallSize` (13px) if eyebrows/labels should match stock's 13px exactly.
-2. **Pin bare heading tokens:** if any bare `.t-heading`/`.t-display` (no per-section px) should also
-   stop growing on wide screens, alias those tokens to fixed px too — otherwise leave fluid by design.
+**Resolved / closed:**
+1. ✅ **Exact label match** — done (`--fs-xs` → 13px).
+2. ✅ **Bare heading tokens** — no action needed: every section overrides the heading tokens with its
+   own size setting, so they never render raw; left fluid by design (responsive headroom).
+3. ◻ **Headings on a single customizer lever** — NOT done, by decision. Headings stay per-section
+   (they already match stock H2/page-title). The "Option 2" refactor (tie to `--typeH2Size`, lose
+   per-section sliders, about 48→43) remains available if ever wanted — but is intentionally deferred.
+
+**Status: CLOSED — nothing open.**
 
 ---
 
-## F. Residual / tracked elsewhere
+## F. Notes
 
-- Bare heading tokens (`--fs-lg`→`--fs-hero`) remain fluid by design; see §C residual row and §E option 2.
+- Bare heading tokens (`--fs-lg`→`--fs-hero`) are fluid **by design** — sections always override them
+  with a per-section size, so they never render raw. Not a residual; no action.
+- Headings on a single customizer lever (Option 2) is **deferred by decision** — see §E item 3.
 - Broader custom-section scope tracked in `CUSTOM-CODE-AUDIT.md`.
+
+— End of audit (CLOSED 2026-06-04). —

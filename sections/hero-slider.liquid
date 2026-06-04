@@ -161,7 +161,10 @@
     color: {{ heading_color }};
     line-height: 1.06;
     margin-bottom: 8px;
-    font-size: {{ heading_size_desktop }}px;
+    /* Fluid heading: smooth scale between mobile + desktop sizes (no hard snap at
+       749, and tames the oversized 68px on 750–1023 tablets) —
+       {{ heading_size_mobile }}px at 375px → {{ heading_size_desktop }}px at 1024px. */
+    font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px);
     /* Stock-match: Jost 400 (was --fw-light 300) for consistency with the
        stock heading weight; 400 also reads better over photography. */
     font-weight: 400;
@@ -259,7 +262,6 @@
   @media(min-width: 1024px) { .hero-{{ section.id }} .s-arr { display: none !important; } }
   {%- endif -%}
   @media (max-width: 749px) {
-    .hero-{{ section.id }} .s-h { font-size: {{ heading_size_mobile }}px; }
     /* Reduce kicker stacking on small screens — keep the brand eyebrow,
        drop the category tag so the headline reads first. */
     .hero-{{ section.id }} .s-tag { display: none; }
@@ -303,7 +305,7 @@
     {% endif %}
   }
   {%- if section.settings.hide_desktop -%}
-    @media (min-width: 768px) { .hero-{{ section.id }} { display: none !important; } }
+    @media (min-width: 750px) { .hero-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
     @media (max-width: 749px) { .hero-{{ section.id }} { display: none !important; } }
@@ -362,10 +364,10 @@
           {%- endif -%}
           <div class="s-btns">
             {%- if block.settings.btn1_text != blank -%}
-              <a href="{{ block.settings.btn1_url | default: '#' }}" class="btn-k t-link">{{ block.settings.btn1_text | escape }}</a>
+              <a {% if block.settings.btn1_url != blank %}href="{{ block.settings.btn1_url }}" {% endif %}class="btn-k t-link">{{ block.settings.btn1_text | escape }}</a>
             {%- endif -%}
             {%- if block.settings.btn2_text != blank -%}
-              <a href="{{ block.settings.btn2_url | default: '#' }}" class="btn-o t-link"{% if block.settings.btn2_new_tab %} target="_blank" rel="noopener"{% endif %}>{{ block.settings.btn2_text | escape }}</a>
+              <a {% if block.settings.btn2_url != blank %}href="{{ block.settings.btn2_url }}" {% endif %}class="btn-o t-link"{% if block.settings.btn2_new_tab %} target="_blank" rel="noopener"{% endif %}>{{ block.settings.btn2_text | escape }}</a>
             {%- endif -%}
           </div>
         </div>
@@ -399,7 +401,7 @@
   {%- if show_dots and section.blocks.size > 1 -%}
     <div class="slider-dots" role="group" aria-label="{{ section.settings.aria_label | default: 'Hero slides' }}">
       {%- for block in section.blocks -%}
-        <button class="dot{% if forloop.first %} active{% endif %}" type="button" data-hero-dot="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %} tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"></button>
+        <button class="dot{% if forloop.first %} active{% endif %}" type="button" data-hero-dot="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }} of {{ section.blocks.size }}"{% if forloop.first %} aria-current="true"{% endif %} tabindex="{% if forloop.first %}0{% else %}-1{% endif %}"></button>
       {%- endfor -%}
     </div>
   {%- endif -%}

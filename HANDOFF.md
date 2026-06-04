@@ -84,10 +84,9 @@ fluid `clamp()` heading fixes, plus craft-operations' multi-row divider and abou
 - [ ] **Preview** the Impulse dev theme: https://kansawalasmf.myshopify.com?preview_theme_id=152479498414
 - [ ] Decide whether to **publish** (live theme is the separate Shopflo/Impulse 7.5.1 theme).
 - [x] **About Us page** audit pass — done (`3d4c30b`) and pushed.
-- [ ] **`.theme-check.yml` config check** — during the About pass `shopify theme check` started
-      reporting STOCK noise (83 files / 3350 offenses, mostly `UndefinedObject: Unknown object
-      'section'` on line 2 of every section) instead of the usual `222 files / 0`. The config
-      stopped applying (file was open in the IDE). Those offenses are pre-existing stock, not the
-      edits. Confirm `.theme-check.yml` is saved/valid (`root` + `ignore` intact) to restore `0`.
+- [x] **theme-check baseline = `222 files / 0 offenses`** (confirmed). NOTE: `.theme-check.yml`
+      was never modified. If you ever see `83 files / 3350 offenses` (`UndefinedObject: Unknown
+      object 'section'` on line 2 of every file), it just means `shopify theme check` was run from
+      *inside* `sections/` — run it from the **repo root** and it returns to `222 / 0`.
 - [ ] Remaining surfaces: header, PDP / collection / cart templates.
 - [ ] Optional GitHub backup — needs a remote URL.

@@ -33,17 +33,17 @@ only change font-size/padding), so no mobile-specific color work was needed.
 | Sihor `sihor-workshop` "Our Address" label | cream → brass `#d8ae82` |
 | Craft step numbers (`craft-process` home + `craft-operations` about) | now **solid `#d8ae82`, visible & identical** — removed the hardcoded `opacity:.3` on craft-process (was ~1.0–1.2:1, near-invisible) |
 | Footer marquee (`footer-kansawala` / `footer-group.json`) | text `#e5c2a0` + separator `#bc843f` → **matches the top `marquee-strip`** |
-| Vision & Mission (`vision-mission`) | **unchanged** (intentionally reverted — see decisions) |
+| Vision & Mission (`vision-mission`) | **colored treatment**: Mission card = brass `#d8ae82` label / white title / cream body; Vision (brass) card = dark `#2a1508` label+body / white title. (Reverted to cream mid-session, then restored per merchant.) |
 
 Every change updated **both** the live template JSON **and** the section schema default, so
 new instances inherit the corrected colors. `shopify theme check` = **0 offenses** throughout.
 
 ## Decisions / merchant preferences (don't re-litigate)
 
-- **Vision & Mission stays flat cream-on-everything.** An accent treatment (brass eyebrow /
-  white title / dark text on the brass card) was tried and **rejected/reverted**. Do not
-  re-suggest "accent hierarchy" there. (The brass Vision card's cream text is technically
-  ~2.7:1, a known/accepted trade-off.)
+- **Vision & Mission uses a colored treatment** (final decision after one revert round):
+  Mission card = brass `#d8ae82` label, white title, cream body; Vision (brass) card = dark
+  `#2a1508` label+body, white title. The dark text on the Vision card is deliberate — it
+  fixes the ~2.7:1 contrast failure that plain cream had on the `#bc843f` background.
 - **Decorative step numbers should be visible, not a faint watermark.** `#bc843f33` /
   `opacity:.3` was rejected. Both craft sections now use solid `#d8ae82`.
 - **Both marquees (top strip + footer) intentionally use `#e5c2a0` text + `#bc843f`

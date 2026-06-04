@@ -590,8 +590,8 @@
             "body": "To preserve and celebrate the rich tradition of handcrafted Kansa utensils — providing families with high-quality kitchenware that inspires wholesome cooking and cherished moments around the dining table, generation after generation.",
             "big_letter": "M",
             "card_bg": "#6b3c23",
-            "label_color": "#fee8d9",
-            "title_color": "#fee8d9",
+            "label_color": "#d8ae82",
+            "title_color": "#ffffff",
             "body_color": "#fee8d9",
             "big_letter_color": "#fee8d90f"
           }
@@ -604,9 +604,9 @@
             "body": "To be the foremost brand of authentic Indian Kansa utensils — renowned globally for craftsmanship, quality, and the promotion of healthy, joyful living through the timeless art of cooking and communal dining.",
             "big_letter": "V",
             "card_bg": "#bc843f",
-            "label_color": "#fee8d9",
-            "title_color": "#fee8d9",
-            "body_color": "#fee8d9",
+            "label_color": "#2a1508",
+            "title_color": "#ffffff",
+            "body_color": "#2a1508",
             "big_letter_color": "#fee8d914"
           }
         }

@@ -118,7 +118,9 @@
   }
   .bst-{{ section.id }} .t-eyebrow { color: {{ eye_color }}; margin-bottom: 14px; }
   .bst-{{ section.id }} .t-eyebrow--dash::before { background: {{ eye_color }}; width: 28px; }
-  .bst-{{ section.id }} .t-display { color: {{ heading_color }}; margin: 0 0 26px; font-size: {{ section.settings.heading_size_desktop }}px; }
+  /* Fluid heading: smooth scale between mobile + desktop sizes (no hard snap at
+     749) — {{ section.settings.heading_size_mobile }}px at 375px → {{ section.settings.heading_size_desktop }}px at 1024px. */
+  .bst-{{ section.id }} .t-display { color: {{ heading_color }}; margin: 0 0 26px; font-size: clamp({{ section.settings.heading_size_mobile }}px, calc({{ section.settings.heading_size_mobile }}px + ({{ section.settings.heading_size_desktop | minus: section.settings.heading_size_mobile }}) * (100vw - 375px) / 649), {{ section.settings.heading_size_desktop }}px); }
   .bst-{{ section.id }} .t-display em { color: {{ heading_italic_color }}; }
   .bst-{{ section.id }} .body-t {
     color: {{ body_color }};
@@ -176,7 +178,6 @@
   }
   @media (max-width: 749px) {
     .bst-{{ section.id }} .bst-inner { padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px; }
-    .bst-{{ section.id }} .t-display { font-size: {{ section.settings.heading_size_mobile }}px; }
     .bst-{{ section.id }} .s-bdg { top: 16px; left: -10px; padding: 10px 14px; }
     .bst-{{ section.id }} .s-bdg strong { font-size: {{ badge_year_size_mobile }}px; }
     .bst-{{ section.id }} .s-bdg span { margin-top: 2px; font-size: {{ badge_label_size_mobile }}px; }
@@ -189,7 +190,7 @@
     .bst-{{ section.id }} .bst-inner { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
   }
   {%- if section.settings.hide_desktop -%}
-  @media (min-width: 768px) { .bst-{{ section.id }} { display: none !important; } }
+  @media (min-width: 750px) { .bst-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media (max-width: 749px) { .bst-{{ section.id }} { display: none !important; } }
@@ -263,7 +264,7 @@
           <p class="t-body kw-editor-hint" style="--kw-hint-color: {{ body_color }};">Add “Pill tag” blocks for the trait pills.</p>
         {%- endif -%}
         {%- if cta_text != blank -%}
-          <a href="{{ cta_link | default: '#' }}" class="s-cta t-link">
+          <a {% if cta_link != blank %}href="{{ cta_link }}" {% endif %}class="s-cta t-link">
             {{ cta_text | escape }}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>

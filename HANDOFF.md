@@ -1,67 +1,84 @@
-# HANDOFF — Dark-section typography pass
+# HANDOFF — 3-lens section audit pass (a11y / typography / responsive)
 
-**Date:** 2026-06-04 · **Branch:** `main` · **Status:** committed locally, **not pushed**
+**Date:** 2026-06-04 · **Branch:** `main` · **Status:** committed locally **and pushed to the
+unpublished "Impulse" dev theme** (`#152479498414`, store `kansawalasmf`). **Not** on GitHub
+(no git remote configured).
 
-A manual context note for the next person/session. (For auto-loaded context across
-chats, see `MEMORY.md` in the Claude project memory folder — this file is just a
-human-readable paper trail and does **not** auto-load.)
+Human-readable paper trail. Auto-loaded context lives in the Claude project `MEMORY.md`
+(`home-section-audit-pass.md`); this file does not auto-load.
 
 ---
 
 ## What this session did
 
-Audited every dark-background section on the **Home** and **About Us** pages for
-typography consistency (color + font), then applied targeted fixes.
+Audited **every custom section on the Home page + the footer** through three skills —
+`refactoring-ui`, `web-typography`, `web-interface-guidelines` (plus LCP/perf for image-heavy
+sections) — then applied + committed targeted fixes (one commit per section, `shopify theme
+check` = 0 offenses on each). Then pushed the whole theme to the **Impulse** dev theme with
+`scripts/theme-push.ps1` (`--nodelete`). An **About Us page** pass is underway next.
 
-Key finding up front: **fonts are already consistent** — every section pulls type from the
-shared `t-*` classes in `assets/kw-typography.css`. Only **color values** (stored per-section
-in the JSON templates + schema defaults) varied. Mobile inherits desktop colors (breakpoints
-only change font-size/padding), so no mobile-specific color work was needed.
+## Recurring issues found + fixed across the board
 
-## Commits
+1. **`hide_desktop` breakpoint leak** — many sections used `@media (min-width: 768px)` while
+   `hide_mobile` (and every other switch) used 749/750, so the "Hide on desktop" toggle leaked
+   at **750–767px**. → standardized to `min-width: 750px`.
+2. **Fixed-px headings snapping at a breakpoint** → replaced with one fluid `clamp()` formula
+   (passes through the merchant's mobile px at 375vw and desktop px at 1024vw):
+   ```
+   clamp({mobile}px, calc({mobile}px + ({desktop} - {mobile}) * (100vw - 375px) / 649), {desktop}px)
+   ```
+3. **Dead `href="#"` fallbacks** on CTA/card links → omit `href` when the URL setting is blank
+   (so it's not a focusable link to nowhere; whole-card links were the worst case).
+4. **Below-fold images stealing the hero LCP** — sections far down the page had their first
+   image `loading="eager" fetchpriority="high"`. → lazy/auto (only the hero slide is eager+high).
+5. **Multi-row grid divider leaks** — `border-right:1px … :last-child` left a stray right-edge
+   divider when items exceeded one row → keyed dividers off `:nth-child({cols}n), :last-child`.
+6. **Slider/carousel a11y** — dots used `role="tablist"` with plain buttons and never exposed
+   `aria-current`; stars were `aria-hidden` with no text alternative. → `role="group"`,
+   `aria-current` synced in JS, visually-hidden rating text.
 
-| Commit | Summary |
-|---|---|
-| `e594464` | Hero whites → cream: `about-us-hero` subheading & `hero-slider` heading `#ffffff` → cream (`#fee8d9` / `#faf5ee`). Sihor "Our Address" label `#faf5ee` → brass `#d8ae82`. |
-| `a67b075` | Craft step numbers unified + made visible; footer marquee matched to top strip; Vision & Mission reverted to original. |
+### Two genuine latent bugs caught
+- **Bestsellers** secondary product image had a fade transition + `opacity:0` but **no hover
+  rule ever revealed it** — broken swap + a wasted image request per card. Added the hover reveal.
+- **b2b-trust / three-sacred-metals** dots never told screen readers which slide was active.
 
-## Net live result
+## Commit series (home + footer)
 
-| Section | Change |
-|---|---|
-| `about-us-hero` subheading, `hero-slider` heading | pure white → cream |
-| Sihor `sihor-workshop` "Our Address" label | cream → brass `#d8ae82` |
-| Craft step numbers (`craft-process` home + `craft-operations` about) | now **solid `#d8ae82`, visible & identical** — removed the hardcoded `opacity:.3` on craft-process (was ~1.0–1.2:1, near-invisible) |
-| Footer marquee (`footer-kansawala` / `footer-group.json`) | text `#e5c2a0` + separator `#bc843f` → **matches the top `marquee-strip`** |
-| Vision & Mission (`vision-mission`) | **colored treatment**: Mission card = brass `#d8ae82` label / white title / cream body; Vision (brass) card = dark `#2a1508` label+body / white title. (Reverted to cream mid-session, then restored per merchant.) |
+`19fcddb` collections-grid · `6fdfed1` marquee-strip · `c549baa` newsletter (+live `index.json`
+AA contrast) · `29be099` b2b-trust · `2706f6e` hero-slider · `d8e9baa` global-presence ·
+`9c87ecf` bestsellers · `ab36473` brand-story · `de38920` heritage-timeline ·
+`2903489` three-sacred-metals · `e35a0dc` ayurveda · `c88dd96` meaning-legacy ·
+`6ede218` craft-process · `35a358e` customer-reviews · `680b425` buy-back-promise ·
+`2071454` footer-kansawala.
 
-Every change updated **both** the live template JSON **and** the section schema default, so
-new instances inherit the corrected colors. `shopify theme check` = **0 offenses** throughout.
+## Flagged but deliberately NOT changed
 
-## Decisions / merchant preferences (don't re-litigate)
+- **Brass (`#bc843f` / `#d8ae82`) small text on light bg ~3:1** — fails AA but is the
+  intentional brand accent (`DO NOT change brass`). Surfaced per-section, not altered.
+- **Autoplay pause button (WCAG 2.2.2)** — merchant chose **hover/focus pause only**; no
+  visible pause button added (consistent across marquee + sliders).
+- **Dead-code cleanups** that touch saved schema settings (e.g. meaning-legacy connector-dot
+  controls) — left for a separate decision to avoid orphaning admin values.
 
-- **Vision & Mission uses a colored treatment** (final decision after one revert round):
-  Mission card = brass `#d8ae82` label, white title, cream body; Vision (brass) card = dark
-  `#2a1508` label+body, white title. The dark text on the Vision card is deliberate — it
-  fixes the ~2.7:1 contrast failure that plain cream had on the `#bc843f` background.
-- **Decorative step numbers should be visible, not a faint watermark.** `#bc843f33` /
-  `opacity:.3` was rejected. Both craft sections now use solid `#d8ae82`.
-- **Both marquees (top strip + footer) intentionally use `#e5c2a0` text + `#bc843f`
-  separator** — *not* the canonical `#d8ae82`. Merchant confirmed the lighter tan is fine.
-- **Photo heroes use cream (`#faf5ee` / `#fee8d9`), never pure white.**
-
-## Dark-section color reference
+## Dark-section color reference (unchanged this pass)
 
 - Background brown `#6b3c23` · darkest brown `#2a1508`
 - Heading `#faf5ee` · body `#fee8d9` · canonical brass accent `#d8ae82`
 - Marquee text `#e5c2a0` · solid brass separator `#bc843f`
 
+## Settled merchant decisions (don't re-litigate)
+
+- **Vision & Mission uses a colored treatment** — Mission card brass `#d8ae82` label / white
+  title / cream body; Vision (brass `#bc843f`) card dark `#2a1508` label+body / white title.
+  The dark text on the Vision card is deliberate (fixes the cream-on-brass ~2.7:1 failure).
+- **Decorative step numbers should be visible**, not a faint watermark (solid `#d8ae82`).
+- **Both marquees use `#e5c2a0` text + `#bc843f` separator** (not `#d8ae82`) — confirmed.
+- **Photo heroes use cream (`#faf5ee` / `#fee8d9`), never pure white.**
+
 ## Open items / next steps
 
-- [ ] **Push** `main` to origin (not done yet).
-- [ ] **Live preview** via `scripts\theme-dev.ps1`. ⚠️ This batch touched admin-syncable
-      files (`footer-group.json`, `templates/page.about.json`) — run `scripts\theme-pull.ps1`
-      and reconcile **before** pushing the dev theme, so newer admin "Customize" edits aren't
-      overwritten.
-- [ ] Optional: if the now-visible craft step numbers feel too bold, a gentle `opacity:.5`
-      on both `.cpr-num` / `.cstep-n` is the agreed middle-ground.
+- [ ] **Preview** the Impulse dev theme: https://kansawalasmf.myshopify.com?preview_theme_id=152479498414
+- [ ] Decide whether to **publish** (live theme is the separate Shopflo/Impulse 7.5.1 theme).
+- [ ] **About Us page** audit pass (in progress this session) — see commits after `2071454`.
+- [ ] Remaining surfaces: header, PDP / collection / cart templates.
+- [ ] Optional GitHub backup — needs a remote URL.

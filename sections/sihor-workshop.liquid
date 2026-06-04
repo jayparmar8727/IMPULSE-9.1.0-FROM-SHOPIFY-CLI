@@ -23,7 +23,8 @@
   }
   .sw-{{ uid }} .ws-eye{ color: {{ s.eye_color }}; margin: 0 0 14px; }
   .sw-{{ uid }} .ws-eye.t-eyebrow--dash::before{ background: {{ s.eye_color }}; width: 22px; }
-  .sw-{{ uid }} .ws-ttl{ color: {{ s.heading_color }}; margin: 0 0 20px; font-size: {{ s.heading_size_mobile }}px; }
+  /* Fluid heading: smooth scale, no 1024 snap (was stuck at the mobile size across 750–1023 tablets). */
+  .sw-{{ uid }} .ws-ttl{ color: {{ s.heading_color }}; margin: 0 0 20px; font-size: clamp({{ s.heading_size_mobile }}px, calc({{ s.heading_size_mobile }}px + ({{ s.heading_size_desktop | minus: s.heading_size_mobile }}) * (100vw - 375px) / 649), {{ s.heading_size_desktop }}px); }
   .sw-{{ uid }} .ws-ttl em{ color: {{ s.heading_em_color }}; }
   .sw-{{ uid }} .ws-body{ color: {{ s.body_color }}; margin: 0 0 18px; font-size: {{ s.body_m }}px; max-width: 65ch; }
   .sw-{{ uid }} .ws-body + .ws-body{ margin-bottom: 24px; }
@@ -80,9 +81,6 @@
   @media (min-width: 1024px){
     .sw-{{ uid }}{
       padding: {{ s.pad_top }}px {{ s.pad_x }}px {{ s.pad_bot }}px;
-    }
-    .sw-{{ uid }} .ws-ttl{
-      font-size: {{ s.heading_size_desktop }}px;
     }
     .sw-{{ uid }} .ws-body{ font-size: {{ s.body_d }}px; }
     .sw-{{ uid }} .ws-addr-lbl{ font-size: {{ s.addr_label_d }}px; }

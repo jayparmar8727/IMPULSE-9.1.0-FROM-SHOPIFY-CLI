@@ -33,7 +33,9 @@
   .mission-{{ section.id }} .mission-quote {
     color: {{ quote_color }};
     margin: 0 0 24px;
-    font-size: {{ quote_size_mobile }}px;
+    /* Fluid quote: smooth scale, no hard snap at 1025 (was stuck at the mobile
+       size across 750–1024 tablets). */
+    font-size: clamp({{ quote_size_mobile }}px, calc({{ quote_size_mobile }}px + ({{ quote_size_desktop | minus: quote_size_mobile }}) * (100vw - 375px) / 649), {{ quote_size_desktop }}px);
   }
   .mission-{{ section.id }} .mission-attr {
     color: {{ attr_color }};
@@ -47,9 +49,6 @@
     }
   }
   @media (min-width: 1025px) {
-    .mission-{{ section.id }} .mission-quote {
-      font-size: {{ quote_size_desktop }}px;
-    }
     .mission-{{ section.id }} .mission-attr {
       font-size: {{ attr_size_desktop }}px;
     }
@@ -60,7 +59,7 @@
     }
   }
   {%- if section.settings.hide_desktop -%}
-  @media (min-width: 768px) { .mission-{{ section.id }} { display: none !important; } }
+  @media (min-width: 750px) { .mission-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media (max-width: 749px) { .mission-{{ section.id }} { display: none !important; } }

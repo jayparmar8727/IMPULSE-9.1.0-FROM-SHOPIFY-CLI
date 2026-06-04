@@ -65,9 +65,10 @@
   .cops-{{ section.id }} .t-eyebrow--dash::before {
     background: {{ eye_color }};
   }
+  /* Fluid heading: smooth scale, no hard snap at 749. */
   .cops-{{ section.id }} .t-display {
     color: {{ heading_color }};
-    font-size: {{ heading_size_desktop }}px;
+    font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px);
   }
   .cops-{{ section.id }} .t-display em {
     color: {{ heading_italic_color }};
@@ -165,7 +166,6 @@
     .cops-{{ section.id }} .cops-sub { max-width: 100%; }
   }
   @media (max-width: 749px) {
-    .cops-{{ section.id }} .t-display { font-size: {{ heading_size_mobile }}px; }
     .cops-{{ section.id }} .cops-sub { font-size: {{ sub_size_mobile }}px; }
     .cops-{{ section.id }} .cstep-n { font-size: {{ num_size_mobile }}px; }
     .cops-{{ section.id }} .cstep-t { font-size: {{ step_title_size_mobile }}px; }
@@ -174,7 +174,7 @@
     .cops-{{ section.id }} .cstep-ops-lbl { font-size: {{ ops_label_size_mobile }}px; }
   }
   {%- if section.settings.hide_desktop -%}
-  @media(min-width: 768px) { .cops-{{ section.id }} { display: none !important; } }
+  @media(min-width: 750px) { .cops-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media(max-width: 749px) { .cops-{{ section.id }} { display: none !important; } }
@@ -207,6 +207,9 @@
     }
     .cops-{{ section.id }} .cstep:nth-child(odd) { border-right: 1px solid {{ border_color }}; }
     .cops-{{ section.id }} .cstep:not(:first-child) { padding-left: 28px; }
+    /* Clear the divider on each row's last column (every 4th step) + the final
+       step, so a multi-row grid (>4 steps) shows no stray right-edge divider. */
+    .cops-{{ section.id }} .cstep:nth-child(4n),
     .cops-{{ section.id }} .cstep:last-child { border-right: none; padding-right: 0; }
   }
   /* Match home: desktop horizontal+vertical padding from tablet up (≥750), so the

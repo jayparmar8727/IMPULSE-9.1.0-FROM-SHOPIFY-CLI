@@ -36,7 +36,8 @@
   .cta-{{ section.id }} .cta-title {
     color: {{ heading_color }};
     margin: 0 0 8px;
-    font-size: {{ heading_size_desktop }}px;
+    /* Fluid heading: smooth scale, no hard snap at 749. */
+    font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px);
   }
   .cta-{{ section.id }} .cta-title em {
     color: {{ heading_italic_color }};
@@ -88,12 +89,11 @@
     }
   }
   @media (max-width: 749px) {
-    .cta-{{ section.id }} .cta-title { font-size: {{ heading_size_mobile }}px; }
     .cta-{{ section.id }} .cta-sub { font-size: {{ sub_size_mobile }}px; }
     .cta-{{ section.id }} .cta-btn { font-size: {{ btn_size_mobile }}px; }
   }
   {%- if section.settings.hide_desktop -%}
-  @media (min-width: 768px) { .cta-{{ section.id }} { display: none !important; } }
+  @media (min-width: 750px) { .cta-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media (max-width: 749px) { .cta-{{ section.id }} { display: none !important; } }
@@ -122,7 +122,7 @@
               {%- assign style_class = 'cta-btn--outline' -%}
             {%- endif -%}
             <a
-              href="{{ block.settings.button_link | default: '#' }}"
+              {% if block.settings.button_link != blank %}href="{{ block.settings.button_link }}"{% endif %}
               class="cta-btn t-link {{ style_class }}"
               {{ block.shopify_attributes }}
             >{{ block.settings.button_text | escape }}</a>

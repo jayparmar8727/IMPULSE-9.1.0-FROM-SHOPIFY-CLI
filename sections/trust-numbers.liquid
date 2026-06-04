@@ -57,7 +57,9 @@
   .trust-{{ section.id }} .tn {
     color: {{ number_color }};
     margin-bottom: 10px;
-    font-size: {{ number_size_mobile }}px;
+    /* Fluid number: smooth scale, no 1024 snap (was stuck at the mobile size
+       across 750–1023 tablets). */
+    font-size: clamp({{ number_size_mobile }}px, calc({{ number_size_mobile }}px + ({{ number_size | minus: number_size_mobile }}) * (100vw - 375px) / 649), {{ number_size }}px);
     line-height: 1.1;
     overflow-wrap: normal;
     /* Equal-width figures so the numeral doesn't jitter while counting up. */
@@ -120,7 +122,6 @@
     .trust-{{ section.id }} .ti:last-child {
       border-right: none;
     }
-    .trust-{{ section.id }} .tn { font-size: {{ number_size }}px; }
     .trust-{{ section.id }} .tl {
       font-size: {{ label_size }}px;
       letter-spacing: var(--ls-label);
@@ -128,7 +129,7 @@
     }
   }
   {%- if section.settings.hide_desktop -%}
-  @media (min-width: 768px) { .trust-{{ section.id }} { display: none !important; } }
+  @media (min-width: 750px) { .trust-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media (max-width: 749px) { .trust-{{ section.id }} { display: none !important; } }

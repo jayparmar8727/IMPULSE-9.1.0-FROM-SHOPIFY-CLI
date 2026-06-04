@@ -60,7 +60,9 @@
   }
   .ltl-{{ section.id }} .ltl-eye { color: {{ eyebrow_color }}; margin-bottom: 14px; }
   .ltl-{{ section.id }} .ltl-eye.t-eyebrow--dash::before { background: {{ eyebrow_color }}; width: 22px; }
-  .ltl-{{ section.id }} .ltl-ttl { color: {{ text_color }}; font-size: {{ heading_size_mobile }}px; }
+  /* Fluid heading: smooth scale, no 1024 snap (was stuck at the mobile size
+     across 750–1023 tablets) — {{ heading_size_mobile }}px at 375px → {{ heading_size_desktop }}px at 1024px. */
+  .ltl-{{ section.id }} .ltl-ttl { color: {{ text_color }}; font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px); }
   .ltl-{{ section.id }} .ltl-ttl em { color: {{ title_em_color }}; }
   .ltl-{{ section.id }} .ltl-list {
     margin-top: 40px;
@@ -125,7 +127,7 @@
   .js-kw-fadeup .ltl-{{ section.id }} .fu:nth-child(6) { transition-delay: 0.40s; }
 
   {%- if section.settings.hide_desktop -%}
-  @media(min-width: 768px) { .ltl-{{ section.id }} { display: none !important; } }
+  @media(min-width: 750px) { .ltl-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media(max-width: 749px) { .ltl-{{ section.id }} { display: none !important; } }
@@ -137,9 +139,6 @@
     }
     .ltl-{{ section.id }} .ltl-inner {
       padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
-    }
-    .ltl-{{ section.id }} .ltl-ttl {
-      font-size: {{ heading_size_desktop }}px;
     }
     .ltl-{{ section.id }} .ltl-yr { font-size: {{ year_size_desktop }}px; }
     .ltl-{{ section.id }} .ltl-yr-lbl { font-size: {{ year_label_size_desktop }}px; }

@@ -729,7 +729,14 @@
       for (var j = 0; j < items.length; j++) {
         (function (d) {
           d.addEventListener('toggle', function () {
-            if (mq.matches) d.dataset.userToggled = '1';
+            if (mq.matches) {
+              d.dataset.userToggled = '1';
+            } else if (!d.open) {
+              // Desktop columns are always-open; if a keyboard Enter on the
+              // (mouse-disabled) summary collapses one, re-open it. Setting
+              // open re-fires toggle, but d.open is then true so this no-ops.
+              d.setAttribute('open', '');
+            }
           });
         })(items[j]);
       }

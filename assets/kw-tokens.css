@@ -26,11 +26,17 @@
   --d:'Jost', sans-serif;
   --s:'Cormorant Garamond','Times New Roman',Georgia,serif;
 
-  /* ═══ FLUID TYPE SCALE · Major Third (1.25×) ═══ */
-  --fs-xs:   clamp(0.7rem,   0.68rem + 0.10vw, 0.75rem);
-  --fs-sm:   clamp(0.8rem,   0.75rem + 0.25vw, 0.875rem);
-  --fs-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
-  --fs-md:   clamp(1.125rem, 1rem    + 0.40vw, 1.25rem);
+  /* ═══ TYPE SCALE ═══
+     Body-range tokens are PINNED to the stock Jost scale (snippets/css-variables.liquid)
+     so custom body/label text matches stock pages exactly AND is driven by the theme's
+     single "Body size" customizer setting — one lever, like stock. Fallbacks = stock
+     defaults (used only if the stock var is ever absent). Heading-range tokens (lg→hero)
+     stay fluid; section headings override them with their own clamp() from the per-section
+     size settings anyway, so the raw token rarely renders. */
+  --fs-xs:   var(--typeBodyExtraSmallSize, 12px);  /* stock x-small  → eyebrows/labels */
+  --fs-sm:   var(--typeBodySmallSize,      14px);  /* stock body-small */
+  --fs-base: var(--typeBodySize,           16px);  /* stock body / description */
+  --fs-md:   var(--typeHeroSubtitleSize,   18px);  /* stock hero-subtitle → large body */
   --fs-lg:   clamp(1.375rem, 1.20rem + 0.75vw, 1.5625rem);
   --fs-xl:   clamp(1.625rem, 1.30rem + 1.30vw, 2rem);
   --fs-2xl:  clamp(2rem,     1.60rem + 1.80vw, 2.5rem);

@@ -41,7 +41,9 @@
   }
   .ayv-{{ section.id }} .eye { color: {{ eye_color }}; margin-bottom: 14px; }
   .ayv-{{ section.id }} .eye.t-eyebrow--dash::before { background: {{ eye_color }}; width: 28px; }
-  .ayv-{{ section.id }} .ttl { color: {{ heading_color }}; font-size: {{ section.settings.heading_size_desktop }}px; }
+  /* Fluid heading: smooth scale between mobile + desktop sizes (no hard snap at
+     749) — {{ section.settings.heading_size_mobile }}px at 375px → {{ section.settings.heading_size_desktop }}px at 1024px. */
+  .ayv-{{ section.id }} .ttl { color: {{ heading_color }}; font-size: clamp({{ section.settings.heading_size_mobile }}px, calc({{ section.settings.heading_size_mobile }}px + ({{ section.settings.heading_size_desktop | minus: section.settings.heading_size_mobile }}) * (100vw - 375px) / 649), {{ section.settings.heading_size_desktop }}px); }
   .ayv-{{ section.id }} .ttl em { color: {{ heading_italic_color }}; }
   .ayv-{{ section.id }} .ayur-grid {
     display: grid;
@@ -54,6 +56,10 @@
     padding: 44px 28px 12px 0;
     border-right: 1px solid {{ divider_color }};
   }
+  /* Clear the column divider on each row's LAST column (every cols_desktop-th
+     item) plus the final item — so multi-row grids (>cols benefits) don't show a
+     stray right-edge divider. */
+  .ayv-{{ section.id }} .ag:nth-child({{ cols_desktop }}n),
   .ayv-{{ section.id }} .ag:last-child { border-right: none; }
   .ayv-{{ section.id }} .ag:not(:first-child) { padding-left: 28px; }
   .ayv-{{ section.id }} .ag-num {
@@ -110,13 +116,12 @@
     .ayv-{{ section.id }} .ayur-grid { grid-template-columns: 1fr; }
     /* 1-col: every card flush-left, only the very last loses its divider. */
     .ayv-{{ section.id }} .ag:last-child { border-bottom: none; }
-    .ayv-{{ section.id }} .ttl { font-size: {{ section.settings.heading_size_mobile }}px; }
     .ayv-{{ section.id }} .ag-num { font-size: {{ tag_size_mobile }}px; }
     .ayv-{{ section.id }} .ag-t { font-size: {{ title_size_mobile }}px; }
     .ayv-{{ section.id }} .ag-d { font-size: {{ desc_size_mobile }}px; }
   }
   {%- if section.settings.hide_desktop -%}
-  @media (min-width: 768px) { .ayv-{{ section.id }} { display: none !important; } }
+  @media (min-width: 750px) { .ayv-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media (max-width: 749px) { .ayv-{{ section.id }} { display: none !important; } }

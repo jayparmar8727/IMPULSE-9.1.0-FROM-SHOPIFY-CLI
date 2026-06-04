@@ -97,7 +97,9 @@
   }
   .bbp-{{ section.id }} .bbp-top-hdr .t-eyebrow { color: {{ left_eye_color }}; margin: 0 0 14px; display: inline-flex; justify-content: flex-start; }
   .bbp-{{ section.id }} .bbp-top-hdr .t-eyebrow--dash::before { background: {{ left_eye_color }}; width: 28px; }
-  .bbp-{{ section.id }} .bbp-top-hdr .t-display    { color: {{ left_heading_color }}; margin: 0; font-size: {{ heading_size_desktop }}px; }
+  /* Fluid heading: smooth scale between mobile + desktop sizes (no hard snap at
+     749) — {{ heading_size_mobile }}px at 375px → {{ heading_size_desktop }}px at 1024px. */
+  .bbp-{{ section.id }} .bbp-top-hdr .t-display    { color: {{ left_heading_color }}; margin: 0; font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px); }
   .bbp-{{ section.id }} .bbp-top-hdr .t-display em { color: {{ left_heading_italic_color }}; }
 
   /* Left (light) — sub + proof + note */
@@ -154,7 +156,8 @@
   /* Promise — dark side */
   .bbp-{{ section.id }} .bbp-promise-h {
     color: {{ heading_color }};
-    font-size: {{ promise_h_size_desktop }}px;
+    /* Fluid: smooth scale, no hard snap at 749. */
+    font-size: clamp({{ promise_h_size_mobile }}px, calc({{ promise_h_size_mobile }}px + ({{ promise_h_size_desktop | minus: promise_h_size_mobile }}) * (100vw - 375px) / 649), {{ promise_h_size_desktop }}px);
     line-height: 1.25;
     margin: 0 0 16px;
     text-transform: none;
@@ -237,8 +240,6 @@
       padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
     }
     .bbp-{{ section.id }} .bbp-left { padding-top: 0; }
-    .bbp-{{ section.id }} .bbp-top-hdr .t-display { font-size: {{ heading_size_mobile }}px; }
-    .bbp-{{ section.id }} .bbp-promise-h { font-size: {{ promise_h_size_mobile }}px; }
     .bbp-{{ section.id }} .bbp-sub { font-size: {{ sub_size_mobile }}px; }
     .bbp-{{ section.id }} .bbp-proof { grid-template-columns: 1fr; }
     .bbp-{{ section.id }} .bbp-step {
@@ -328,7 +329,7 @@
 
         {%- if btn2_text != blank -%}
           <div class="bbp-cta">
-            <a class="bbp-btn t-link" href="{{ btn2_link | default: '#' }}">{{ btn2_text | escape }}</a>
+            <a class="bbp-btn t-link"{% if btn2_link != blank %} href="{{ btn2_link }}"{% endif %}>{{ btn2_text | escape }}</a>
           </div>
         {%- endif -%}
 

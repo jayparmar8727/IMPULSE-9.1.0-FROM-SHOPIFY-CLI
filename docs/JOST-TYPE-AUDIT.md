@@ -1,15 +1,20 @@
 # Jost Type Audit — Stock vs Custom (size consistency)
 
-**Date:** 2026-06-04 · Goal: site-wide **Jost** size consistency between **stock** Impulse pages
-(product, collection, normal pages) and the **custom `kw` sections** (home, about, footer).
+**Date:** 2026-06-04 · **Re-audit v2** (after the consistency pass) · Goal: site-wide **Jost** size
+consistency between **stock** Impulse pages (product, collection, normal pages) and the **custom `kw`
+sections** (home, about, footer).
 
-> **The font is already consistent.** Stock sets **both** header and body to **Jost 400**
+> **The font was already consistent.** Stock sets **both** header and body to **Jost 400**
 > (`type_header_font_family = type_base_font_family = jost_n4`), and custom `--d` is Jost too.
-> Cormorant is **custom-only** (serif accent) and not part of this — so this audit is **size only**.
+> Cormorant is **custom-only** (serif accent) and out of scope — so this audit is **size only**.
+
+> **v2 status: the size mismatch is now FIXED.** The body/label tokens are pinned to the stock Jost
+> scale and all card names are unified to 14px. Verified against the working tree at commit `75d6ffa`.
+> Details per section below; what changed since v1 is summarised in §E.
 
 ---
 
-## A. STOCK Jost scale (computed from theme settings)
+## A. STOCK Jost scale (computed from theme settings) — unchanged
 
 Driven by 2 settings → `type_header_base_size: 50`, `type_base_size: 16` (line-height: headers 1.1,
 body 1.4). Formulas live in `snippets/css-variables.liquid`:
@@ -33,83 +38,82 @@ Stock sizes are **fixed px** (with a couple of simple mobile reductions).
 
 ---
 
-## B. CUSTOM Jost scale (`assets/kw-tokens.css` → `kw-typography.css`)
+## B. CUSTOM Jost scale (`assets/kw-tokens.css` → `kw-typography.css`) — NOW PINNED
 
-The `.t-*` classes default to a **fluid** Major-Third scale (`clamp()` that GROWS with viewport):
+The **body-range** tokens are now aliased to the stock `--type*` vars (one customizer lever, like stock).
+Only the **heading-range** tokens (lg→hero) stay fluid — and those are almost always overridden by a
+section's own px size setting before they render.
 
-| Token | `.t-*` users | Renders (mobile → desktop) |
-|-------|--------------|----------------------------|
-| `--fs-xs` | `.t-eyebrow`, `.t-label`, `.t-link` | 11 → **12px** |
-| `--fs-sm` | `.t-body-sm` | 13 → **14px** |
-| `--fs-base` | **`.t-body`** | **16 → 18px** |
-| `--fs-md` | `.t-body-lg` | 18 → **20px** |
-| `--fs-lg` | `.t-heading-sm` | 22 → **25px** |
-| `--fs-xl` | `.t-heading`, `.t-card-title` | 26 → **32px** |
-| `--fs-2xl` | `.t-display-sm`, `.t-quote` | 32 → **40px** |
-| `--fs-3xl` | `.t-display`, `.t-stat` | 40 → **56px** |
-| `--fs-hero` | `.t-display-lg` | 48 → **96px** |
+| Token | Definition | Renders | `.t-*` users |
+|-------|-----------|---------|--------------|
+| `--fs-xs` | `var(--typeBodyExtraSmallSize, 12px)` | **12px fixed** | `.t-eyebrow`, `.t-label`, `.t-link` |
+| `--fs-sm` | `var(--typeBodySmallSize, 14px)` | **14px fixed** | `.t-body-sm` |
+| `--fs-base` | `var(--typeBodySize, 16px)` | **16px fixed** | **`.t-body`** |
+| `--fs-md` | `var(--typeHeroSubtitleSize, 18px)` | **18px fixed** | `.t-body-lg` |
+| `--fs-lg` | `clamp(…)` | 22 → 25px fluid | `.t-heading-sm` |
+| `--fs-xl` | `clamp(…)` | 26 → 32px fluid | `.t-heading`, `.t-card-title` |
+| `--fs-2xl` | `clamp(…)` | 32 → 40px fluid | `.t-display-sm`, `.t-quote` |
+| `--fs-3xl` | `clamp(…)` | 40 → 56px fluid | `.t-display`, `.t-stat` |
+| `--fs-hero` | `clamp(…)` | 48 → 96px fluid | `.t-display-lg` |
 
-**BUT** most section *headings* and *body* are then overridden by **per-section px settings** in the
-theme editor (e.g. `heading_size_desktop` 43/48, `body_size_desktop` 16). After this session's pass,
-headings are fluid `clamp(mobileSetting → desktopSetting)`.
+**Card names** are hardcoded in `kw-typography.css` (no token): `.t-card-name` = **14px**,
+`.t-cc-card-name` = **14px**, `.t-card-cta` = 16/14px. Section headings/body still take **per-section px
+settings** from the theme editor (e.g. `heading_size_desktop` 43/48, `body_size_desktop` 16), rendering
+as `clamp(mobileSetting → desktopSetting)`.
 
 ---
 
-## C. Where stock and custom DIVERGE (the actual inconsistency)
+## C. Stock vs custom — alignment status (post-fix)
 
-| Role | Stock | Custom | Divergence |
-|------|-------|--------|------------|
-| **Body / description text** | **16px fixed** | `.t-body` = `--fs-base` = **16→18px fluid** *(unless a section sets `body_size_desktop:16`)* | ⚠️ On desktop, custom body can render **18px** vs stock **16px** — this is the "home description bigger than normal page" effect |
-| Section heading (home) | H2 = 43px | default 43px | ✅ matches at desktop (mobile 30 vs 32 — close) |
+| Role | Stock | Custom | Status |
+|------|-------|--------|--------|
+| **Body / description text** | 16px fixed | `.t-body` = `--fs-base` = **16px fixed** | ✅ **RESOLVED** (`0ebebab`) — was 16→18 fluid; the "home description bigger than normal page" effect is gone |
+| Body-large | 18px (hero subtitle) | `.t-body-lg` = `--fs-md` = **18px** | ✅ matches |
+| Body-small | 14px | `.t-body-sm` = `--fs-sm` = **14px** | ✅ matches |
+| Labels / eyebrows | 13px accent | `.t-*` = `--fs-xs` = **12px** | ◐ 1px smaller — pinned to stock x-small (12), intentional kicker; bump token to `--typeAccentSmallSize` (13) if exact match wanted |
+| **Product card name** | 14px | `.t-card-name` = **14px** | ✅ **RESOLVED** (`4d587a6`) |
+| **Collection-grid card name** | (product card 14px) | `.t-cc-card-name` = **14px** | ✅ **RESOLVED** (`cc16372`, `75d6ffa`) — was 18/16 |
+| Section heading (home) | H2 = 43px | default 43px | ✅ matches desktop (mobile 30 vs 32 — close) |
 | Section heading (about) | page title 48px | default 48px | ✅ matches |
-| Body-small | 14px | `.t-body-sm` = 13→14px | ✅ ~matches at desktop |
-| Labels / eyebrows | 13px accent | `.t-*` = 11→12px | slightly smaller (intentional kicker style) |
-| Collection-grid card name | (product card 14px) | `.t-cc-card-name` 18/16px | ⚠️ custom-only mismatch (category vs product card) |
+| Heading tokens `lg`→`hero` (bare) | — | still fluid clamp | ⚠️ **residual** — only renders if a section uses a bare `.t-heading`/`.t-display` with **no** px size setting; those few cases still grow on wide screens |
 
-**Root cause of the inconsistency you're seeing:** custom uses a **fluid (`clamp`) scale that grows on
-wider screens**, while stock is **fixed**. The most visible case is **body/description text** —
-`.t-body` (`--fs-base`) hits **18px** on desktop while every stock page stays at **16px**.
+**Net:** the visible inconsistency (custom body/description reading larger than stock pages) is **fixed** —
+custom body now renders **16px fixed**, identical to stock, and is driven by the same single "Body size"
+setting. The only remaining fluid surface is the bare heading tokens, which sections normally override.
 
 ---
 
-## D. How to SEE / verify it yourself
+## D. How to VERIFY (post-fix)
 
 1. Open the **preview**: https://kansawalasmf.myshopify.com?preview_theme_id=152479498414
-2. Open a **stock page** (e.g. a product page, or a normal Page) and a **custom page** (home).
-3. **DevTools → Inspect** a paragraph of body text on each → read **computed `font-size`**:
-   - Stock body → **16px**
-   - Custom `.t-body` paragraph on a wide screen → **~18px**
-4. To watch the fluid growth: inspect a custom `.t-body` element and **drag the window wider** — its
-   `font-size` climbs 16 → 18px; the stock one never moves.
+2. Open a **stock page** (product / normal Page) and a **custom page** (home).
+3. **DevTools → Inspect** a body paragraph on each → computed `font-size` should now read **16px on both**.
+4. **Drag the window wider** on a custom `.t-body` element — its `font-size` should **stay at 16px** (no
+   fluid growth). If it climbs, the `--fs-base` pin regressed.
+5. Inspect a product card name (stock) and a collections-grid card name (custom) → both **14px**.
 
 ---
 
-## E. Consistency options — ✅ OPTION 1 APPLIED (2026-06-04)
+## E. What changed since v1 (the consistency pass)
 
-**Done:** Option 1 was applied — `kw-tokens.css` `--fs-base/-sm/-xs/-md` now alias the stock
-`--type*` vars (`0ebebab`), so custom body text = 16px fixed like stock and follows the single
-"Body size" customizer setting. All product/category card names unified to 14px (`4d587a6`,
-`cc16372`, `.t-card-name` fix). Headings stay per-section (already match stock). The options below
-are kept for reference / future Option-2 work.
+All edits are **custom-only** (no stock files touched — Golden Rule #3):
 
-All are **custom-only** edits (no stock files touched — Golden Rule #3):
+- **`0ebebab`** — pinned `--fs-base/-sm/-xs/-md` in `kw-tokens.css` to the stock `--type*` vars, so
+  custom body/label text = stock sizes (fixed) and follows the single "Body size" customizer setting.
+  *This is "Option 1" from v1 of this audit.*
+- **`4d587a6`** — bestsellers product-card title unified to 14px (was 15px on mobile).
+- **`cc16372`** — collections-grid card name 18px → 14px to match product cards.
+- **`75d6ffa`** — last card-name unified to 14px (`.t-card-name` / `.t-cc-card-name` both 14px).
 
-1. **Match stock exactly (recommended for consistency):** make the custom body token **fixed 16px**
-   like stock — e.g. set `--fs-base: 16px` (or alias it to stock's `var(--typeBaseSize)`), and
-   similarly pin `--fs-sm`/`--fs-xs` to stock's 14/13px. Removes the fluid growth so home description
-   text = normal-page text everywhere. *One change in `kw-tokens.css`, applies site-wide.*
-2. **Keep fluid but cap at 16px:** change `--fs-base` clamp max from `1.125rem` to `1rem` (16px) so it
-   never exceeds stock. Same visual result for body, keeps the token structure.
-3. **Per-role alignment:** leave the scale, but audit each section's `body_size_desktop` default to 16
-   and switch any bare `.t-body` usages to a fixed 16px. More surgical, more files.
-4. **Leave as-is:** accept the fluid scale as a deliberate "custom sections read slightly larger."
-
-> My recommendation: **Option 1 or 2** for body text (`--fs-base`) — it's the one that produces the
-> "description size on home = normal page" consistency you described, in a single token change.
+**Remaining options (optional, not yet done):**
+1. **Exact label match:** repoint `--fs-xs` from `--typeBodyExtraSmallSize` (12px) to
+   `--typeAccentSmallSize` (13px) if eyebrows/labels should match stock's 13px exactly.
+2. **Pin bare heading tokens:** if any bare `.t-heading`/`.t-display` (no per-section px) should also
+   stop growing on wide screens, alias those tokens to fixed px too — otherwise leave fluid by design.
 
 ---
 
-## F. Also flagged (separate, custom-only)
+## F. Residual / tracked elsewhere
 
-- **Collections-grid card name** `.t-cc-card-name` = 18/16px vs product cards 14px. Bring to 14px to
-  match, or keep as the category-card treatment — your call (tracked in `CUSTOM-CODE-AUDIT.md`).
+- Bare heading tokens (`--fs-lg`→`--fs-hero`) remain fluid by design; see §C residual row and §E option 2.
+- Broader custom-section scope tracked in `CUSTOM-CODE-AUDIT.md`.

@@ -89,9 +89,11 @@
   }
   .mlg-{{ section.id }} .t-eyebrow { color: {{ eye_color }}; margin-bottom: 14px; }
   .mlg-{{ section.id }} .t-eyebrow--dash::before { background: {{ eye_color }}; width: 28px; }
+  /* Fluid heading: smooth scale between mobile + desktop sizes (no hard snap at
+     749) — {{ heading_size_mobile }}px at 375px → {{ heading_size_desktop }}px at 1024px. */
   .mlg-{{ section.id }} .t-display {
     color: {{ heading_color }};
-    font-size: {{ heading_size_desktop }}px;
+    font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px);
     margin-bottom: 24px;
   }
   .mlg-{{ section.id }} .t-display em {
@@ -303,7 +305,6 @@
     .mlg-{{ section.id }} .mlg-hdr { margin-bottom: 40px; }
     .mlg-{{ section.id }} .mlg-step { margin-bottom: 56px; }
     .mlg-{{ section.id }} .mlg-footer { margin-top: 48px; }
-    .mlg-{{ section.id }} .t-display { font-size: {{ heading_size_mobile }}px; }
     .mlg-{{ section.id }} .mlg-sub { font-size: {{ sub_size_mobile }}px; }
     .mlg-{{ section.id }} .mlg-dot-num { font-size: {{ dot_num_size_mobile }}px; }
     .mlg-{{ section.id }} .mlg-num { font-size: {{ step_num_size_mobile }}px; }
@@ -352,9 +353,9 @@
             assign b = block.settings
             assign b_focal = b.focal | default: 'center'
             assign b_alt = b.alt | default: ''
-            assign b_link = b.cta_link | default: '#'
+            assign b_link = b.cta_link
           -%}
-          <a href="{{ b_link }}" class="mlg-step fu" {{ block.shopify_attributes }}>
+          <a {% if b_link != blank %}href="{{ b_link }}" {% endif %}class="mlg-step fu" {{ block.shopify_attributes }}>
             <div class="mlg-visual">
               <div class="mlg-img-frame" style="--focal: {{ b_focal | escape }};">
                 {%- if b.image != blank -%}
@@ -413,7 +414,7 @@
           <p class="mlg-footer-text t-body">{{ footer_text | escape }}</p>
         {%- endif -%}
         {%- if cta_text != blank -%}
-          <a href="{{ cta_link | default: '#' }}" class="mlg-cta t-link">{{ cta_text | escape }} &rarr;</a>
+          <a {% if cta_link != blank %}href="{{ cta_link }}" {% endif %}class="mlg-cta t-link">{{ cta_text | escape }} &rarr;</a>
         {%- endif -%}
       </div>
     {%- endif -%}

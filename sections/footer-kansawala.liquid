@@ -296,7 +296,7 @@
   }
 
   {%- if section.settings.hide_desktop -%}
-  @media(min-width: 768px) { .ftr-{{ section.id }}, .ftr-strip-{{ section.id }} { display: none !important; } }
+  @media(min-width: 750px) { .ftr-{{ section.id }}, .ftr-strip-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media(max-width: 749px) { .ftr-{{ section.id }}, .ftr-strip-{{ section.id }} { display: none !important; } }
@@ -338,11 +338,15 @@
     {%- endfor -%}
   </ul>
   <div class="ftr-strip-track" aria-hidden="true">
-    {%- for block in strip_blocks -%}
-      <span class="ftt t-label" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
-    {%- endfor -%}
-    {%- for block in strip_blocks -%}
-      <span class="ftt ftt--dup t-label">{{ block.settings.text | escape }}</span>
+    {%- comment -%} Render the run 4× (= 2×rep) so one half (2 runs) always exceeds a wide
+      viewport — preventing the blank gap a 2×-only marquee shows on large monitors. Each
+      .ftt carries its own right divider, so the runs concatenate seamlessly and translateX(-50%)
+      loops without a seam. Only the FIRST run is plain .ftt (the one shown under reduced motion);
+      every later run is .ftt--dup and hidden when the scroll stops. {%- endcomment -%}
+    {%- for r in (1..4) -%}
+      {%- for block in strip_blocks -%}
+        <span class="ftt t-label{% unless forloop.parentloop.first %} ftt--dup{% endunless %}"{% if forloop.parentloop.first %} {{ block.shopify_attributes }}{% endif %}>{{ block.settings.text | escape }}</span>
+      {%- endfor -%}
     {%- endfor -%}
   </div>
 </div>
@@ -399,7 +403,7 @@
           <a href="mailto:{{ section.settings.email | escape }}">{{ section.settings.email | escape }}</a>
         {%- endif -%}
         {%- if section.settings.contact_link_text != blank -%}
-          <a href="{{ section.settings.contact_link | default: '#' }}">{{ section.settings.contact_link_text | escape }}</a>
+          <a{% if section.settings.contact_link != blank %} href="{{ section.settings.contact_link }}"{% endif %}>{{ section.settings.contact_link_text | escape }}</a>
         {%- endif -%}
         {%- if section.settings.address != blank -%}
           <p>{{ section.settings.address | escape }}</p>

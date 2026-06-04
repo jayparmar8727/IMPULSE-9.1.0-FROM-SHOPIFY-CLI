@@ -220,15 +220,13 @@
 /* Collections-grid card name */
 .t-cc-card-name{
   font-family: var(--d);
-  font-size: 18px;
+  /* 14px to match the stock + bestsellers product-card title (consistency). */
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: .12em;
   line-height: 1.5;
   text-transform: uppercase;
   margin: 0;
-}
-@media (max-width: 749px){
-  .t-cc-card-name{ font-size: 16px; }
 }
 
 /* ─── 5. LABEL  (metal / category pills under images) ──────────────── */

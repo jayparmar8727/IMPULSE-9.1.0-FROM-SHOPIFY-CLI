@@ -107,11 +107,13 @@
     background: {{ eye_color }};
     width: 28px;
   }
-  .gp2-{{ section.id }} .pres-h { color: {{ heading_color }}; margin: 0 0 28px; font-size: {{ heading_size_mobile }}px; }
+  /* Fluid heading: smooth scale between mobile + desktop sizes (no hard snap at
+     1024, and no longer stuck at the 30px mobile size across 769–1023 tablets) —
+     {{ heading_size_mobile }}px at 375px → {{ heading_size_desktop }}px at 1024px. */
+  .gp2-{{ section.id }} .pres-h { color: {{ heading_color }}; margin: 0 0 28px; font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px); }
   .gp2-{{ section.id }} .pres-h em { color: {{ heading_italic_color }}; }
   @media (min-width: 1024px) {
     .gp2-{{ section.id }} .presence-grid { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
-    .gp2-{{ section.id }} .pres-h { font-size: {{ heading_size_desktop }}px; }
   }
   .gp2-{{ section.id }} .pres-p {
     color: {{ body_color }};
@@ -345,18 +347,17 @@
     <div class="pres-r fu">
       <div class="tri-grid">
         {%- if panel_count > 0 -%}
-          {%- assign panel_i = 0 -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'panel' -%}
               {%- liquid
                 assign img_focal = block.settings.image.presentation.focal_point | default: '50% 50%'
+                comment
+                  Perf: this section sits well below the hero, so its images must NOT
+                  compete with the hero LCP image. All triptych images lazy-load with
+                  default priority (only the hero-slider first slide is eager + high).
+                endcomment
                 assign p_loading = 'lazy'
                 assign p_fp = 'auto'
-                if panel_i == 0
-                  assign p_loading = 'eager'
-                  assign p_fp = 'high'
-                endif
-                assign panel_i = panel_i | plus: 1
               -%}
               <div class="tri-panel" style="--tri-focal: {{ img_focal | escape }};" {{ block.shopify_attributes }}>
                 {%- if block.settings.image != blank -%}

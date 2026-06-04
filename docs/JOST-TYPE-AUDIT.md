@@ -84,7 +84,13 @@ wider screens**, while stock is **fixed**. The most visible case is **body/descr
 
 ---
 
-## E. Consistency options (DECISION NEEDED — nothing changed yet)
+## E. Consistency options — ✅ OPTION 1 APPLIED (2026-06-04)
+
+**Done:** Option 1 was applied — `kw-tokens.css` `--fs-base/-sm/-xs/-md` now alias the stock
+`--type*` vars (`0ebebab`), so custom body text = 16px fixed like stock and follows the single
+"Body size" customizer setting. All product/category card names unified to 14px (`4d587a6`,
+`cc16372`, `.t-card-name` fix). Headings stay per-section (already match stock). The options below
+are kept for reference / future Option-2 work.
 
 All are **custom-only** edits (no stock files touched — Golden Rule #3):
 

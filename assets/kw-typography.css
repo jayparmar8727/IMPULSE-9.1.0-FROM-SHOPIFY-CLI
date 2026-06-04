@@ -180,15 +180,13 @@
 /* kw-card name typography */
 .t-card-name{
   font-family: var(--d);
-  font-size: 16px;
+  /* 14px to match the stock + bestsellers + collections-grid card title (consistency). */
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: .12em;
   line-height: 1.5;
   text-transform: uppercase;
   margin: 0;
-}
-@media (max-width: 749px){
-  .t-card-name{ font-size: 14px; }
 }
 
 /* kw-card ATC button typography */

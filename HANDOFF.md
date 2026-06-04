@@ -65,6 +65,23 @@ reduced-motion/IO/NaN handling). **This completes the entire custom `kw` codebas
 foundation.** Optional future enhancement noted: upgrade the Organization JSON-LD to `LocalBusiness`
 (Sihor address/phone) for richer SEO.
 
+## Typography consistency follow-up (stock-vs-custom Jost)
+
+The font was already consistent (stock header **and** body = Jost 400; custom `--d` = Jost). The
+**sizes** drifted because custom used a fluid `clamp()` scale while stock is fixed. Fixed it
+(see `docs/JOST-TYPE-AUDIT.md` for the full comparison):
+
+- **Body/label tokens pinned to the stock scale** (`0ebebab`): `kw-tokens.css` `--fs-base/-sm/-xs/-md`
+  now alias the stock `--type*` vars (`var(--typeBodySize)`, etc.). Custom body text = **16px fixed**
+  like stock, and it now follows the **single "Body size" customizer setting** — one lever, like stock.
+- **Card names unified to 14px** to match the stock + bestsellers product-card title:
+  `.bsl-card__name` mobile 15→14 (`4d587a6`), `.t-cc-card-name` 18→14 (`cc16372`), `.t-card-name`
+  16→14 (this commit). Stock product-card title ≈ 14px is the reference.
+- **Headings** left per-section (they already match stock H2/page-title at 43/48px and benefit from
+  per-section control). Going to a single global heading lever would be the bigger "Option 2" refactor.
+- The `.crv-slot` 16px (Judge.me widget titles) and `.t-card-cta` 16px (Add-to-Cart button) are
+  different roles, left as-is.
+
 ## Flagged but deliberately NOT changed
 
 - **Brass (`#bc843f` / `#d8ae82`) small text on light bg ~3:1** — fails AA but is the

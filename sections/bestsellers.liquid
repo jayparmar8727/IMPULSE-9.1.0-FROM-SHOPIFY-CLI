@@ -210,15 +210,16 @@
     text-align: left;
   }
   .bsl-{{ section.id }} .bsl-card__name {
-    /* font-size matched to the stock product card (.grid-product__title = base − 2px ≈ 14px) */
-    font-size: 14px;
+    /* Derived from the stock "Body size" setting (stock product-card title = base − 2px),
+       so it stays 14px today AND auto-tracks the customizer like stock product cards. */
+    font-size: calc(var(--typeBaseSize, 16px) - 2px);
     color: var(--K); margin-bottom: 8px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-decoration: none;
-    min-height: calc(14px * 1.5 * 2);
+    min-height: calc((var(--typeBaseSize, 16px) - 2px) * 3);
     transition: color .2s ease;
   }
   .bsl-{{ section.id }} .bsl-card__name:focus-visible {

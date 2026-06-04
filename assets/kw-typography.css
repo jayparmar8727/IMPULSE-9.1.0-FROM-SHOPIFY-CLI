@@ -180,8 +180,9 @@
 /* kw-card name typography */
 .t-card-name{
   font-family: var(--d);
-  /* 14px to match the stock + bestsellers + collections-grid card title (consistency). */
-  font-size: 14px;
+  /* Derived from the stock "Body size" setting (stock product-card title = base − 2px),
+     so it stays 14px today AND auto-tracks the customizer like stock cards. */
+  font-size: calc(var(--typeBaseSize, 16px) - 2px);
   font-weight: 400;
   letter-spacing: .12em;
   line-height: 1.5;
@@ -218,8 +219,9 @@
 /* Collections-grid card name */
 .t-cc-card-name{
   font-family: var(--d);
-  /* 14px to match the stock + bestsellers product-card title (consistency). */
-  font-size: 14px;
+  /* Derived from the stock "Body size" setting (= base − 2px), matching stock +
+     other card titles and auto-tracking the customizer. */
+  font-size: calc(var(--typeBaseSize, 16px) - 2px);
   font-weight: 400;
   letter-spacing: .12em;
   line-height: 1.5;

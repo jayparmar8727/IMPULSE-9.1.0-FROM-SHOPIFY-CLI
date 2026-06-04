@@ -13,6 +13,14 @@
   assign separator_color = section.settings.separator_color
   assign show_border     = section.settings.show_border
   assign border_color    = section.settings.border_color
+  comment
+    rep = how many times the item run is rendered PER half. The track holds
+    2×rep identical runs, so translateX(-50%) loops seamlessly while one half
+    (rep runs) stays wider than the widest common viewport — preventing the
+    blank gap a 2×-only marquee shows on large monitors.
+  endcomment
+  assign rep             = 2
+  assign loop_count      = rep | times: 2
   assign uid             = section.id | replace: '-', ''
   if direction == 'right'
     assign anim_dir = 'reverse'
@@ -58,17 +66,19 @@
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
   }
+  /* Static reduced-motion fallback is hidden during normal animated playback. */
+  .kw-strip-{{ section.id }} .strip-static { display: none; }
   @media (prefers-reduced-motion: reduce) {
-    /* Stop the scroll AND let the content wrap so nothing stays clipped by
-       overflow:hidden — reduced-motion users get a readable centered list. */
-    .kw-strip-{{ section.id }} .strip-track {
-      animation: none !important;
-      white-space: normal;
+    /* Swap the scrolling track for a static, wrapped, centered list so nothing
+       stays clipped by overflow:hidden. */
+    .kw-strip-{{ section.id }} .strip-track { display: none; }
+    .kw-strip-{{ section.id }} .strip-static {
+      display: flex;
       flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
+      white-space: normal;
     }
-    .kw-strip-{{ section.id }} .strip-dup,
-    .kw-strip-{{ section.id }} .strip-trail { display: none; }
   }
   @media (max-width: 749px) {
     .kw-strip-{{ section.id }} .strip-item,
@@ -78,29 +88,41 @@
   }
 {%- endstyle -%}
 
+{%- comment -%} One item run: every item carries a trailing separator so runs concatenate
+  seamlessly when repeated. {%- endcomment -%}
+{%- capture strip_run -%}
+  {%- for block in section.blocks -%}
+    <span class="strip-item t-label" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span><span class="strip-sep">{{ separator | escape }}</span>
+  {%- endfor -%}
+{%- endcapture -%}
+
 <div class="kw-strip-{{ section.id }}" {{ section.shopify_attributes }}>
-  {%- comment -%} Static, screen-reader-only copy so the trust claims aren't lost to AT. {%- endcomment -%}
   {%- if section.blocks.size > 0 -%}
+    {%- comment -%} Static, screen-reader-only copy so the trust claims aren't lost to AT. {%- endcomment -%}
     <ul class="visually-hidden">
       {%- for block in section.blocks -%}
         <li>{{ block.settings.text | escape }}</li>
       {%- endfor -%}
     </ul>
+
+    {%- comment -%} Animated marquee — hidden from AT (the list above covers it). Rendering
+      loop_count (= 2×rep) identical runs makes the track two identical halves, so
+      translateX(-50%) loops without a seam while one half stays wider than the widest
+      common viewport — preventing the blank gap a 2×-only marquee shows on wide monitors. {%- endcomment -%}
+    <div class="strip-track" aria-hidden="true">
+      {%- for i in (1..loop_count) -%}{{ strip_run }}{%- endfor -%}
+    </div>
+
+    {%- comment -%} Reduced-motion fallback: one clean run, no trailing separator. {%- endcomment -%}
+    <div class="strip-static" aria-hidden="true">
+      {%- for block in section.blocks -%}
+        <span class="strip-item t-label">{{ block.settings.text | escape }}</span>
+        {%- unless forloop.last -%}<span class="strip-sep">{{ separator | escape }}</span>{%- endunless -%}
+      {%- endfor -%}
+    </div>
+  {%- elsif request.design_mode -%}
+    <p class="t-body kw-editor-hint" style="--kw-hint-color: {{ text_color }};">Add a &ldquo;Strip Item&rdquo; block to populate this marquee.</p>
   {%- endif -%}
-  {%- comment -%} Animated visual marquee — hidden from AT (the list above covers it). {%- endcomment -%}
-  <div class="strip-track" aria-hidden="true">
-    {%- for block in section.blocks -%}
-      <span class="strip-item t-label" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
-      {%- unless forloop.last -%}<span class="strip-sep">{{ separator | escape }}</span>{%- endunless -%}
-    {%- endfor -%}
-    {%- if section.blocks.size > 0 -%}<span class="strip-sep strip-trail">{{ separator | escape }}</span>{%- endif -%}
-    {%- comment -%}Duplicate for seamless loop{%- endcomment -%}
-    {%- for block in section.blocks -%}
-      <span class="strip-item strip-dup t-label">{{ block.settings.text | escape }}</span>
-      {%- unless forloop.last -%}<span class="strip-sep strip-dup">{{ separator | escape }}</span>{%- endunless -%}
-    {%- endfor -%}
-    {%- if section.blocks.size > 0 -%}<span class="strip-sep strip-dup">{{ separator | escape }}</span>{%- endif -%}
-  </div>
 </div>
 
 {%- endunless -%}
@@ -239,7 +261,7 @@
       "type": "color",
       "id": "border_color",
       "label": "Border color",
-      "default": "#6b3c23"
+      "default": "#bc843f"
     }
   ],
   "blocks": [

@@ -51,12 +51,18 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 36px;
+    margin-bottom: 32px;
     flex-wrap: wrap;
     gap: 16px;
   }
   .colls-{{ section.id }} .t-eyebrow { color: {{ eye_color }}; margin-bottom: 14px; }
-  .colls-{{ section.id }} .t-display { color: {{ heading_color }}; font-size: {{ heading_size_desktop }}px; }
+  /* Fluid heading: scales smoothly between the merchant's mobile + desktop
+     sizes (no hard snap at 749). Passes through {{ heading_size_mobile }}px at
+     375px viewport and {{ heading_size_desktop }}px at 1024px, clamped outside. */
+  .colls-{{ section.id }} .t-display {
+    color: {{ heading_color }};
+    font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px);
+  }
   .colls-{{ section.id }} .t-display em { color: {{ heading_italic_color }}; }
   .colls-{{ section.id }} .coll-grid {
     display: grid;
@@ -100,8 +106,8 @@
     color: {{ name_color }};
     margin: 0;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -111,16 +117,14 @@
     }
   }
   @media (max-width: 749px) {
-    .colls-{{ section.id }} .t-display { font-size: {{ heading_size_mobile }}px; }
     /* Tighten the caption rhythm on narrow 2-col cards (design rec): image→label
        10px, label→name 4px (≈2.5:1) so label+name read as one caption block. */
     .colls-{{ section.id }} .cc-card { padding-top: 10px; }
     .colls-{{ section.id }} .cc-card-eye { margin-bottom: 4px; }
   }
   @media(min-width: 1024px) {
-    .colls-{{ section.id }} .colls-inner {
-      padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
-    }
+    /* Desktop gutter is set by the ≥750 block below; here we only switch the
+       grid columns + header alignment. */
     .colls-{{ section.id }} .coll-hdr > div { text-align: {{ text_align }}; }
     .colls-{{ section.id }} .coll-hdr .t-eyebrow { justify-content: {% if text_align == 'center' %}center{% elsif text_align == 'right' %}flex-end{% else %}flex-start{% endif %}; }
     .colls-{{ section.id }} .coll-grid {
@@ -128,7 +132,7 @@
     }
   }
   {%- if section.settings.hide_desktop -%}
-  @media (min-width: 768px) { .colls-{{ section.id }} { display: none !important; } }
+  @media (min-width: 750px) { .colls-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media (max-width: 749px) { .colls-{{ section.id }} { display: none !important; } }
@@ -170,7 +174,7 @@
         assign img_loading = 'lazy'
         assign img_fp = 'auto'
       -%}
-      <a href="{{ block_link | default: '#' }}" class="cc" {{ block.shopify_attributes }}>
+      <a {% if block_link != blank %}href="{{ block_link }}" {% endif %}class="cc" {{ block.shopify_attributes }}>
         <div class="cc-img-wrap">
           {%- if block_image != blank -%}
             <img

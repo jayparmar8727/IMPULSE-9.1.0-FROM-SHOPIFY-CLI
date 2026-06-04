@@ -76,7 +76,9 @@
   /* HEADER */
   .crv-{{ section.id }} .crv-hdr-left .t-eyebrow { color: {{ eye_color }}; margin-bottom: 14px; }
   .crv-{{ section.id }} .crv-hdr-left .t-eyebrow--dash::before { background: {{ eye_color }}; width: 28px; }
-  .crv-{{ section.id }} .t-display { color: {{ heading_color }}; font-size: {{ heading_size_desktop }}px; max-width: 620px; }
+  /* Fluid heading: smooth scale between mobile + desktop sizes (no hard snap at
+     749) — {{ heading_size_mobile }}px at 375px → {{ heading_size_desktop }}px at 1024px. */
+  .crv-{{ section.id }} .t-display { color: {{ heading_color }}; font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px); max-width: 620px; }
   .crv-{{ section.id }} .t-display em { color: {{ heading_italic_color }}; }
   .crv-{{ section.id }} .crv-sub {
     color: {{ sub_color }};
@@ -265,7 +267,6 @@
     .crv-{{ section.id }} .crv-inner {
       padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
     }
-    .crv-{{ section.id }} .t-display { font-size: {{ heading_size_mobile }}px; }
     .crv-{{ section.id }} .crv-sub { font-size: {{ sub_size_mobile }}px; }
     .crv-{{ section.id }} .crv-badge-score { font-size: {{ rating_score_size_mobile }}px; }
     .crv-{{ section.id }} .crv-cta .btn-o { font-size: {{ cta_size_mobile }}px; }
@@ -301,9 +302,9 @@
         {%- if show_rating_badge -%}
           <div class="crv-badge-row">
             <div class="crv-badge">
-              <div class="crv-badge-rating">
+              <div class="crv-badge-rating"{% if rating_score != blank %} role="img" aria-label="Rated {{ rating_score | escape }} out of 5 stars"{% endif %}>
                 {%- if rating_score != blank -%}
-                  <span class="crv-badge-score t-stat-serif-upright">{{ rating_score | escape }}</span>
+                  <span class="crv-badge-score t-stat-serif-upright" aria-hidden="true">{{ rating_score | escape }}</span>
                 {%- endif -%}
                 <div class="crv-badge-stars t-stars" aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
               </div>
@@ -336,7 +337,7 @@
     {%- comment -%} CTA {%- endcomment -%}
     {%- if cta_text != blank -%}
       <div class="crv-cta">
-        <a class="btn-o t-link" href="{{ cta_link | default: '#' }}">{{ cta_text | escape }}</a>
+        <a class="btn-o t-link"{% if cta_link != blank %} href="{{ cta_link }}"{% endif %}>{{ cta_text | escape }}</a>
       </div>
     {%- endif -%}
 

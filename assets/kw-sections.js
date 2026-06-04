@@ -338,6 +338,7 @@
       function setActive(i) {
         for (var k = 0; k < dots.length; k++) {
           dots[k].classList.toggle('is-active', k === i);
+          dots[k].setAttribute('aria-current', k === i ? 'true' : 'false');
         }
       }
       function scrollToIndex(idx) {

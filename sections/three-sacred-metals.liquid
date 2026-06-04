@@ -70,9 +70,11 @@
     color:{{ eye_color }};
     margin-bottom:14px;
   }
+  /* Fluid heading: smooth scale between mobile + desktop sizes (no hard snap at
+     750) — {{ heading_size_mobile }}px at 375px → {{ heading_size_desktop }}px at 1024px. */
   .tsm-{{ section.id }} .tsm-ttl{
     color:{{ heading_color }};
-    font-size:{{ heading_size_mobile }}px;
+    font-size:clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px);
     margin:0;
     text-wrap:balance;
   }
@@ -260,7 +262,7 @@
   @media(max-width:749px){.tsm-{{ section.id }}{display:none!important}}
   {%- endif -%}
   {%- if section.settings.hide_desktop -%}
-  @media(min-width:768px){.tsm-{{ section.id }}{display:none!important}}
+  @media(min-width:750px){.tsm-{{ section.id }}{display:none!important}}
   {%- endif -%}
   @media(min-width:990px){
     .tsm-{{ section.id }} .tsm-grid{
@@ -279,11 +281,6 @@
     .tsm-{{ section.id }} .tsm-desc{ font-size:{{ metal_desc_size_mobile }}px; }
     .tsm-{{ section.id }} .tsm-benefits li{ font-size:{{ benefit_size_mobile }}px; }
     .tsm-{{ section.id }} .tsm-cta{ font-size:{{ cta_size_mobile }}px; }
-  }
-  @media(min-width:750px){
-    .tsm-{{ section.id }} .tsm-ttl{
-      font-size:{{ heading_size_desktop }}px;
-    }
   }
   @media(min-width:1024px){
     .tsm-{{ section.id }}{
@@ -339,12 +336,13 @@
         if img_alt == blank
           assign img_alt = ''
         endif
+        comment
+          Perf: section #8, far below the hero — these images must NOT compete
+          with the hero LCP. All cards lazy-load at low priority (only the
+          hero-slider first slide is eager + fetchpriority high).
+        endcomment
         assign load = 'lazy'
         assign fpri = 'low'
-        if forloop.first
-          assign load = 'eager'
-          assign fpri = 'high'
-        endif
       -%}
       <article class="tsm-card fu" role="listitem" data-tsm-slide="{{ forloop.index0 }}" data-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
         {%- if img != blank -%}
@@ -395,11 +393,12 @@
   </div>
 
   {%- if mobile_layout == 'slider' and show_dots and section.blocks.size > 1 -%}
-    <div class="tsm-dots" role="tablist" aria-label="Metal cards">
+    <div class="tsm-dots" role="group" aria-label="Metal cards">
       {%- for block in section.blocks -%}
         <button type="button"
           class="tsm-dot{% if forloop.first %} is-active{% endif %}"
           data-tsm-dot="{{ forloop.index0 }}"
+          aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
           aria-label="Go to slide {{ forloop.index }} of {{ section.blocks.size }}"></button>
       {%- endfor -%}
     </div>

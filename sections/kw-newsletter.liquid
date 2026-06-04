@@ -67,7 +67,14 @@
   }
   .nws-{{ section.id }} .t-eyebrow { color: {{ eye_color }}; margin-bottom: 14px; justify-content: center; }
   .nws-{{ section.id }} .t-eyebrow--dash::before { background: {{ eye_color }}; }
-  .nws-{{ section.id }} .t-display { color: {{ heading_color }}; margin: 0 auto 12px; max-width: none; font-size: {{ heading_size_desktop }}px; }
+  /* Fluid heading: smooth scale between the merchant's mobile + desktop sizes
+     (no hard snap at 749) — {{ heading_size_mobile }}px at 375px → {{ heading_size_desktop }}px at 1024px. */
+  .nws-{{ section.id }} .t-display {
+    color: {{ heading_color }};
+    margin: 0 auto 12px;
+    max-width: none;
+    font-size: clamp({{ heading_size_mobile }}px, calc({{ heading_size_mobile }}px + ({{ heading_size_desktop | minus: heading_size_mobile }}) * (100vw - 375px) / 649), {{ heading_size_desktop }}px);
+  }
   .nws-{{ section.id }} .t-display em { color: {{ heading_italic_color }}; }
   .nws-{{ section.id }} .nws-sub {
     color: {{ sub_color }};
@@ -160,7 +167,6 @@
     .nws-{{ section.id }} .nws-form button { min-height: 44px; }
   }
   @media (max-width: 749px) {
-    .nws-{{ section.id }} .t-display { font-size: {{ heading_size_mobile }}px; }
     .nws-{{ section.id }} .nws-sub { font-size: {{ sub_size_mobile }}px; }
     .nws-{{ section.id }} .nws-form input[type="email"],
     .nws-{{ section.id }} .nws-form button { font-size: {{ form_size_mobile }}px; }
@@ -168,21 +174,13 @@
     .nws-{{ section.id }} .nws-error { font-size: {{ msg_size_mobile }}px; }
   }
   {%- if section.settings.hide_desktop -%}
-  @media(min-width: 768px) { .nws-{{ section.id }} { display: none !important; } }
+  @media(min-width: 750px) { .nws-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media(max-width: 749px) { .nws-{{ section.id }} { display: none !important; } }
   {%- endif -%}
-  @media(min-width: 1024px) {
-    .nws-{{ section.id }} {
-      margin: {{ margin_top }}px 0 {{ margin_bottom }}px;
-    }
-    .nws-{{ section.id }} .nws-inner {
-      padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
-    }
-  }
-  /* iPad consistency: desktop gutter+margins from tablet up (≥750), matching the
-     other boxed home sections. */
+  /* Desktop gutter+margins from tablet up (≥750), matching the other boxed home
+     sections. (No separate ≥1024 block — it would only duplicate these values.) */
   @media (min-width: 750px) {
     .nws-{{ section.id }} { margin: {{ margin_top }}px 0 {{ margin_bottom }}px; }
     .nws-{{ section.id }} .nws-inner { padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px; }
@@ -210,10 +208,13 @@
         name="contact[email]"
         placeholder="{{ placeholder | escape }}"
         autocomplete="email"
+        spellcheck="false"
+        autocapitalize="off"
+        autocorrect="off"
         required
         aria-label="{{ placeholder | escape }}"
         aria-invalid="{% if form.errors %}true{% else %}false{% endif %}"
-        {%- if form.errors %} aria-describedby="nws-error-{{ section.id }}"{% endif %}
+        {%- if form.errors %} aria-describedby="nws-error-{{ section.id }}" autofocus{% endif %}
       >
       <button class="t-link" type="submit">{{ btn_text | escape }}</button>
       {%- if show_consent -%}
@@ -518,7 +519,7 @@
       "type": "color",
       "id": "sub_color",
       "label": "Subtext color",
-      "default": "#6b3c2394"
+      "default": "#6b3c23"
     },
     {
       "type": "color",

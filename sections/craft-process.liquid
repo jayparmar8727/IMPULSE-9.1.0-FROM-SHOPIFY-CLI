@@ -49,7 +49,9 @@
   }
   .cpr-{{ section.id }} .t-eyebrow { color: {{ eye_color }}; margin-bottom: 14px; }
   .cpr-{{ section.id }} .t-eyebrow--dash::before { background: {{ eye_color }}; width: 28px; }
-  .cpr-{{ section.id }} .t-display { color: {{ heading_color }}; font-size: {{ section.settings.heading_size_desktop }}px; }
+  /* Fluid heading: smooth scale between mobile + desktop sizes (no hard snap at
+     749) — {{ section.settings.heading_size_mobile }}px at 375px → {{ section.settings.heading_size_desktop }}px at 1024px. */
+  .cpr-{{ section.id }} .t-display { color: {{ heading_color }}; font-size: clamp({{ section.settings.heading_size_mobile }}px, calc({{ section.settings.heading_size_mobile }}px + ({{ section.settings.heading_size_desktop | minus: section.settings.heading_size_mobile }}) * (100vw - 375px) / 649), {{ section.settings.heading_size_desktop }}px); }
   .cpr-{{ section.id }} .t-display em { color: {{ heading_italic_color }}; }
   .cpr-{{ section.id }} .cpr-sub {
     color: {{ subtitle_color }};
@@ -67,6 +69,9 @@
     border-right: 1px solid {{ divider_color }};
     position: relative;
   }
+  /* Clear the column divider on each row's last column (every 4th step) plus the
+     final step — so a multi-row grid (>4 steps) shows no stray right-edge divider. */
+  .cpr-{{ section.id }} .cpr-step:nth-child(4n),
   .cpr-{{ section.id }} .cpr-step:last-child { border-right: none; }
   .cpr-{{ section.id }} .cpr-step:not(:first-child) { padding-left: 28px; }
   .cpr-{{ section.id }} .cpr-num {
@@ -125,14 +130,13 @@
     .cpr-{{ section.id }} .cpr-hdr { flex-direction: column; align-items: flex-start; }
   }
   @media (max-width: 749px) {
-    .cpr-{{ section.id }} .t-display { font-size: {{ section.settings.heading_size_mobile }}px; }
     .cpr-{{ section.id }} .cpr-sub { font-size: {{ sub_size_mobile }}px; }
     .cpr-{{ section.id }} .cpr-num { font-size: {{ step_num_size_mobile }}px; }
     .cpr-{{ section.id }} .cpr-title { font-size: {{ step_title_size_mobile }}px; }
     .cpr-{{ section.id }} .cpr-desc { font-size: {{ step_desc_size_mobile }}px; }
   }
   {%- if section.settings.hide_desktop -%}
-  @media (min-width: 768px) { .cpr-{{ section.id }} { display: none !important; } }
+  @media (min-width: 750px) { .cpr-{{ section.id }} { display: none !important; } }
   {%- endif -%}
   {%- if section.settings.hide_mobile -%}
   @media (max-width: 749px) { .cpr-{{ section.id }} { display: none !important; } }

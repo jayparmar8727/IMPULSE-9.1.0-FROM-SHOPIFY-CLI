@@ -11,11 +11,10 @@ Human-readable paper trail. Auto-loaded context lives in the Claude project `MEM
 
 ## What this session did
 
-Audited **every custom section on the Home page + the footer** through three skills —
-`refactoring-ui`, `web-typography`, `web-interface-guidelines` (plus LCP/perf for image-heavy
-sections) — then applied + committed targeted fixes (one commit per section, `shopify theme
-check` = 0 offenses on each). Then pushed the whole theme to the **Impulse** dev theme with
-`scripts/theme-push.ps1` (`--nodelete`). An **About Us page** pass is underway next.
+Audited **every custom section on the Home page, the footer, and the About Us page** through
+three skills — `refactoring-ui`, `web-typography`, `web-interface-guidelines` (plus LCP/perf for
+image-heavy sections) — then applied + committed targeted fixes. Then pushed the whole theme to
+the **Impulse** dev theme with `scripts/theme-push.ps1` (`--nodelete`). **All complete & pushed.**
 
 ## Recurring issues found + fixed across the board
 
@@ -51,6 +50,11 @@ AA contrast) · `29be099` b2b-trust · `2706f6e` hero-slider · `d8e9baa` global
 `6ede218` craft-process · `35a358e` customer-reviews · `680b425` buy-back-promise ·
 `2071454` footer-kansawala.
 
+**About Us page** (`templates/page.about.json`) — all 9 custom sections in one commit `3d4c30b`
+(about-us-hero, mission-quote, trust-numbers, legacy-timeline, craft-operations, our-values,
+vision-mission [header heading only], sihor-workshop, about-cta): same `hide_desktop` 768→750 +
+fluid `clamp()` heading fixes, plus craft-operations' multi-row divider and about-cta's dead link.
+
 ## Flagged but deliberately NOT changed
 
 - **Brass (`#bc843f` / `#d8ae82`) small text on light bg ~3:1** — fails AA but is the
@@ -79,6 +83,11 @@ AA contrast) · `29be099` b2b-trust · `2706f6e` hero-slider · `d8e9baa` global
 
 - [ ] **Preview** the Impulse dev theme: https://kansawalasmf.myshopify.com?preview_theme_id=152479498414
 - [ ] Decide whether to **publish** (live theme is the separate Shopflo/Impulse 7.5.1 theme).
-- [ ] **About Us page** audit pass (in progress this session) — see commits after `2071454`.
+- [x] **About Us page** audit pass — done (`3d4c30b`) and pushed.
+- [ ] **`.theme-check.yml` config check** — during the About pass `shopify theme check` started
+      reporting STOCK noise (83 files / 3350 offenses, mostly `UndefinedObject: Unknown object
+      'section'` on line 2 of every section) instead of the usual `222 files / 0`. The config
+      stopped applying (file was open in the IDE). Those offenses are pre-existing stock, not the
+      edits. Confirm `.theme-check.yml` is saved/valid (`root` + `ignore` intact) to restore `0`.
 - [ ] Remaining surfaces: header, PDP / collection / cart templates.
 - [ ] Optional GitHub backup — needs a remote URL.

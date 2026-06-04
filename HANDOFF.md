@@ -11,10 +11,11 @@ Human-readable paper trail. Auto-loaded context lives in the Claude project `MEM
 
 ## What this session did
 
-Audited **every custom section on the Home page, the footer, and the About Us page** through
-three skills — `refactoring-ui`, `web-typography`, `web-interface-guidelines` (plus LCP/perf for
-image-heavy sections) — then applied + committed targeted fixes. Then pushed the whole theme to
-the **Impulse** dev theme with `scripts/theme-push.ps1` (`--nodelete`). **All complete & pushed.**
+Audited **every custom section on the Home page, the footer, and the About Us page — plus all the
+custom foundation files** (fonts, JSON-LD, theme.liquid head wiring, JS engines, token/typography
+CSS) — through three skills: `refactoring-ui`, `web-typography`, `web-interface-guidelines` (plus
+LCP/perf for image-heavy sections). Applied + committed targeted fixes, then pushed the whole theme
+to the **Impulse** dev theme with `scripts/theme-push.ps1` (`--nodelete`). **All complete & pushed.**
 
 ## Recurring issues found + fixed across the board
 
@@ -55,6 +56,15 @@ AA contrast) · `29be099` b2b-trust · `2706f6e` hero-slider · `d8e9baa` global
 vision-mission [header heading only], sihor-workshop, about-cta): same `hide_desktop` 768→750 +
 fluid `clamp()` heading fixes, plus craft-operations' multi-row divider and about-cta's dead link.
 
+**Custom foundation files** (commit `c2af351`) — audited `kw-fonts`, `kw-schema-organization`,
+`layout/theme.liquid` head wiring, `kw-sections.js` engines, `kw-tokens.css` / `kw-typography.css`.
+All clean except one fix: the **footer accordion** could be collapsed on desktop by a keyboard Enter
+on the (mouse-disabled) `<summary>` and not reopen — now it re-opens on a desktop toggle.
+Everything else verified solid (async font loading, `|json` JSON-LD, deferred JS, count-up
+reduced-motion/IO/NaN handling). **This completes the entire custom `kw` codebase: 25 sections +
+foundation.** Optional future enhancement noted: upgrade the Organization JSON-LD to `LocalBusiness`
+(Sihor address/phone) for richer SEO.
+
 ## Flagged but deliberately NOT changed
 
 - **Brass (`#bc843f` / `#d8ae82`) small text on light bg ~3:1** — fails AA but is the
@@ -88,5 +98,9 @@ fluid `clamp()` heading fixes, plus craft-operations' multi-row divider and abou
       was never modified. If you ever see `83 files / 3350 offenses` (`UndefinedObject: Unknown
       object 'section'` on line 2 of every file), it just means `shopify theme check` was run from
       *inside* `sections/` — run it from the **repo root** and it returns to `222 / 0`.
-- [ ] Remaining surfaces: header, PDP / collection / cart templates.
+- [x] **Custom foundation files** audited — done (`c2af351`) and pushed. Entire custom `kw`
+      codebase (25 sections + foundation) is now covered.
+- [ ] Optional: upgrade `kw-schema-organization` JSON-LD `Organization` → `LocalBusiness`
+      (Sihor address/phone/geo) for richer SEO. Enhancement, not a bug.
+- [ ] Remaining surfaces (all STOCK Impulse, not custom): header, PDP / collection / cart templates.
 - [ ] Optional GitHub backup — needs a remote URL.

@@ -72,7 +72,14 @@
 {%- endcomment -%}
 
 {%- style -%}
-  .b2b-{{ section.id }} { background: {{ bg_color }}; box-sizing: border-box; overflow-x: hidden; }
+  /* contain:paint is the real overflow fix — the client-logo marquee track
+     (.b2b-strip-track, width:max-content ~1400px) is visually clipped by its
+     overflow:hidden parent, but on MOBILE Chrome still counts that hidden
+     overflow when sizing the layout viewport ("shrink-to-fit"), which inflated
+     the whole document to ~759px and dragged every section + the header
+     sideways. overflow-x:hidden alone does NOT stop this; paint containment
+     does (verified at 390px). box-sizing/overflow-x kept as before. */
+  .b2b-{{ section.id }} { background: {{ bg_color }}; box-sizing: border-box; overflow-x: hidden; contain: paint; }
   .b2b-{{ section.id }} .b2b-inner {
     padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
     {%- if container_width == 'boxed' -%}

@@ -103,33 +103,17 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   MOBILE HORIZONTAL-OVERFLOW GUARD  (2026-06-05)
+   MOBILE HORIZONTAL-OVERFLOW SAFETY NET  (2026-06-05)
    ───────────────────────────────────────────────────────────────────
-   Symptom this fixes: on a narrow phone viewport a single stray
-   too-wide descendant gives the whole document a horizontal scrollbar,
-   which drags the sticky header + every section sideways and clips the
-   left edge (header looks "broken", content reads "EGACY" not "LEGACY").
+   General guard: a stray in-flow element wider than a phone viewport can
+   give the whole document a horizontal scrollbar, dragging the sticky
+   header + sections sideways. This catches that ordinary case.
 
-   Uses `overflow-x: hidden` (universal browser support, incl. older iOS
-   Safari — `overflow-x: clip` is ignored there, which is why an earlier
-   clip-based attempt did nothing in the preview). The stock Impulse sticky
-   header is `position: fixed` (.site-header--stuck), NOT CSS position:sticky,
-   so a hidden ancestor does not break it. Set on html + body so the page's
-   horizontal scroll is killed regardless of which one is the scroll root.
-   Custom-only, additive, reversible (delete this block to revert). */
+   It does NOT, by itself, stop mobile "shrink-to-fit" viewport inflation
+   caused by a max-content track hidden behind overflow:hidden — the actual
+   bug that prompted this (the b2b-trust client-logo marquee) is fixed at
+   source in sections/b2b-trust.liquid via `contain: paint`. Kept here as a
+   cheap safety net. Safe with the stock sticky header (it's position:fixed
+   .site-header--stuck, not CSS position:sticky). Custom-only, reversible. */
 html,
 body{ overflow-x: hidden; }
-
-/* ── Root cause: runtime-injected widgets that ignore the mobile viewport ──
-   Confirmed via headless audit (390px): the page was forced to 759px wide by
-   two FIXED, body-level elements injected at runtime (so they're absent from
-   theme code and clipped by no section):
-     • #shopify-pc__banner  — Shopify cookie-consent banner, rendered width:759px
-       even on a 390px phone, pushing the document into a horizontal scroll that
-       dragged the sticky header + every section sideways and clipped the left.
-     • #PBarNextFrameWrapper / #PBarNextFrame — an app's prefetch iframe, same 759px.
-   Capping to the viewport reflows the banner so Accept/Decline stay reachable
-   (the overflow-x guard above alone would clip those buttons off-screen). */
-#shopify-pc__banner,
-#PBarNextFrameWrapper,
-#PBarNextFrame{ max-width: 100% !important; }

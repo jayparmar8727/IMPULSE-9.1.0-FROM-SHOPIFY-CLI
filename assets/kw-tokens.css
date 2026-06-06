@@ -119,3 +119,17 @@
    Custom-only, additive, reversible (delete this block to revert). */
 html,
 body{ overflow-x: hidden; }
+
+/* ── Root cause: runtime-injected widgets that ignore the mobile viewport ──
+   Confirmed via headless audit (390px): the page was forced to 759px wide by
+   two FIXED, body-level elements injected at runtime (so they're absent from
+   theme code and clipped by no section):
+     • #shopify-pc__banner  — Shopify cookie-consent banner, rendered width:759px
+       even on a 390px phone, pushing the document into a horizontal scroll that
+       dragged the sticky header + every section sideways and clipped the left.
+     • #PBarNextFrameWrapper / #PBarNextFrame — an app's prefetch iframe, same 759px.
+   Capping to the viewport reflows the banner so Accept/Decline stay reachable
+   (the overflow-x guard above alone would clip those buttons off-screen). */
+#shopify-pc__banner,
+#PBarNextFrameWrapper,
+#PBarNextFrame{ max-width: 100% !important; }

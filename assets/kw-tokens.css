@@ -110,17 +110,12 @@
    which drags the sticky header + every section sideways and clips the
    left edge (header looks "broken", content reads "EGACY" not "LEGACY").
 
-   `overflow-x: clip` clips the stray overflow at the page boundary
-   WITHOUT establishing a scroll container — so the stock Impulse sticky
-   header (rendered INSIDE #PageContainer via header-group) keeps
-   sticking. Plain `overflow: hidden` here would silently BREAK
-   position:sticky, so it is deliberately NOT used.
-
-   Applied at both the <body> and the #PageContainer wrapper so it catches
-   a stray element wherever it sits (sections, header/footer groups, or the
-   modals rendered at the end of <body>). Custom-only, additive, reversible
-   (delete this block to revert).
-   ═══════════════════════════════════════════════════════════════════ */
-html{ overflow-x: clip; }
-body{ overflow-x: clip; }
-#PageContainer{ overflow-x: clip; }
+   Uses `overflow-x: hidden` (universal browser support, incl. older iOS
+   Safari — `overflow-x: clip` is ignored there, which is why an earlier
+   clip-based attempt did nothing in the preview). The stock Impulse sticky
+   header is `position: fixed` (.site-header--stuck), NOT CSS position:sticky,
+   so a hidden ancestor does not break it. Set on html + body so the page's
+   horizontal scroll is killed regardless of which one is the scroll root.
+   Custom-only, additive, reversible (delete this block to revert). */
+html,
+body{ overflow-x: hidden; }

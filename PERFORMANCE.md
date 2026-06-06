@@ -19,8 +19,9 @@ Measure on a **preview URL** (not the editor) with Lighthouse / PageSpeed Insigh
   `<picture>` art-direction + focal point where relevant. `max_blocks` caps eager fetches.
 - **JS:** `theme.js` + `vendor-scripts-v11.js` both `defer`; `is-land` islands + import-map for selective hydration;
   our IIFEs (fade-up, count-up, HeroSlider) are small and IntersectionObserver-gated.
-- **Fonts:** Google Fonts via async `print`/`onload` swap + preconnect + `<noscript>` (`kw-fonts.liquid`); Fahkwang
-  uses `font-display: swap`. No FOIT.
+- **Fonts:** Cormorant Garamond via Google Fonts async `print`/`onload` swap + preconnect + `<noscript>`
+  (`kw-fonts.liquid`), `display=swap` → no FOIT. Jost is served by the theme font picker (`jost_n4`), not
+  by `kw-fonts.liquid`. (No Fahkwang — the picker is on Jost.)
 - **Motion:** global `prefers-reduced-motion` floor (`kw-tokens.css`) collapses transitions.
 
 ## Asset budget
@@ -29,11 +30,11 @@ Measure on a **preview URL** (not the editor) with Lighthouse / PageSpeed Insigh
 | `theme.css` | ~759K | Stock Impulse, `preload: true`. Don't fork it; keep our additions tiny. |
 | `kw-tokens.css` + `kw-typography.css` | ~15K (2 requests) | Mergeable into one request. |
 | `theme.js` + `vendor-scripts-v11.js` | ~279K + ~126K | Stock + our additive IIFEs. Keep new JS in the shared file, IO-gated. |
-| Web fonts | Jost (6 wt) + Cormorant (2 + italics) + Fahkwang (5 faces) | Only ~2–3 weights are actually used in KW sections — trim. |
+| Web fonts | Jost (theme picker `jost_n4`) + Cormorant Garamond (upright 300/700 + italic 300/400 = 4 faces) | No Fahkwang. KW sections mainly use Cormorant 300 + 300-italic — the 700/400-italic faces are trimmable. |
 | **LCP / eager images** | merchant-set | Keep eager/above-fold images **≤ ~150K**; pre-crop to the rendered ratio. |
 
 ## Optimisation checklist (priority order)
-- [ ] **Trim font weights** to what's used (Jost 300/400/500, Cormorant 300-italic) — biggest easy win.
+- [ ] **Trim font weights** to what's used (Jost 200/400; Cormorant 300 + 300-italic) — biggest easy win.
 - [ ] **Self-host** Jost + Cormorant (woff2 in `assets/`, `@font-face`) **or** add `<link rel="preload" as="font">`
       for the 2–3 critical weights → removes the Google round-trip and the `RemoteAsset` warnings.
 - [ ] **Merge** `kw-tokens.css` + `kw-typography.css` into one file (one request).

@@ -21,7 +21,7 @@
 ## Project layer added on top of stock
 
 - `CLAUDE.md` — governance / rules (single source of truth).
-- `section-manifest.json` — stock-vs-custom registry (currently stock-only; lists customs pending migration).
+- `section-manifest.json` — stock-vs-custom registry (`owner: stock|custom`; the custom sections are migrated in, `pending_migration` is empty).
 - `docs/` — `STOCK_BASELINE.md`, `section-standards.md`, `schema-patterns.md`, `coding-rules.md`,
   `ai-section-instructions.md`, `THEME-DEV-WORKFLOW.md`, this file.
 - `scripts/` — `theme-dev.ps1`, `theme-pull.ps1`, `theme-push.ps1`, `theme.config.example.ps1`.
@@ -29,15 +29,16 @@
 
 ## Stock vs. custom — the ownership model
 
-`section-manifest.json` is the **source of truth**: each migrated section will be marked
+`section-manifest.json` is the **source of truth**: each custom section is marked
 `"owner": "custom"` (with `status`/`placed_in`); everything else is stock at rev `40d0dcd`. Check the
 manifest, not the filename.
 
-## Pending: homepage migration
+## Custom layer — migrated in
 
-17 custom sections + foundation (kw-tokens.css, kw-typography.css, kw-fonts, theme.js engines, head
-wiring, `templates/index.json`, branding) are scheduled to be **migrated in** from the prior build.
-Until then this base renders as stock Impulse. See `section-manifest.json` → `pending_migration`.
+The Kansawala custom sections + foundation (kw-tokens.css, kw-typography.css, kw-fonts, theme.js
+engines, head wiring, `templates/index.json`, branding) have been **migrated in** from the prior
+build. `pending_migration` in `section-manifest.json` is now empty; its `"owner": "custom"` entries
+are the live roster.
 
 ## Wiring reference (stock)
 

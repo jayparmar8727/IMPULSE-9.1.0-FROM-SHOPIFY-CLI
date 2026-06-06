@@ -8,12 +8,13 @@ diverges from the stock baseline.
 
 > Stock baseline is recorded in [`docs/STOCK_BASELINE.md`](docs/STOCK_BASELINE.md).
 > Baseline git rev: `40d0dcd` ("Initial pull of Impulse theme with editor customizations").
-> **394 tracked files · 126 assets · 58 stock sections.** This is **complete true stock** —
-> it is the trustworthy reference for stock-vs-custom diffs and upgrades.
+> **At baseline: 394 tracked files · 126 assets · 58 stock sections** — **complete true stock**,
+> the trustworthy reference for stock-vs-custom diffs and upgrades. (The current tree has grown
+> past these numbers as custom work landed; the manifest, not these counts, is the live registry.)
 
-> **Status:** the Kansawala custom sections have **not been migrated in yet** — see the
-> `pending_migration` list in [`section-manifest.json`](section-manifest.json). The homepage
-> transfer is a separate, planned step.
+> **Status:** the Kansawala custom sections **have been migrated in.** `pending_migration` in
+> [`section-manifest.json`](section-manifest.json) is now empty; the manifest is the source of
+> truth for what's custom (look for `"owner": "custom"`). The homepage transfer is complete.
 
 ---
 
@@ -125,20 +126,16 @@ git diff --name-status 40d0dcd | grep '^A'
 
 ## Theme dev workflow (local ↔ admin) — don't lose admin customizations
 
-The storefront has **two** editing surfaces: **code** (VS Code → git) and **content/settings** (Shopify
-admin "Customize"). Both render from a shared Shopify **dev theme**. Two traps make admin edits vanish:
-1. **One-way push** — bare `shopify theme dev` pushes your *local* files OVER the dev theme, clobbering
-   admin "Customize" edits.
-2. **Ephemeral theme** — a CLI Development theme auto-deletes after ~7 days of inactivity, taking
-   admin-only edits with it.
-
-Hard rules (full guide: [`docs/THEME-DEV-WORKFLOW.md`](docs/THEME-DEV-WORKFLOW.md)):
+The storefront has **two** editing surfaces — **code** (VS Code → git) and **content/settings** (Shopify
+admin "Customize") — both rendering from one shared dev theme. Two traps silently wipe admin edits (a
+one-way push from bare `shopify theme dev`, and the ~7-day auto-delete of CLI Development themes). The
+**full explanation + one-time setup + recovery steps live in
+[`docs/THEME-DEV-WORKFLOW.md`](docs/THEME-DEV-WORKFLOW.md) — that doc is canonical.** The operative rules:
 - **Never run bare `shopify theme dev`.** Use `scripts/theme-dev.ps1` — it pins a **persistent** dev theme
-  and runs `--theme-editor-sync` (two-way), so admin edits flow back to local. (Create your machine-local
-  `scripts/theme.config.ps1` from `theme.config.example.ps1` first.)
-- **Pull + commit admin edits before ending a session:** `scripts/theme-pull.ps1` (pulls
-  `config/settings_data.json`, `templates/*.json`, `sections/*-group.json`), then `git commit` — else the
-  edits are lost when the dev theme changes/expires.
+  and runs `--theme-editor-sync` (two-way). (Create your machine-local `scripts/theme.config.ps1` from
+  `theme.config.example.ps1` first.)
+- **Pull + commit admin edits before ending a session:** `scripts/theme-pull.ps1`, then `git commit` —
+  else the edits are lost when the dev theme changes/expires.
 - **Split by tool:** code in VS Code; content/settings in admin.
 
 ## Git / branch rules

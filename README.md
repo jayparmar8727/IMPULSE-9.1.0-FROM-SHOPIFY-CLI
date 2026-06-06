@@ -6,10 +6,11 @@ top. This base replaces an earlier build whose import was incomplete.
 
 ## Status
 
-- **Stock baseline:** rev `40d0dcd` — complete true stock (394 files, 126 assets, 58 sections).
-  See [`docs/STOCK_BASELINE.md`](docs/STOCK_BASELINE.md).
-- **Customizations:** none migrated in yet. The 17 Kansawala custom sections + foundation are
-  **pending migration** — see `pending_migration` in [`section-manifest.json`](section-manifest.json).
+- **Stock baseline:** rev `40d0dcd` — complete true stock (at baseline: 394 files, 126 assets,
+  58 sections). See [`docs/STOCK_BASELINE.md`](docs/STOCK_BASELINE.md).
+- **Customizations:** **migrated in.** The Kansawala custom sections + foundation are live;
+  `pending_migration` in [`section-manifest.json`](section-manifest.json) is now empty. The
+  manifest (`"owner": "custom"`) is the source of truth for what's custom and how many.
 
 ## Start here
 

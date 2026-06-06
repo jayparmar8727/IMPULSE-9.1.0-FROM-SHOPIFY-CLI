@@ -1,9 +1,9 @@
 # Current Theme Architecture — Kansawala working base (Impulse 9.1.0)
 
-> A map of the theme **as it is now**: complete true-stock Impulse 9.1.0 (CLI pull, rev `40d0dcd`),
-> with the project governance layer added on top and **no custom sections yet**. The authoritative
-> stock record is [`STOCK_BASELINE.md`](STOCK_BASELINE.md); ownership is tracked in
-> [`../section-manifest.json`](../section-manifest.json).
+> A map of the theme **as it is now**: true-stock Impulse 9.1.0 (CLI pull, baseline rev `40d0dcd`) with
+> the project governance layer **and the migrated Kansawala custom sections** on top. The authoritative
+> stock record is [`STOCK_BASELINE.md`](STOCK_BASELINE.md); current ownership (stock vs custom) is tracked
+> in [`../section-manifest.json`](../section-manifest.json) — look for `"owner": "custom"`.
 
 ## Directory snapshot
 

@@ -101,3 +101,25 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE HORIZONTAL-OVERFLOW GUARD  (2026-06-05)
+   ───────────────────────────────────────────────────────────────────
+   Symptom this fixes: on a narrow phone viewport a single stray
+   too-wide descendant gives the whole document a horizontal scrollbar,
+   which drags the sticky header + every section sideways and clips the
+   left edge (header looks "broken", content reads "EGACY" not "LEGACY").
+
+   `overflow-x: clip` clips the stray overflow at the page boundary
+   WITHOUT establishing a scroll container — so the stock Impulse sticky
+   header (rendered INSIDE #PageContainer via header-group) keeps
+   sticking. Plain `overflow: hidden` here would silently BREAK
+   position:sticky, so it is deliberately NOT used.
+
+   Applied at both the <body> and the #PageContainer wrapper so it catches
+   a stray element wherever it sits (sections, header/footer groups, or the
+   modals rendered at the end of <body>). Custom-only, additive, reversible
+   (delete this block to revert).
+   ═══════════════════════════════════════════════════════════════════ */
+body{ overflow-x: clip; }
+#PageContainer{ overflow-x: clip; }

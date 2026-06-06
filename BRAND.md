@@ -19,13 +19,14 @@
 | `--err`| `#B0413E` | error |
 
 ## 2. Fonts
-Loaded from Google Fonts via `snippets/kw-fonts.liquid` (Impulse's font_picker
-stays on Fahkwang for the stock theme).
+Cormorant Garamond is loaded from Google Fonts via `snippets/kw-fonts.liquid`; Jost is **not** —
+it comes from the theme font picker, which on our dev/preview theme is set to `jost_n4` (Jost).
 
 - **`--d` → Jost** — display sans. Headings, eyebrows, labels, buttons.
-  Weights loaded: 200/300/400/500/600/700.
+  NOT loaded by `kw-fonts.liquid` — Jost comes from the theme font picker (`jost_n4`).
+  Weight 400 is guaranteed; 200 is used by `.t-stat`; Jost Thin 100 is NOT available.
 - **`--s` → Cormorant Garamond** — serif. Italic accent lines inside display
-  headings, stat/year numerals. Weights: 300/700 + italics.
+  headings, stat/year numerals. Loaded weights: upright 300 + 700, italic 300 + 400.
 
 ## 3. Fluid type scale (Major Third, 1.25×)
 `--fs-xs` · `--fs-sm` · `--fs-base` · `--fs-md` · `--fs-lg` · `--fs-xl` ·

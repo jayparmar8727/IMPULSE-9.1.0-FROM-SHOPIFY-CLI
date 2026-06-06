@@ -121,5 +121,6 @@
    modals rendered at the end of <body>). Custom-only, additive, reversible
    (delete this block to revert).
    ═══════════════════════════════════════════════════════════════════ */
+html{ overflow-x: clip; }
 body{ overflow-x: clip; }
 #PageContainer{ overflow-x: clip; }

@@ -174,7 +174,7 @@
   .bsl-{{ section.id }} .bsl-card__img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: {% if settings.product_grid_image_fill %}cover{% else %}contain{% endif %};
     display: block;
     transition: opacity .55s ease;
   }
@@ -397,6 +397,16 @@
                         assign secondary_image = media
                       endfor
                     endif
+                    case settings.product_grid_image_size
+                      when 'portrait'
+                        assign media_ratio = '2 / 3'
+                      when 'landscape'
+                        assign media_ratio = '4 / 3'
+                      when 'natural'
+                        assign media_ratio = primary_image.preview_image.aspect_ratio | default: 1
+                      else
+                        assign media_ratio = '1 / 1'
+                    endcase
                     assign first_variant = product.selected_or_first_available_variant
                     assign alt_text = product.title | escape
                     assign rating_value = product.metafields.reviews.rating.value.rating | default: product.metafields.reviews.rating.value | default: 0
@@ -408,7 +418,7 @@
                   -%}
                   <div class="bsl-cell">
                     <article class="bsl-card">
-                      <a href="{{ product.url }}" class="bsl-card__media" aria-label="{{ product.title | escape }}">
+                      <a href="{{ product.url | within: block.settings.collection }}" class="bsl-card__media" style="aspect-ratio: {{ media_ratio }};" aria-label="{{ product.title | escape }}">
                         {%- if discount_percent > 0 and product.available -%}
                           <span class="bsl-card__disc t-label">{{ discount_percent }}% Off</span>
                         {%- endif -%}
@@ -458,16 +468,16 @@
                             {%- if rating_count > 0 -%}<span class="bsl-card__rate-count">{{ rating_count }} Reviews</span>{%- endif -%}
                           </div>
                         {%- endif -%}
-                        <a href="{{ product.url }}" class="bsl-card__name t-card-name">{{ product.title | escape }}</a>
+                        <a href="{{ product.url | within: block.settings.collection }}" class="bsl-card__name t-card-name">{{ product.title | escape }}</a>
                         <div class="bsl-card__price">
                           {%- if product.price_varies -%}
                             <span class="bsl-card__price-from">From</span>
-                            <span class="bsl-card__price-amt">{{ product.price_min | money_without_currency | replace: '.00', '' }}</span>
+                            <span class="bsl-card__price-amt">{{ product.price_min | money }}</span>
                           {%- else -%}
                             <span class="bsl-card__price-from">{% if on_sale %}Sale{% else %}MRP{% endif %}</span>
-                            <span class="bsl-card__price-amt">{{ product.price | money_without_currency | replace: '.00', '' }}</span>
+                            <span class="bsl-card__price-amt">{{ product.price | money }}</span>
                             {%- if on_sale -%}
-                              <span class="bsl-card__price-orig" aria-label="Original price">{{ product.compare_at_price | money_without_currency | replace: '.00', '' }}</span>
+                              <span class="bsl-card__price-orig" aria-label="Original price">{{ product.compare_at_price | money }}</span>
                             {%- endif -%}
                           {%- endif -%}
                         </div>
@@ -480,7 +490,7 @@
                               </button>
                             {%- endform -%}
                           {%- else -%}
-                            <a href="{{ product.url }}" class="bsl-card__atc t-card-cta" aria-label="Add {{ product.title | escape }} to cart — pick a size on the product page">
+                            <a href="{{ product.url | within: block.settings.collection }}" class="bsl-card__atc t-card-cta" aria-label="Add {{ product.title | escape }} to cart — pick a size on the product page">
                               <span class="bsl-card__atc-label">Add to Cart</span>
                             </a>
                           {%- endif -%}

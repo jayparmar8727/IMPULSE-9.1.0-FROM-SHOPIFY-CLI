@@ -17,123 +17,190 @@
     "faq": {
       "type": "faq",
       "blocks": {
-        "rich-text-1": {
+        "rich-text-intro": {
           "type": "rich-text",
           "settings": {
-            "title": "FAQs",
-            "text": "",
+            "title": "Questions, Answered",
+            "text": "<p>Everything you might want to know before a Kansawala piece enters your home — from how it travels to how it's cared for, and the promise that comes with it.</p>",
             "align_text": "left"
           }
         },
-        "question-1": {
-          "type": "question",
+        "rich-text-shipping": {
+          "type": "rich-text",
           "settings": {
-            "title": "How long does shipping take?",
-            "text": "<p>Standard shipping takes 5–7 business days. Express shipping (2–3 business days) is available at checkout. Orders placed before 2pm EST ship the same day.</p>"
+            "title": "",
+            "text": "<h3>Shipping &amp; Delivery</h3>",
+            "align_text": "left"
           }
         },
-        "question-2": {
+        "question-ship-1": {
+          "type": "question",
+          "settings": {
+            "title": "How long will my order take to arrive?",
+            "text": "<p>Within India, your order is hand-packed in Sihor and delivered in 5-7 business days. Every piece is wrapped with real care for the journey — these are heirlooms, and we treat them that way.</p>"
+          }
+        },
+        "question-ship-2": {
           "type": "question",
           "settings": {
             "title": "Do you offer free shipping?",
-            "text": "<p>Yes — free standard shipping on all orders over $100.</p>"
+            "text": "<p>Yes — free shipping across India on every order, with no minimum. Your piece reaches you at no extra cost.</p>"
           }
         },
-        "question-3": {
-          "type": "question",
-          "settings": {
-            "title": "Can I change or cancel my order?",
-            "text": "<p>Orders can be modified or cancelled within 1 hour of purchase. After that, we’re unable to make changes as orders are processed quickly. Contact us right away and we’ll do our best.</p>"
-          }
-        },
-        "question-4": {
+        "question-ship-3": {
           "type": "question",
           "settings": {
             "title": "Do you ship internationally?",
-            "text": "<p>We currently ship to Canada, the US, the UK, and Australia. Shipping rates and times vary by destination and are calculated at checkout.</p>"
+            "text": "<p>We do. Kansawala already reaches homes in 40+ countries. International rates and delivery times are calculated at checkout, based on your destination.</p>"
           }
         },
-        "rich-text-2": {
+        "question-ship-4": {
+          "type": "question",
+          "settings": {
+            "title": "Can I change or cancel my order?",
+            "text": "<p>Orders move quickly from our workshop. If something needs to change, write to us at info@kansawalas.com within 12 hours of ordering and we'll do everything we can.</p>"
+          }
+        },
+        "rich-text-returns": {
           "type": "rich-text",
           "settings": {
             "title": "",
-            "text": "<h3>Returns & Exchanges</h3>",
+            "text": "<h3>Returns &amp; Replacements</h3>",
             "align_text": "left"
           }
         },
-        "question-5": {
+        "question-ret-1": {
           "type": "question",
           "settings": {
-            "title": "What is your return policy?",
-            "text": "<p>We accept returns within 30 days of delivery. Items must be unworn, unwashed, and in original condition with tags attached.</p>"
+            "title": "What is your returns policy?",
+            "text": "<p>Because each piece is handcrafted, we don't accept change-of-mind returns. Our promise is simpler and stronger: if your piece arrives damaged or flawed, we replace it — no quibbling.</p>"
           }
         },
-        "question-6": {
+        "question-ret-2": {
           "type": "question",
           "settings": {
-            "title": "How do I start a return?",
-            "text": "<p>Use our returns portal to submit your request. Once approved, you’ll receive a prepaid return label by email within 24 hours.</p>"
+            "title": "My piece arrived damaged. What happens now?",
+            "text": "<p>We're sorry — it's rare, but we'll make it right. Send a photo to info@kansawalas.com within 48 hours of delivery and we'll arrange a replacement straight away.</p>"
           }
         },
-        "question-7": {
+        "question-ret-3": {
           "type": "question",
           "settings": {
-            "title": "Can I exchange for a different size or colour?",
-            "text": "<p>Yes. Start an exchange through the returns portal and select the item you’d like instead. Exchanges ship free of charge.</p>"
+            "title": "Are the small marks on my piece a defect?",
+            "text": "<p>No — those are the fingerprints of handwork. Each piece passes through 24-25 hand operations, and slight variations in finish are the signature of a human hammer, not a fault.</p>"
           }
         },
-        "question-8": {
-          "type": "question",
-          "settings": {
-            "title": "When will I receive my refund?",
-            "text": "<p>Refunds are processed within 5 business days of receiving your return. You’ll receive a confirmation email once it’s been issued.</p>"
-          }
-        },
-        "rich-text-3": {
+        "rich-text-care": {
           "type": "rich-text",
           "settings": {
             "title": "",
-            "text": "<h3>Sizing & Fit</h3>",
+            "text": "<h3>Care &amp; Maintenance</h3>",
             "align_text": "left"
           }
         },
-        "question-9": {
+        "question-care-1": {
           "type": "question",
           "settings": {
-            "title": "How do I find my size?",
-            "text": "<p>Each product page includes a size guide with measurements. If you’re between sizes, we generally recommend sizing up for a relaxed fit or down for a more fitted look.</p>"
+            "title": "How do I clean my Kansa, brass and copper?",
+            "text": "<p>The old way is still the best way: a paste of tamarind (or lemon) with a little salt, rubbed gently, then rinsed and dried. It brings the shine back every time. Skip harsh dishwashers and abrasive scrubbers.</p>"
           }
         },
-        "question-10": {
+        "question-care-2": {
           "type": "question",
           "settings": {
-            "title": "Do your clothes run true to size?",
-            "text": "<p>Most styles run true to size. Any exceptions are noted in the product description.</p>"
+            "title": "Will the shine fade over time?",
+            "text": "<p>These are living metals — with daily use they settle into a warm patina. A simple tamarind-and-salt polish restores their glow whenever you wish.</p>"
           }
         },
-        "question-11": {
+        "question-care-3": {
           "type": "question",
           "settings": {
-            "title": "What if something doesn’t fit?",
-            "text": "<p>No problem — start a free exchange through our returns portal and we’ll get the right size to you.</p>"
+            "title": "Is there anything I should avoid?",
+            "text": "<p>Don't leave very sour or salty food sitting overnight, avoid the dishwasher, and dry each piece after washing. Treated kindly, it will serve your family for decades.</p>"
+          }
+        },
+        "rich-text-buyback": {
+          "type": "rich-text",
+          "settings": {
+            "title": "",
+            "text": "<h3>The Buy-Back Promise</h3>",
+            "align_text": "left"
+          }
+        },
+        "question-bb-1": {
+          "type": "question",
+          "settings": {
+            "title": "What is the Kansawala Buy-Back Promise?",
+            "text": "<p>Kansa, brass and copper are real metals — and real metals hold their worth. After years of daily use, return your Kansawala pieces to us and we'll buy them back at the current market value of their metal. Your utensils nourish you for a decade, then pay you back.</p>"
+          }
+        },
+        "question-bb-2": {
+          "type": "question",
+          "settings": {
+            "title": "How is the buy-back price calculated?",
+            "text": "<p>It's based on the prevailing market rate for the metal at the time you return the piece — copper, and the copper content of Kansa and brass — not the price you originally paid. Because these metals tend to appreciate, that's usually in your favour.</p>"
+          }
+        },
+        "question-bb-3": {
+          "type": "question",
+          "settings": {
+            "title": "How do I claim the buy-back?",
+            "text": "<p>Write to us at info@kansawalas.com. We'll guide you through returning your pieces and confirm their current buy-back value.</p>"
+          }
+        },
+        "rich-text-health": {
+          "type": "rich-text",
+          "settings": {
+            "title": "",
+            "text": "<h3>Heritage &amp; Authenticity</h3>",
+            "align_text": "left"
+          }
+        },
+        "question-health-1": {
+          "type": "question",
+          "settings": {
+            "title": "Why cook and eat from these metals?",
+            "text": "<p>Kansa, brass and copper have been part of Indian kitchens for thousands of years, and Ayurveda has long valued the way they interact with food and water. Many families simply find that food and water taste cleaner and fresher from them.</p>"
+          }
+        },
+        "question-health-2": {
+          "type": "question",
+          "settings": {
+            "title": "How do I know the metal is pure?",
+            "text": "<p>Every Kansawala piece is made to a precise, traditional alloy — 78% copper, 22% tin for Kansa — and our products are NABL certified. No coatings, no kalai hiding impurities, no shortcuts.</p>"
+          }
+        },
+        "question-health-3": {
+          "type": "question",
+          "settings": {
+            "title": "Are these safe for everyday use?",
+            "text": "<p>Yes, used as intended. As with all traditional metalware, we suggest not storing highly acidic foods for long periods, and giving copper and brass an occasional polish to keep them at their best.</p>"
           }
         }
       },
       "block_order": [
-        "rich-text-1",
-        "question-1",
-        "question-2",
-        "question-3",
-        "question-4",
-        "rich-text-2",
-        "question-5",
-        "question-6",
-        "question-7",
-        "question-8",
-        "rich-text-3",
-        "question-9",
-        "question-10",
-        "question-11"
+        "rich-text-intro",
+        "rich-text-shipping",
+        "question-ship-1",
+        "question-ship-2",
+        "question-ship-3",
+        "question-ship-4",
+        "rich-text-returns",
+        "question-ret-1",
+        "question-ret-2",
+        "question-ret-3",
+        "rich-text-care",
+        "question-care-1",
+        "question-care-2",
+        "question-care-3",
+        "rich-text-buyback",
+        "question-bb-1",
+        "question-bb-2",
+        "question-bb-3",
+        "rich-text-health",
+        "question-health-1",
+        "question-health-2",
+        "question-health-3"
       ],
       "settings": {
         "title": "",

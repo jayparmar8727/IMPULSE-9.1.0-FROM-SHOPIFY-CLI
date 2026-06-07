@@ -405,7 +405,6 @@
                     if rating_value != blank and rating_value != 0
                       assign has_rating = true
                     endif
-                    assign tagline = product.metafields.custom.tagline
                   -%}
                   <div class="bsl-cell">
                     <article class="bsl-card">
@@ -460,7 +459,6 @@
                           </div>
                         {%- endif -%}
                         <a href="{{ product.url }}" class="bsl-card__name t-card-name">{{ product.title | escape }}</a>
-                        {%- if tagline != blank -%}<p class="bsl-card__tag">{{ tagline | escape }}</p>{%- endif -%}
                         <div class="bsl-card__price">
                           {%- if product.price_varies -%}
                             <span class="bsl-card__price-from">From</span>

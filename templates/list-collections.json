@@ -9,17 +9,408 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "list-collections-template",
+    "header": {
+      "type": "collection-page-header",
+      "blocks": {
+        "pill-1": {
+          "type": "pill",
+          "settings": {
+            "label": "75+ Products"
+          }
+        },
+        "pill-2": {
+          "type": "pill",
+          "settings": {
+            "label": "NABL Certified"
+          }
+        },
+        "pill-3": {
+          "type": "pill",
+          "settings": {
+            "label": "4th Generation Family"
+          }
+        },
+        "pill-5": {
+          "type": "pill",
+          "settings": {
+            "label": "Free Worldwide Shipping"
+          }
+        }
+      },
+      "block_order": [
+        "pill-1",
+        "pill-2",
+        "pill-3",
+        "pill-5"
+      ],
       "settings": {
-        "title_enable": true,
-        "display_type": "all",
-        "sort": "alphabetical",
-        "grid": "3"
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "eyebrow": "Ayurveda’s Three Sacred Metals",
+        "heading": "All Collections",
+        "heading_italic": "Kansa · Brass · Copper",
+        "body": "Handcrafted by the Mukundray Fulchand family in Sihor, Gujarat since 1945. Every piece is made using the same traditional techniques — 24 to 25 hand operations per piece.",
+        "heading_size_desktop": 48,
+        "heading_size_mobile": 30,
+        "body_opacity": 100,
+        "pill_opacity": 100,
+        "container_width": "boxed",
+        "max_width": 1500,
+        "text_align": "left",
+        "text_align_mobile": "left",
+        "body_max_width": 770,
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "padding_x": 40,
+        "padding_top_mobile": 36,
+        "padding_bottom_mobile": 36,
+        "padding_x_mobile": 17,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "body_color": "#6b3c23",
+        "pill_color": "#bc843f",
+        "pill_dot_color": "#bc843f"
+      }
+    },
+    "list": {
+      "type": "all-collections-list",
+      "blocks": {
+        "card-1": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa",
+            "count_text": "",
+            "tag": "",
+            "title": "Kansa / Bronze",
+            "description": "Ayurveda’s most trusted metal. Balances all three doshas. NABL Certified. Dinner sets, thali sets, glasses and bowls."
+          }
+        },
+        "card-2": {
+          "type": "card",
+          "settings": {
+            "collection": "brass",
+            "count_text": "",
+            "tag": "",
+            "title": "Brass",
+            "description": "Naturally non-stick. No teflon. No chemicals. Tawa, kadhai, patila, ghee pot, biryani handi and more."
+          }
+        },
+        "card-3": {
+          "type": "card",
+          "settings": {
+            "collection": "copper",
+            "count_text": "",
+            "tag": "",
+            "title": "Copper",
+            "description": "Kills bacteria in water within 4 hours. Boosts immunity. Glasses, bottles and copper water vessels."
+          }
+        },
+        "card_KyQpeD": {
+          "type": "card",
+          "settings": {
+            "collection": "avada-best-sellers",
+            "count_text": "",
+            "tag": "",
+            "title": "AVADA - Best Sellers",
+            "description": ""
+          }
+        },
+        "card_iwiran": {
+          "type": "card",
+          "settings": {
+            "collection": "popular-products",
+            "count_text": "",
+            "tag": "",
+            "title": "Popular Products",
+            "description": ""
+          }
+        },
+        "card_Uj6aJ7": {
+          "type": "card",
+          "settings": {
+            "collection": "gifting",
+            "count_text": "",
+            "tag": "",
+            "title": "Gifting",
+            "description": ""
+          }
+        },
+        "card_rDaqPV": {
+          "type": "card",
+          "settings": {
+            "collection": "cookware-and-kitchenware",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_hJP6wm": {
+          "type": "card",
+          "settings": {
+            "collection": "sets-and-combo",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_MBthHX": {
+          "type": "card",
+          "settings": {
+            "collection": "tableware-and-dinnerware",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_i3Twam": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa-bronze-dinner-set-orignal",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_dKQ7q8": {
+          "type": "card",
+          "settings": {
+            "collection": "casted-kansa-dinner-ware-serving-ware",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_GJ8pxH": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa-baby-set",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_FTGHrV": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa-serve-ware",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_tFLTJX": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa-ice-cream-set",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_QzR8P4": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa-katori",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_ReVGGe": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa-bronze-thali-dish-orignal",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_CNnMN9": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa-thali",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_VxeTcf": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa-side-plate",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "card_y3eWaN": {
+          "type": "card",
+          "settings": {
+            "collection": "kansa-spoon",
+            "count_text": "",
+            "tag": "",
+            "title": "",
+            "description": ""
+          }
+        }
+      },
+      "block_order": [
+        "card-1",
+        "card-2",
+        "card-3",
+        "card_KyQpeD",
+        "card_iwiran",
+        "card_Uj6aJ7",
+        "card_rDaqPV",
+        "card_hJP6wm",
+        "card_MBthHX",
+        "card_i3Twam",
+        "card_dKQ7q8",
+        "card_GJ8pxH",
+        "card_FTGHrV",
+        "card_tFLTJX",
+        "card_QzR8P4",
+        "card_ReVGGe",
+        "card_CNnMN9",
+        "card_VxeTcf",
+        "card_y3eWaN"
+      ],
+      "settings": {
+        "hide_desktop": false,
+        "hide_mobile": false,
+        "desc_max_lines": 2,
+        "desc_max_words": 28,
+        "container_width": "boxed",
+        "max_width": 1500,
+        "cols_desktop": 3,
+        "gap": 22,
+        "gap_mobile": 16,
+        "image_ratio": "1 / 1",
+        "padding_top": 56,
+        "padding_bottom": 108,
+        "padding_x": 40,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 56,
+        "padding_x_mobile": 17,
+        "cta_text": "Shop",
+        "cta_append_title": false,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "tag_color": "#bc843f",
+        "card_title_color": "#6b3c23",
+        "card_desc_color": "#6b3c23",
+        "btn_bg": "#6b3c23",
+        "btn_text": "#faf5ee"
+      }
+    },
+    "seo_description": {
+      "type": "collection-seo-description",
+      "blocks": {
+        "metal-kansa": {
+          "type": "metal",
+          "settings": {
+            "name": "Kansa",
+            "composition": "78% Copper · 22% Tin · Bell Metal",
+            "description": "Ayurveda’s most trusted metal for eating. Balances all three doshas (Vata, Pitta, Kapha). Naturally non-reactive, no coating required. NABL Certified. Dinner sets, thali sets, glasses, bowls, plates and more."
+          }
+        },
+        "metal-brass": {
+          "type": "metal",
+          "settings": {
+            "name": "Brass",
+            "composition": "Pure Pital · Copper + Zinc Alloy",
+            "description": "Ayurveda’s recommended metal for cooking. Naturally non-stick without any teflon or chemical coating. Retains over 90% of nutrients compared to 13% in aluminium cookware. Tawa, kadhai, patila, ghee pot, handi and more."
+          }
+        },
+        "metal-copper": {
+          "type": "metal",
+          "settings": {
+            "name": "Copper",
+            "composition": "Pure Tamba · 99.9% Pure Copper",
+            "description": "Kills harmful bacteria in water within 4 hours. Boosts immunity, improves digestion, regulates thyroid. Ayurveda recommends storing and drinking water from Copper vessels daily. Glasses, bottles and water vessels."
+          }
+        },
+        "fact-1": { "type": "fact", "settings": { "label": "Founded", "value": "1945 — Sihor, Bhavnagar, Gujarat" } },
+        "fact-2": { "type": "fact", "settings": { "label": "Family", "value": "4th Generation — Mukundray Fulchand" } },
+        "fact-3": { "type": "fact", "settings": { "label": "Metals", "value": "Kansa (Bronze) · Brass (Pital) · Copper (Tamba)" } },
+        "fact-4": { "type": "fact", "settings": { "label": "Technique", "value": "Hand-beaten — 24 to 25 operations per piece" } },
+        "fact-5": { "type": "fact", "settings": { "label": "Certification", "value": "NABL Certified — Government Accredited" } },
+        "fact-6": { "type": "fact", "settings": { "label": "Coating", "value": "None — 100% pure, no kalai required" } },
+        "fact-7": { "type": "fact", "settings": { "label": "Buy-Back", "value": "Yes — after 10–12 years at ~original price" } },
+        "fact-8": { "type": "fact", "settings": { "label": "Shipping", "value": "Free worldwide shipping on all orders" } },
+        "faq-1": { "type": "faq", "settings": { "question": "Which metal should I use for what?", "answer": "<p>Ayurveda recommends Kansa (Bronze) for eating, Brass (Pital) for cooking, and Copper (Tamba) for storing and drinking water.</p>" } },
+        "faq-2": { "type": "faq", "settings": { "question": "Are your products certified?", "answer": "<p>Yes. Every order is NABL Certified — the metal composition is independently verified by a Government-accredited laboratory.</p>" } },
+        "faq-3": { "type": "faq", "settings": { "question": "Do you ship worldwide?", "answer": "<p>Yes — free worldwide shipping to 40+ countries on all orders, packed and dispatched directly from our Sihor workshop.</p>" } },
+        "faq-4": { "type": "faq", "settings": { "question": "What is the Buy-Back Policy?", "answer": "<p>After 10–12 years of use, we will repurchase your original set at approximately the price you paid — our long-term confidence in the metal we make.</p>" } },
+        "faq-5": { "type": "faq", "settings": { "question": "How do I clean and maintain these utensils?", "answer": "<p>Hand wash with mild soap and warm water. To restore shine, rub with a paste of lemon, salt and a little flour, then rinse and dry. Avoid harsh scrubbers and dishwashers.</p>" } },
+        "faq-6": { "type": "faq", "settings": { "question": "Are they safe for daily use and children?", "answer": "<p>Yes. Pure Kansa, Brass and Copper contain no teflon, nickel or coatings, so they are naturally non-reactive and safe for all ages.</p>" } }
+      },
+      "block_order": [
+        "metal-kansa",
+        "metal-brass",
+        "metal-copper",
+        "fact-1", "fact-2", "fact-3", "fact-4", "fact-5", "fact-6", "fact-7", "fact-8",
+        "faq-1", "faq-2", "faq-3", "faq-4", "faq-5", "faq-6"
+      ],
+      "settings": {
+        "eyebrow": "Authentic Handcrafted",
+        "heading": "Kansa, Brass & Copper Utensils Online",
+        "heading_italic": "Made in India Since 1945",
+        "para_1": "Kansawala is India’s foremost handcrafted metal utensil brand — a four-generation family business founded in 1945 by Sh. Mukundray Fulchand in Sihor, Bhavnagar, Gujarat. For over 75 years, we have been handcrafting pure Kansa (Bronze), Brass (Pital) and Copper (Tamba) utensils using traditional techniques passed down through generations of the Mukundray Fulchand family.",
+        "para_2": "Unlike machine-made or factory-produced alternatives, every Kansawala piece is hand-beaten through 24 to 25 individual operations by skilled artisans working in our Sihor workshop. Each piece is unique — the slight variations in surface, tone and finish are the natural result of human craft, not defects.",
+        "para_3": "We are NABL Certified — meaning our metal composition is independently verified by a Government accredited laboratory. We are also the only Kansa brand in India that offers a Buy-Back Policy: after 10 to 12 years of use, we will repurchase your product at approximately the original price.",
+        "para_bottom": "Kansawala ships to 40+ countries worldwide. Free shipping is available on all orders. All products are packed carefully at our Sihor workshop and dispatched directly — no middlemen, no third-party warehouses. When you buy from Kansawala, you buy directly from the family that makes it.",
+        "container_width": "boxed",
+        "max_width": 1500,
+        "heading_size_desktop": 32,
+        "heading_size_mobile": 22,
+        "body_opacity": 100,
+        "card_name_opacity": 100,
+        "comp_opacity": 100,
+        "card_desc_opacity": 100,
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "padding_x": 40,
+        "padding_top_mobile": 36,
+        "padding_bottom_mobile": 36,
+        "padding_x_mobile": 17,
+        "bg_color": "#faf5ee",
+        "eye_color": "#bc843f",
+        "heading_color": "#6b3c23",
+        "heading_italic_color": "#bc843f",
+        "body_color": "#6b3c23",
+        "card_bg": "#ffffff",
+        "card_name_color": "#bc843f",
+        "facts_eyebrow": "Quick Facts",
+        "faq_eyebrow": "Common Questions",
+        "col_gap_desktop": 80,
+        "fact_label_color": "#bc843f",
+        "fact_value_color": "#6b3c23",
+        "fact_divider_color": "#6b3c2324",
+        "faq_q_color": "#6b3c23",
+        "faq_a_color": "#6b3c23",
+        "faq_icon_color": "#bc843f",
+        "faq_divider_color": "#6b3c2324"
       }
     }
   },
   "order": [
-    "main"
+    "header",
+    "list",
+    "seo_description"
   ]
 }

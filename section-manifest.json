@@ -31,7 +31,10 @@
     "our-values": { "owner": "custom", "note": "About page core-values grid w/ SVG icons (self-contained; fade-up). Wired via templates/page.about.json." },
     "vision-mission": { "owner": "custom", "note": "About page vision & mission cards (self-contained; fade-up). Wired via templates/page.about.json." },
     "sihor-workshop": { "owner": "custom", "note": "About page Sihor workshop block w/ address + images (self-contained; fade-up via .ws-fu). Wired via templates/page.about.json." },
-    "about-cta": { "owner": "custom", "note": "About page closing CTA w/ button blocks (self-contained). Wired via templates/page.about.json." }
+    "about-cta": { "owner": "custom", "note": "About page closing CTA w/ button blocks (self-contained). Wired via templates/page.about.json." },
+    "collection-page-header": { "owner": "custom", "note": "Collections list-page header band (eyebrow + heading + body + pill blocks; self-contained). Wired via templates/list-collections.json." },
+    "all-collections-list": { "owner": "custom", "note": "Curated collection-card grid for the /collections list page (block per collection; self-contained). Wired via templates/list-collections.json." },
+    "collection-seo-description": { "owner": "custom", "note": "Collections list-page combined 2-column block: left = brand story + metal cards, right = Quick Facts table + FAQ accordion (with FAQPage JSON-LD). Self-contained. Wired via templates/list-collections.json." }
   },
   "snippets": {
     "kw-fonts": { "owner": "custom", "note": "Loads Cormorant Garamond (Google Fonts); reuses theme Jost. Rendered in layout/theme.liquid <head>." },

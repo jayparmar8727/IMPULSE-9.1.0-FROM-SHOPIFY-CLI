@@ -1,0 +1,565 @@
+{%- liquid
+  assign bg_color = section.settings.bg_color
+  assign eye_color = section.settings.eye_color
+
+  assign padding_top = section.settings.padding_top
+  assign padding_bottom = section.settings.padding_bottom
+  assign padding_x = section.settings.padding_x
+  assign padding_top_mobile = section.settings.padding_top_mobile
+  assign padding_bottom_mobile = section.settings.padding_bottom_mobile
+  assign padding_x_mobile = section.settings.padding_x_mobile
+
+  assign container_width = section.settings.container_width
+  assign max_width = section.settings.max_width
+
+  assign cols_desktop = section.settings.cols_desktop
+  assign gap = section.settings.gap
+  assign gap_mobile = section.settings.gap_mobile
+  assign image_ratio = section.settings.image_ratio
+
+  assign tag_color = section.settings.tag_color
+  assign card_title_color = section.settings.card_title_color
+  assign card_desc_color = section.settings.card_desc_color
+  assign btn_bg = section.settings.btn_bg
+  assign btn_text = section.settings.btn_text
+
+  assign cta_text = section.settings.cta_text
+  assign cta_append_title = section.settings.cta_append_title
+
+  assign desc_max_lines = section.settings.desc_max_lines
+  assign desc_max_words = section.settings.desc_max_words
+-%}
+
+{%- style -%}
+  .acl-{{ section.id }} {
+    background: {{ bg_color }};
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .acl-{{ section.id }} .acl-inner {
+    padding: {{ padding_top_mobile }}px {{ padding_x_mobile }}px {{ padding_bottom_mobile }}px;
+    {%- if container_width == 'boxed' -%}
+    max-width: {{ max_width }}px;
+    margin-left: auto;
+    margin-right: auto;
+    {%- endif -%}
+  }
+  .acl-{{ section.id }} .acl-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: {{ gap_mobile }}px;
+  }
+  .acl-{{ section.id }} .ac {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    min-width: 0;
+  }
+  .acl-{{ section.id }} .ac-img-wrap {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: {{ image_ratio }};
+    background: #FAF5EE;
+  }
+  .acl-{{ section.id }} .ac img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .8s cubic-bezier(.25,.46,.45,.94);
+    display: block;
+  }
+  .acl-{{ section.id }} .ac:hover img { transform: scale(1.04); }
+  /* Visible keyboard focus (the card is the link). */
+  .acl-{{ section.id }} .ac:focus-visible {
+    outline: 3px solid {{ card_title_color }};
+    outline-offset: 3px;
+  }
+  .acl-{{ section.id }} .ac-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(107, 60, 35, .25);
+  }
+  .acl-{{ section.id }} .ac-placeholder svg { width: 60%; height: 60%; }
+  .acl-{{ section.id }} .ac-content {
+    padding: 14px 2px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: left;
+    flex: 1 1 auto;
+  }
+  .acl-{{ section.id }} .ac-eye {
+    color: {{ eye_color }};
+    margin: 0 0 10px;
+    white-space: nowrap;
+  }
+  .acl-{{ section.id }} .ac-eye.t-eyebrow--dash::before { background: {{ eye_color }}; }
+  .acl-{{ section.id }} .ac-tag {
+    color: {{ tag_color }};
+    margin: 0 0 8px;
+    display: block;
+  }
+  .acl-{{ section.id }} .ac-title {
+    color: {{ card_title_color }};
+    margin: 0 0 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .acl-{{ section.id }} .ac-desc {
+    color: {{ card_desc_color }};
+    margin: 0 0 14px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: {{ desc_max_lines }};
+    line-clamp: {{ desc_max_lines }};
+    overflow: hidden;
+  }
+  .acl-{{ section.id }} .ac-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 14px;
+    width: 100%;
+    background: transparent;
+    color: {{ btn_bg }};
+    border: 1px solid {{ btn_bg }};
+    text-decoration: none;
+    transition: background .25s ease, color .25s ease, border-color .25s ease;
+    white-space: nowrap;
+    margin-top: auto;
+  }
+  .acl-{{ section.id }} .ac:hover .ac-cta,
+  .acl-{{ section.id }} .ac:focus-visible .ac-cta {
+    background: {{ btn_bg }};
+    color: {{ btn_text }};
+    border-color: {{ btn_bg }};
+  }
+  .acl-{{ section.id }} .ac-cta-label { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .acl-{{ section.id }} .ac-arrow {
+    width: 14px;
+    height: 13px;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    fill: none;
+    flex-shrink: 0;
+    transition: transform .35s ease;
+  }
+  .acl-{{ section.id }} .ac:hover .ac-arrow { transform: translateX(4px); }
+  /* Desktop gutter from the tablet breakpoint up (≥750), matching the other
+     boxed KW sections; grid columns still switch at ≥1024. */
+  @media (min-width: 750px) {
+    .acl-{{ section.id }} .acl-inner {
+      padding: {{ padding_top }}px {{ padding_x }}px {{ padding_bottom }}px;
+    }
+    .acl-{{ section.id }} .acl-grid { gap: {{ gap }}px; }
+    .acl-{{ section.id }} .ac-content { padding: 18px 2px 0; }
+  }
+  @media (min-width: 1024px) {
+    .acl-{{ section.id }} .acl-grid {
+      grid-template-columns: repeat({{ cols_desktop }}, minmax(0, 1fr));
+    }
+    .acl-{{ section.id }} .ac-content { padding: 28px 2px 0; }
+  }
+
+  {%- if section.settings.hide_desktop -%}
+  @media (min-width: 750px) { .acl-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+  {%- if section.settings.hide_mobile -%}
+  @media (max-width: 749px) { .acl-{{ section.id }} { display: none !important; } }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section class="acl-{{ section.id }}" {{ section.shopify_attributes }}>
+  <div class="acl-inner">
+    <div class="acl-grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign block_col = collections[block.settings.collection]
+
+          assign block_image = block_col.image
+          assign block_link = block_col.url
+
+          assign block_title = block.settings.title
+          if block_title == blank
+            assign block_title = block_col.title
+          endif
+
+          assign block_desc = block.settings.description
+          if block_desc == blank
+            assign block_desc = block_col.description | strip_html | strip
+          endif
+          if block_desc != blank
+            if desc_max_words > 0
+              assign block_desc = block_desc | truncatewords: desc_max_words
+            else
+              assign block_desc = block_desc | truncatewords: 80
+            endif
+          endif
+
+          assign block_count_text = block.settings.count_text
+          if block_count_text == blank and block_col != blank
+            assign block_count_text = block_col.all_products_count | append: '+ Products'
+          endif
+
+          assign block_cta = cta_text
+          if cta_append_title and block_col != blank and block_col.title != blank
+            assign block_cta = cta_text | append: ' ' | append: block_col.title
+          endif
+
+          # First row (the visible-on-load cards) loads eager for LCP; the rest lazy.
+          assign img_loading = 'lazy'
+          assign img_fp = 'auto'
+          if forloop.index <= cols_desktop
+            assign img_loading = 'eager'
+            assign img_fp = 'high'
+          endif
+        -%}
+        <a {% if block_link != blank %}href="{{ block_link }}" {% endif %}class="ac" {{ block.shopify_attributes }}>
+          <div class="ac-img-wrap">
+            {%- if block_image != blank -%}
+              <img
+                src="{{ block_image | image_url: width: 1200 }}"
+                srcset="{{ block_image | image_url: width: 600 }} 600w, {{ block_image | image_url: width: 900 }} 900w, {{ block_image | image_url: width: 1200 }} 1200w"
+                sizes="(min-width: 1024px) calc(({{ max_width }}px - {{ padding_x | times: 2 }}px - {{ gap | times: cols_desktop | minus: gap }}px) / {{ cols_desktop }}), (min-width: 750px) 50vw, calc(100vw - {{ padding_x_mobile | times: 2 }}px - {{ gap_mobile }}px)"
+                alt="{{ block_title | escape }}"
+                loading="{{ img_loading }}"
+                fetchpriority="{{ img_fp }}"
+                decoding="async"
+                width="1200"
+                height="1200">
+            {%- else -%}
+              <div class="ac-placeholder">{{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+            {%- endif -%}
+          </div>
+          <div class="ac-content">
+            {%- if block_count_text != blank -%}
+              <p class="ac-eye t-eyebrow t-eyebrow--dash t-card-eye">{{ block_count_text | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.tag != blank -%}
+              <span class="ac-tag t-label">{{ block.settings.tag | escape }}</span>
+            {%- endif -%}
+            {%- if block_title != blank -%}
+              <h2 class="ac-title t-card-name">{{ block_title | escape }}</h2>
+            {%- endif -%}
+            {%- if block_desc != blank -%}
+              <p class="ac-desc t-body-sm">{{ block_desc | escape }}</p>
+            {%- endif -%}
+            {%- if block_cta != blank -%}
+              <span class="ac-cta t-card-cta">
+                <span class="ac-cta-label">{{ block_cta | escape }}</span>
+                <svg class="ac-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+      {%- if section.blocks.size == 0 and request.design_mode -%}
+        <p class="t-body kw-editor-hint kw-col-full" style="--kw-hint-color: {{ card_title_color }};">Add a “Collection card” block for each collection you want to list.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "All Collections List",
+  "tag": "section",
+  "class": "kw-all-collections-list",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Visibility"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_desktop",
+      "label": "Hide on desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_mobile",
+      "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Description"
+    },
+    {
+      "type": "range",
+      "id": "desc_max_lines",
+      "label": "Description — max lines",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "desc_max_words",
+      "label": "Description — max words (0 = no limit)",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container width",
+      "options": [
+        { "value": "boxed", "label": "Boxed (centered)" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max content width (px)",
+      "min": 800,
+      "max": 1920,
+      "step": 20,
+      "default": 1500,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "cols_desktop",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Grid gap desktop (px)",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "default": 22,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "label": "Grid gap mobile (px)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Card image aspect ratio",
+      "options": [
+        { "value": "1 / 1", "label": "Square (1:1)" },
+        { "value": "4 / 5", "label": "Portrait (4:5)" },
+        { "value": "3 / 4", "label": "Portrait (3:4)" },
+        { "value": "2 / 3", "label": "Portrait (2:3)" },
+        { "value": "4 / 3", "label": "Landscape (4:3)" },
+        { "value": "16 / 9", "label": "Wide (16:9)" }
+      ],
+      "default": "1 / 1"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Desktop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top (px)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "default": 56,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom (px)",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "default": 108,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Horizontal padding (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Spacing — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 32,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 56,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Mobile horizontal padding (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "default": 17,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA label",
+      "default": "Shop"
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_append_title",
+      "label": "Append the collection title",
+      "info": "Renders 'Shop Kansa', 'Shop Brass', etc. Uncheck to use the label as-is on every card.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#faf5ee"
+    },
+    {
+      "type": "color",
+      "id": "eye_color",
+      "label": "Eyebrow color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "tag_color",
+      "label": "Card tag color",
+      "default": "#bc843f"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "card_desc_color",
+      "label": "Card description color",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button border + text (fills on hover)",
+      "default": "#6b3c23"
+    },
+    {
+      "type": "color",
+      "id": "btn_text",
+      "label": "Button hover text",
+      "default": "#faf5ee"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Collection card",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Image, link, title and description are pulled from this collection."
+        },
+        {
+          "type": "text",
+          "id": "count_text",
+          "label": "Badge text",
+          "info": "Leave empty to use the collection's product count."
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Tag (e.g. 'For Eating · 78% Copper + 22% Tin')"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "info": "Leave empty to use the collection's title."
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "info": "Leave empty to use the collection's description."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 50,
+  "presets": [
+    {
+      "name": "All Collections List",
+      "blocks": [
+        { "type": "card", "settings": { "tag": "For Eating · 78% Copper + 22% Tin" } },
+        { "type": "card", "settings": { "tag": "For Cooking · Pure Pital" } },
+        { "type": "card", "settings": { "tag": "For Drinking · Pure Tamba" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

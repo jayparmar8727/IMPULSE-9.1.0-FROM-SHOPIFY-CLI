@@ -960,7 +960,7 @@
         "card_bg": "#ffffff",
         "card_border": "#6b3c231f",
         "card_quote_color": "#6b3c23",
-        "star_color": "#bc843f",
+        "star_color": "#9a6326",
         "band_bg_color": "#6b3c23",
         "band_num_color": "#d8ae82"
       }
@@ -1121,7 +1121,7 @@
         "accent_color": "#bc843f",
         "rating_bg": "#faf5ee",
         "rating_border": "#6b3c231f",
-        "rating_star_color": "#bc843f",
+        "rating_star_color": "#9a6326",
         "rating_score_color": "#6b3c23",
         "rating_count_color": "#6b3c23",
         "widget_color": "#6b3c23",

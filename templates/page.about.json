@@ -35,7 +35,7 @@
         "bg_color": "#faf5ee",
         "title_color": "#6b3c23",
         "body_color": "#6b3c23",
-        "link_color": "#bc843f"
+        "link_color": "#9a6326"
       }
     },
     "about_us_hero_1_c7Gc3Q": {
@@ -626,9 +626,9 @@
         "heading_size_mobile": 30,
         "big_letter_size": 96,
         "header_bg": "#faf5ee",
-        "eyebrow_color": "#bc843f",
+        "eyebrow_color": "#9a6326",
         "heading_color": "#6b3c23",
-        "heading_italic_color": "#bc843f",
+        "heading_italic_color": "#9a6326",
         "container_width": "full",
         "max_width": 1500,
         "card_gap": 2,

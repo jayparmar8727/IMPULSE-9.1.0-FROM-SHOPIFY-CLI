@@ -1,0 +1,387 @@
+{% comment %}
+Arguments
+- product: product object
+- [per_row]: number of items per row
+- [quick_shop_enable]: boolean
+- [collection]: collection object
+{% endcomment %}
+
+{%- liquid
+  unless per_row
+    assign per_row = 4
+  endunless
+
+  capture grid_view
+    render 'products_per_row', products_per_row: per_row, style: 'fractions'
+  endcapture
+
+  # These assignments have no effect if a sizes parameter is passed in
+  assign size_variable = grid_view
+  if fallback != blank
+    assign fallback = fallback
+  else
+    assign fallback = 'variable'
+  endif
+
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+
+  # KW custom card: review rating + first variant for inline add-to-cart
+  assign rating_value = product.metafields.reviews.rating.value.rating | default: product.metafields.reviews.rating.value | default: 0
+  assign rating_count = product.metafields.reviews.rating_count | default: 0
+  assign has_rating = false
+  if rating_value != blank and rating_value != 0
+    assign has_rating = true
+  endif
+  assign first_variant = product.selected_or_first_available_variant
+
+  assign product_tags = product.tags | join: ','
+  assign has_custom_label = false
+  if product.metafields.theme.label and product.metafields.theme.label != blank
+    assign has_custom_label = true
+    assign custom_label = product.metafields.theme.label.value
+  elsif product_tags contains '_label_'
+    for tag in product.tags
+      if tag contains '_label_'
+        assign tag_starts_with = tag | slice: 0
+        if tag_starts_with == '_'
+          assign has_custom_label = true
+          assign custom_label = tag | replace: '_label_', ''
+        endif
+      endif
+    endfor
+  endif
+-%}
+
+<div class="grid__item grid-product {{ grid_view }} {% if quick_shop_enable %} grid-product__has-quick-shop{% endif %}" data-aos="row-of-{{ per_row }}" data-product-handle="{{ product.handle }}" data-product-id="{{ product.id }}">
+  <div class="grid-product__content">
+    {%- if has_custom_label -%}
+      <div class="grid-product__tag grid-product__tag--custom">
+        {{ custom_label }}
+      </div>
+    {%- else -%}
+      {%- unless product.available -%}
+        <div class="grid-product__tag grid-product__tag--sold-out">
+          {{ 'products.product.sold_out' | t }}
+        </div>
+      {%- endunless -%}
+      {%- if on_sale and product.available -%}
+        <div class="grid-product__tag grid-product__tag--sale">
+          {{ 'products.general.sale' | t }}
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- liquid
+      assign image_ratio = settings.product_grid_image_size
+      assign fixed_aspect_ratio = false
+      unless image_ratio == 'natural'
+        assign fixed_aspect_ratio = true
+      endunless
+
+      if image_style == 'circle'
+        assign fixed_aspect_ratio = true
+        assign image_ratio = 'square'
+      endif
+
+      assign preview_image = product.featured_media.preview_image
+    -%}
+
+    <div class="grid__item-image-wrapper">
+      <div class="grid-product__image-mask">
+        {%- if fixed_aspect_ratio -%}
+          <div
+            class="grid__image-ratio grid__image-ratio--{% if image_style == 'circle' %}square{% else %}{{ settings.product_grid_image_size }}{% endif %}">
+            {%- capture image_classes -%}
+              {% unless settings.product_grid_image_fill %} grid__image-contain{% endunless %} image-style--{{ image_style }}
+            {%- endcapture -%}
+            {%- if preview_image != blank -%}
+              {%- render 'image-element',
+                img: preview_image,
+                classes: image_classes,
+                sizes: sizes,
+                sizeVariable: size_variable,
+                fallback: fallback,
+                widths: '360, 540, 720, 900, 1080',
+              -%}
+            {%- else -%}
+              {%- capture placeholder -%}product-{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
+              <div class="product-image--placeholder">{{ placeholder | placeholder_svg_tag: 'placeholder-svg' }}</div>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <div class="image-wrap"
+            {% if preview_image != blank %}
+              style="height: 0; padding-bottom: {{ 100 | divided_by: preview_image.aspect_ratio }}%;"
+            {% endif %}
+          >
+            {%- if preview_image != blank -%}
+              {%- capture image_classes -%}
+                grid-product__image image-style--{{ image_style }}
+              {%- endcapture -%}
+              {%- render 'image-element',
+                img: preview_image,
+                classes: image_classes,
+                sizes: sizes,
+                sizeVariable: size_variable,
+                fallback: fallback,
+                widths: '360, 540, 720, 900, 1080',
+              -%}
+            {%- else -%}
+              {%- capture placeholder -%}product-{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
+              <div class="product-image--placeholder">{{ placeholder | placeholder_svg_tag: 'placeholder-svg' }}</div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if settings.product_hover_image and product.media.size > 1 -%}
+          {%- for media in product.media offset: 1 limit: 1 -%}
+            {%- assign second_image = media.preview_image -%}
+          {%- endfor -%}
+          <div class="grid-product__secondary-image small--hide">
+            {%- capture image_classes -%}
+              image-style--{{ image_style }}
+            {%- endcapture -%}
+            {%- render 'image-element',
+              img: second_image,
+              classes: image_classes,
+              sizes: sizes,
+              sizeVariable: sizeVariable,
+              fallback: fallback,
+              widths: '360, 540, 720, 1000',
+            -%}
+          </div>
+        {%- endif -%}
+
+        {%- if settings.enable_swatches -%}
+          {%- assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase -%}
+          {%- for option in product.options_with_values -%}
+            {%- liquid
+              assign option_name = option.name | downcase
+              assign is_color = false
+              if option_name contains swatch_trigger
+                assign is_color = true
+              elsif swatch_trigger == 'color' and option_name contains 'colour'
+                assign is_color = true
+              endif
+            -%}
+            {%- if is_color -%}
+              {%- assign option_index = forloop.index0 -%}
+              {%- assign values = '' -%}
+              {%- for variant in product.variants -%}
+                {%- assign value = variant.options[option_index] %}
+                {%- unless values contains value -%}
+                  {%- liquid
+                    assign values = values | join: ',' | append: ',' | append: value | split: ','
+                  -%}
+
+                  {%- if variant.image -%}
+                    <div
+                      class="grid-product__color-image grid-product__color-image--{{ variant.id }} small--hide">
+                    </div>
+                  {%- endif -%}
+                {%- endunless -%}
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+      </div>
+
+      <a href="{{ product.url | within: collection }}" class="grid-product__link">
+        <div class="grid-product__meta">
+          {%- if has_rating -%}
+            {%- assign rating_pct = rating_value | times: 20.0 -%}
+            <div class="kw-card__rate" aria-label="Rated {{ rating_value }} out of 5{% if rating_count > 0 %} from {{ rating_count }} reviews{% endif %}">
+              <span class="kw-card__stars" aria-hidden="true" style="--rating-pct:{{ rating_pct }}%;">
+                <span class="kw-card__stars-row kw-card__stars-row--bg">{%- for i in (1..5) -%}<svg viewBox="0 0 24 24" class="kw-card__star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>{%- endfor -%}</span>
+                <span class="kw-card__stars-row kw-card__stars-row--fill">{%- for i in (1..5) -%}<svg viewBox="0 0 24 24" class="kw-card__star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>{%- endfor -%}</span>
+              </span>
+              {%- if rating_count > 0 -%}<span class="kw-card__rate-count">{{ rating_count }} Reviews</span>{%- endif -%}
+            </div>
+          {%- endif -%}
+          <div class="grid-product__title grid-product__title--{{ settings.type_product_style }}">{{ product.title }}</div>
+          {%- if settings.vendor_enable -%}
+            <div class="grid-product__vendor">{{ product.vendor }}</div>
+          {%- endif -%}
+          <div class="grid-product__price">
+            {%- if on_sale -%}
+              <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+              <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>
+              <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+            {%- endif -%}
+            {%- if product.price_varies -%}
+              {%- assign price = product.price_min | money -%}
+              {{ 'products.general.from_text_html' | t: price: price }}
+            {%- else -%}
+              {{ product.price | money }}
+            {%- endif -%}
+            {%- if on_sale -%}
+              {%- if settings.product_save_amount -%}
+                {%- if settings.product_save_type == 'dollar' -%}
+                  {%- capture saved_amount -%}{{ product.compare_at_price | minus: product.price | money }}{%- endcapture -%}
+                {%- else -%}
+                  {%- capture saved_amount -%}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%{%- endcapture -%}
+                {%- endif -%}
+                <span class="grid-product__price--savings">
+                  {{ 'products.general.save_html' | t: saved_amount: saved_amount }}
+                </span>
+              {%- endif -%}
+            {%- endif -%}
+
+            {%- assign product_variant = product.selected_or_first_available_variant -%}
+            {%- if product_variant.unit_price_measurement -%}
+              <div class="product__unit-price">
+                {%- capture unit_price_base_unit -%}
+                  {%- if product_variant.unit_price_measurement -%}
+                    {%- if product_variant.unit_price_measurement.reference_value != 1 -%}
+                      {{ product_variant.unit_price_measurement.reference_value }}
+                    {%- endif -%}
+                    {{ product_variant.unit_price_measurement.reference_unit }}
+                  {%- endif -%}
+                {%- endcapture -%}
+
+                {{ product_variant.unit_price | money }}/{{ unit_price_base_unit }}
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if settings.enable_swatches and type == 'horizontal' -%}
+            {%- liquid
+              assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
+              assign swatch_file_extension = 'png'
+              assign color_count = 0
+            -%}
+
+            {%- for option in product.options_with_values -%}
+              {%- liquid
+                assign option_name = option.name | downcase
+                assign is_color = false
+                if option_name contains swatch_trigger
+                  assign is_color = true
+                elsif swatch_trigger == 'color' and option_name contains 'colour'
+                  assign is_color = true
+                endif
+              -%}
+              {%- if is_color -%}
+                {%- assign option_index = forloop.index0 -%}
+                {%- assign values = '' -%}
+                <div class="grid-product__colors grid-product__colors--{{ product.id }}">
+                  {%- for variant in product.variants -%}
+                    {%- assign value = variant.options[option_index] %}
+                    {%- unless values contains value -%}
+                      {%- liquid
+                        assign values = values | join: ',' | append: ',' | append: value | split: ','
+
+                        assign color_file_name = value | handle | append: '.' | append: swatch_file_extension
+                        assign color_image = color_file_name | file_img_url: '50x50' | prepend: 'https:' | split: '?' | first
+                        assign color_swatch_fallback = value | split: ' ' | last | handle
+                        assign color_count = color_count | plus: 1
+                      -%}
+
+                      <span
+                        class="color-swatch color-swatch--small color-swatch--{{ value | handle }}{% if variant.image %} color-swatch--with-image{% endif %}"
+                        {% if variant.image %}
+                          data-variant-id="{{ variant.id }}"
+                          data-variant-image="{{ variant.image | image_url: width: 400 }}"
+                        {% endif %}
+                        aria-label="{{ product.title }} - {{ value }}"
+                        style="background-color: {{ color_swatch_fallback }};{% if images[color_file_name] != blank %}  background-image: url({{ color_image }});{% endif %}">
+                        <span class="visually-hidden">{{ value }}</span>
+                      </span>
+                    {%- endunless -%}
+                  {%- endfor -%}
+                </div>
+                {%- if color_count < 2 -%}
+                  {%- style -%}
+                    .grid-product__colors--{{ product.id }} {
+                      display: none;
+                    }
+                  {%- endstyle -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </a>
+    </div>
+    {%- if product.available -%}
+      {%- if product.has_only_default_variant -%}
+        {%- form 'product', product, class: 'kw-card__atc-form' -%}
+          <input type="hidden" name="id" value="{{ first_variant.id }}">
+          <button type="submit" class="kw-card__atc t-card-cta" aria-label="Add {{ product.title | escape }} to cart">
+            <span class="kw-card__atc-label">Add to Cart</span>
+          </button>
+        {%- endform -%}
+      {%- else -%}
+        <a href="{{ product.url | within: collection }}" class="kw-card__atc t-card-cta" aria-label="Add {{ product.title | escape }} to cart — pick a size on the product page">
+          <span class="kw-card__atc-label">Add to Cart</span>
+        </a>
+      {%- endif -%}
+    {%- else -%}
+      <button type="button" class="kw-card__atc kw-card__atc--disabled t-card-cta" disabled aria-label="{{ product.title | escape }} is sold out">
+        <span class="kw-card__atc-label">Sold Out</span>
+      </button>
+    {%- endif -%}
+  </div>
+  {%- if settings.enable_swatches and type == blank -%}
+    {%- liquid
+      assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
+      assign swatch_file_extension = 'png'
+      assign color_count = 0
+    -%}
+
+    {%- for option in product.options_with_values -%}
+      {%- liquid
+        assign option_name = option.name | downcase
+        assign is_color = false
+        if option_name contains swatch_trigger
+          assign is_color = true
+        elsif swatch_trigger == 'color' and option_name contains 'colour'
+          assign is_color = true
+        endif
+      -%}
+      {%- if is_color -%}
+        {%- assign option_index = forloop.index0 -%}
+        {%- assign values = '' -%}
+        <div class="grid-product__colors grid-product__colors--{{ product.id }}">
+          {%- for variant in product.variants -%}
+            {%- assign value = variant.options[option_index] %}
+            {%- unless values contains value -%}
+              {%- liquid
+                assign values = values | join: ',' | append: ',' | append: value | split: ','
+
+                assign color_file_name = value | handle | append: '.' | append: swatch_file_extension
+                assign color_image = color_file_name | file_img_url: '50x50' | prepend: 'https:' | split: '?' | first
+                assign color_swatch_fallback = value | split: ' ' | last | handle
+                assign color_count = color_count | plus: 1
+              -%}
+
+              <a
+                href="{{ variant.url | within: collection }}"
+                class="color-swatch color-swatch--small color-swatch--{{ value | handle }}{% if variant.image %} color-swatch--with-image{% endif %}"
+                {% if variant.image %}
+                  data-variant-id="{{ variant.id }}"
+                  data-variant-image="{{ variant.image | image_url: width: 400 }}"
+                {% endif %}
+                aria-label="{{ product.title }} - {{ value }}"
+                style="background-color: {{ color_swatch_fallback }};{% if images[color_file_name] != blank %}  background-image: url({{ color_image }});{% endif %}">
+                <span class="visually-hidden">{{ value }}</span>
+              </a>
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+        {%- if color_count < 2 -%}
+          {%- style -%}
+            .grid-product__colors--{{ product.id }} {
+              display: none;
+            }
+          {%- endstyle -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+</div>

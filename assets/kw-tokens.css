@@ -21,6 +21,7 @@
   --W:#FFFFFF; --C:#FEE8D9; --Bu:#D8AE82;
   --Br:#BC843F; --K:#6B3C23; --Dk:#2A1508;
   --off:#FAF5EE;
+  --Br-aa:#9A6326; /* accessible brass — brass as TEXT on light bg (AA ≈5:1). Use instead of --Br for readable text on cream/white; --Br stays for borders/dividers/button-hover/sale-tags + dark-bg accents. */
 
   /* ═══ FONT FAMILIES · rich fallbacks ═══ */
   --d:'Jost', sans-serif;

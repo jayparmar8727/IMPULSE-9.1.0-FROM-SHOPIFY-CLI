@@ -12,7 +12,8 @@
 | `--W`  | `#FFFFFF` | white |
 | `--C`  | `#FEE8D9` | cream (light text on dark) |
 | `--Bu` | `#D8AE82` | brass on **dark** bg — lighter brass shade, keeps gold accents readable on dark sections |
-| `--Br` | `#BC843F` | brass — accent text, decorative accents, button-hover bg |
+| `--Br` | `#BC843F` | brass — **non-text** accents (borders, dividers, accent lines/dashes, dots, button-hover bg) + rating stars; stock Sale/Save/cart |
+| `--Br-aa` | `#9A6326` | accessible brass — brass as **readable text** on light bg (eyebrows, heading-italics, labels, names, prices, stat numerals, links). AA ≈5:1 |
 | `--K`  | `#6B3C23` | kansa brown (primary button bg) |
 | `--Dk` | `#2A1508` | dark brown (overlays) |
 | `--off`| `#FAF5EE` | off-white surface |
@@ -67,10 +68,14 @@ has `display:block`). Heading→body gap varies 12–32px per section but stays
 consistent within a file.
 
 ## 8. Accessibility & stock-coupling notes
-- **The brand brass `--Br` (`#BC843F`) is used for accent text on light backgrounds** (eyebrows, labels,
-  heading-italics, etc.). It sits below WCAG AA for small text (≈3:1 vs 4.5:1) — a conscious brand choice:
-  it's the established brass, and stock Impulse itself uses `#BC843F` for Sale tags / Save price / cart lines.
-  Dark-bg sections (hero, marquee, heritage, craft) use a lighter brass (`#D8AE82` / `#E5C2A0`) for contrast.
+- **Brass as readable text on light backgrounds uses the accessible amber `--Br-aa` (`#9A6326`, AA ≈5:1)** —
+  eyebrows, heading-italics, labels, metal/card names, prices, stat numerals, links. Plain `--Br` (`#BC843F`,
+  ≈3:1) is **retained for non-text brass** (borders, dividers, accent lines/dashes, button-hover backgrounds,
+  connector dots) and for **rating stars** (gold convention; passes the 3:1 graphical-object threshold), plus
+  stock Impulse's own Sale tags / Save price / cart lines. Dark-bg sections (hero, marquee, heritage, craft)
+  keep the lighter brass (`#D8AE82` / `#E5C2A0`) — brass/tan on dark already meets AA, so it is unchanged.
+  _(Reconciled 2026-06-07 with the thecolorpalettestudio.com palette audit; the earlier "brass text on light
+  is a conscious sub-AA choice" rule is superseded for text only.)_
 - **`.rte h4–h6` is the one place the KW layer reaches into Impulse internals.** It styles merchant rich-text
   sub-headings via Impulse's own `--typeHeaderPrimary / --typeHeaderFallback / --typeHeaderWeight /
   --typeHeaderSpacing / --typeHeaderLineHeight / --typeH3Size / --typeH3SizeMobile / --typeBaseSize` vars.
